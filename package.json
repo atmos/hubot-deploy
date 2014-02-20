@@ -1,0 +1,46 @@
+{
+  "name": "hubot-deploy",
+  "version": "0.0.1",
+  "author": "Corey Donohoe <atmos@atmos.org>",
+  "description": "hubot script for using the GitHub Deployment API",
+  "main": "index.coffee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tampopo/hubot-deploy"
+  },
+  "keywords": [
+    "wrapper",
+    "api",
+    "v3",
+    "github"
+  ],
+  "homepage": "https://github.com/tampopo/hubot-deploy",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "contributors": [
+    {
+      "name": "Corey Donohoe",
+      "email": "atmos@atmos.org"
+    }
+  ],
+  "dependencies": {
+    "hubot":    ">= 2.4.0",
+    "octonode": "0.5.0"
+  },
+  "devDependencies": {
+    "coffee-script": ">=1.6.3"
+  },
+  "engines": {
+    "node": "^0.10.0"
+  },
+  "bugs": {
+    "url": "https://github.com/tampopo/hubot-deploy/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/tampopo/hubot-deploy/raw/master/LICENSE.md"
+    }
+  ]
+}
