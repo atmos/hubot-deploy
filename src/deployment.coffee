@@ -1,15 +1,17 @@
-Fs = require "fs"
-
-applications = JSON.parse(Fs.readFileSync("apps.json").toString())
+Fs   = require "fs"
 
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 ###########################################################################
 
 class Deployment
+  @APPS_FILE = "apps.json"
+
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
     @room_id  = 'unknown'
     @deployer = 'unknown'
+
+    applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 
     @application = applications[@name]
     @repository  = @application['repository'] if @application?
