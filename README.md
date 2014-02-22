@@ -1,4 +1,4 @@
-# hubot-deploy
+# hubot-deploy [![Build Status](https://travis-ci.org/tampopo/hubot-deploy.png?branch=master)](https://travis-ci.org/tampopo/hubot-deploy)
 
 Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) from Hubot.
 
