@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/tampopo/hubot-deploy",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cake test"
   },
   "contributors": [
     {
@@ -29,6 +29,8 @@
     "octonode": "0.5.0"
   },
   "devDependencies": {
+    "chai":          "~1.0.3",
+    "mocha":         "~1.1.0",
     "coffee-script": ">=1.6.3"
   },
   "engines": {
