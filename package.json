@@ -1,6 +1,6 @@
 {
   "name": "hubot-deploy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Corey Donohoe <atmos@atmos.org>",
   "description": "hubot script for using the GitHub Deployment API",
   "main": "index.coffee",
@@ -9,10 +9,9 @@
     "url": "https://github.com/tampopo/hubot-deploy"
   },
   "keywords": [
-    "wrapper",
-    "api",
-    "v3",
-    "github"
+    "github",
+    "deploy",
+    "hubot"
   ],
   "homepage": "https://github.com/tampopo/hubot-deploy",
   "scripts": {
