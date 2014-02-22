@@ -1,7 +1,6 @@
 Fs = require "fs"
 
 applications = JSON.parse(Fs.readFileSync("apps.json").toString())
-console.log applications
 ###########################################################################
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
