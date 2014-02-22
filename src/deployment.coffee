@@ -1,0 +1,69 @@
+Fs = require "fs"
+
+applications = JSON.parse(Fs.readFileSync("apps.json").toString())
+console.log applications
+###########################################################################
+api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
+api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+###########################################################################
+
+class Deployment
+  constructor: (@name, @ref, @task, @env, force, @hosts) ->
+    @forced = force == '!'
+
+    @room_id  = 'unknown'
+    @deployer = 'unknown'
+
+    @application = applications[@name]
+    @repository  = @application['repository'] if @application?
+
+    @env = 'production' if @env == 'prod'
+
+  isValidApp: ->
+    @application?
+
+  isValidEnv: ->
+    @env in @application['environments']
+
+  requestBody: ->
+    ref: @ref
+    force: @forced
+    auto_merge: true
+    description: "Deploying from hubot"
+    payload:
+      task: @task
+      hosts: @hosts
+      branch: @ref
+      room_id: @room_id
+      deployer: @deployer
+      environment: @env
+      heroku_name: @application['heroku_name']
+      heroku_staging_name: @application['heroku_staging_name']
+
+  post: (cb) ->
+    path = "repos/#{@repository}/deployments"
+
+    api.post path, @requestBody(), (err, status, body, headers) ->
+      data = body
+      if err
+        data = err
+        console.log err
+
+      if data['message']
+        bodyMessage = data['message']
+
+        if bodyMessage.match(/No successful commit statuses/)
+          message = "I don't see a successful build for #{@repository} that covers the latest \"#{@ref}\" branch."
+
+        if bodyMessage.match(/Conflict merging ([-_\.0-9a-z]+)/)
+          default_branch = data.message.match(/Conflict merging ([-_\.0-9a-z]+)/)[1]
+          message = "There was a problem merging the #{default_branch} for #{@repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
+
+        if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
+          console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+        else
+          message = bodyMessage
+
+      cb(message)
+
+exports.Deployment = Deployment
