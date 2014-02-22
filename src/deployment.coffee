@@ -14,7 +14,7 @@ class Deployment
     @application = applications[@name]
     @repository  = @application['repository'] if @application?
 
-    normalize_environment()
+    @normalize_environment()
 
   isValidApp: ->
     @application?

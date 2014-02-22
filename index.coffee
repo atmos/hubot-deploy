@@ -19,9 +19,9 @@ module.exports = (robot) ->
     msg.send DeployPattern.toString()
 
   robot.respond DeployPattern, (msg) ->
-    task  = (msg.match[1])
-    force = ((msg.match[2] == '!'|| false))
-    name  = (msg.match[3])
+    task  = msg.match[1]
+    force = msg.match[2] == '!'
+    name  = msg.match[3]
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
