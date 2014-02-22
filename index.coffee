@@ -6,6 +6,8 @@
 #   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot where can I deploy <app> - see what environments you can deploy app
 #   hubot auto-deploy <enable|disable> <app> on <env> - enable or disable auto-deploy
+#   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment
+#   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #
 supported_tasks = [ 'deploy' ]
 
