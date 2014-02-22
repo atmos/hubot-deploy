@@ -1,5 +1,5 @@
 # Description
-#   Cut GitHub deployment from chat that deploy via hooks
+#   Cut GitHub deployment from chat that deploy via hooks - https://github.com/tampopo/hubot-deploy
 #
 # Commands:
 #   hubot deploy - show detailed deployment usage, including apps and environments
@@ -20,7 +20,7 @@ module.exports = (robot) ->
 
   robot.respond DeployPattern, (msg) ->
     task  = (msg.match[1])
-    force = (msg.match[2]|| false)
+    force = ((msg.match[2] == '!'|| false))
     name  = (msg.match[3])
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')

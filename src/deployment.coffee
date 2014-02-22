@@ -1,22 +1,20 @@
 Fs = require "fs"
 
 applications = JSON.parse(Fs.readFileSync("apps.json").toString())
-###########################################################################
+
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 ###########################################################################
 
 class Deployment
-  constructor: (@name, @ref, @task, @env, force, @hosts) ->
-    @forced = force == '!'
-
+  constructor: (@name, @ref, @task, @env, @force, @hosts) ->
     @room_id  = 'unknown'
     @deployer = 'unknown'
 
     @application = applications[@name]
     @repository  = @application['repository'] if @application?
 
-    @env = 'production' if @env == 'prod'
+    normalize_environment()
 
   isValidApp: ->
     @application?
@@ -26,7 +24,7 @@ class Deployment
 
   requestBody: ->
     ref: @ref
-    force: @forced
+    force: @force
     auto_merge: true
     description: "Deploying from hubot"
     payload:
@@ -64,5 +62,10 @@ class Deployment
           message = bodyMessage
 
       cb(message)
+
+  # Private Methods
+  normalize_environment: ->
+    @env = 'staging' if @env == 'stg'
+    @env = 'production' if @env == 'prod'
 
 exports.Deployment = Deployment
