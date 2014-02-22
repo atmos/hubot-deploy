@@ -13,14 +13,15 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
     "repository": "MyOrg/my-org-hubot",
     "environments": ["production"],
 
-    "heroku_name": "my-orgs-hubot",
+    "heroku_name": "my-orgs-hubot"
   },
 
   "dotcom": {
     "repository": "MyOrg/www",
-    "environments": ["production"],
+    "environments": ["production","staging"],
 
-    "heroku_name": "my-org-www"
+    "heroku_name": "my-org-www",
+    "heroku_staging_name": "my-org-www-staging"
   }
 }
 ```
