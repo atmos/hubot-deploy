@@ -1,7 +1,9 @@
-Deployment = require("#{process.cwd()}/src/deployment").Deployment
+Path = require('path')
+
+Deployment = require(Path.join(__dirname, "..", "src", "deployment")).Deployment
 
 describe "Deployment fixtures", () ->
-  Deployment.APPS_FILE = "./test/test_apps.json"
+  Deployment.APPS_FILE = Path.join(__dirname, "test_apps.json")
 
   describe "#isValidApp()", () ->
     it "is invalid if the app can't be found", () ->
