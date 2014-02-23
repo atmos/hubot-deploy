@@ -6,6 +6,13 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 
 There are quite a few variants of this, but here are the basics.
 
+You can always check the version that you're running against.
+
+    $ hubot deploy:version
+      hubot-deploy:v0.1.8
+
+You can also trigger a variety of deployments with custom payloads.
+
     $ hubot deploy hubot
       ... Deploys the master branch of hubot to the default environment
 
