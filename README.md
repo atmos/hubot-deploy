@@ -17,7 +17,7 @@ There are quite a few variants of this, but here are the basics.
   "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
   "description": "Deploying from hubot",
   "creator": {
-    "login": "fakeatmos"
+    "login": "atmos"
   }
 }
 ```
@@ -33,7 +33,7 @@ There are quite a few variants of this, but here are the basics.
   "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"topic\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
   "description": "Deploying from hubot",
   "creator": {
-    "login": "fakeatmos"
+    "login": "atmos"
   }
 }
 ```
@@ -48,7 +48,7 @@ There are quite a few variants of this, but here are the basics.
   "payload": "{\"task\":\"deploy:migrate\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
   "description": "Deploying from hubot",
   "creator": {
-    "login": "fakeatmos"
+    "login": "atmos"
   }
 }
 ```
@@ -64,7 +64,7 @@ There are quite a few variants of this, but here are the basics.
   "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
   "description": "Deploying from hubot",
   "creator": {
-    "login": "fakeatmos"
+    "login": "atmos"
   }
 }
 ```
@@ -80,7 +80,7 @@ There are quite a few variants of this, but here are the basics.
   "payload": "{\"task\":\"deploy\",\"hosts\":\"fe\",\"branch\":\"topic\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"staging\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
   "description": "Deploying from hubot",
   "creator": {
-    "login": "fakeatmos"
+    "login": "atmos"
   }
 }
 ```
