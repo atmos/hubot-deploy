@@ -24,7 +24,7 @@ module.exports = (robot) ->
   robot.respond /deploy\?$/i, (msg) ->
     msg.send DeployPattern.toString()
 
-  robot.respond /deploy:version$/, (msg) ->
+  robot.respond /deploy:version$/i, (msg) ->
     msg.send "hubot-deploy:v#{version}"
 
   robot.respond DeployPattern, (msg) ->
