@@ -15,10 +15,16 @@ supported_tasks = [ 'deploy' ]
 Deployment    = require("./src/deployment").Deployment
 DeployPattern = require("./src/patterns").DeployPattern
 
+pkg = require Path.join __dirname, 'package.json'
+version = pkg.version
+
 ###########################################################################
 module.exports = (robot) ->
   robot.respond /deploy\?$/i, (msg) ->
     msg.send DeployPattern.toString()
+
+  robot.response /deploy:version$/, (msg) ->
+    msg.send "hubot-deploy:v#{version}"
 
   robot.respond DeployPattern, (msg) ->
     task  = msg.match[1]
