@@ -12,6 +12,7 @@
 #
 supported_tasks = [ 'deploy' ]
 
+Path          = require 'path'
 Deployment    = require("./src/deployment").Deployment
 DeployPattern = require("./src/patterns").DeployPattern
 
