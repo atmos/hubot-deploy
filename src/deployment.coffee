@@ -1,6 +1,6 @@
 Fs      = require "fs"
 Path    = require "path"
-Version = require (Path.join(__dirname, "version")).Version
+Version = require(Path.join(__dirname, "version")).Version
 ###########################################################################
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
