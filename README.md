@@ -103,7 +103,7 @@ You need a resource file to easily name your apps and a token from GitHub.
 
 ## Runtime Environment
 
-* **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment scope](https://developer.github.com/v3/oauth/#scopes).
+* **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes) scope.
 
 ## apps.json
 
