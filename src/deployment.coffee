@@ -1,5 +1,6 @@
-Fs   = require "fs"
-
+Fs      = require "fs"
+Version = require "version"
+###########################################################################
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 ###########################################################################
@@ -33,7 +34,7 @@ class Deployment
     ref: @ref
     force: @force
     auto_merge: true
-    description: "Deploying from hubot"
+    description: "Deploying from hubot-deploy-v#{Version.Version}"
     payload:
       task: @task
       hosts: @hosts
