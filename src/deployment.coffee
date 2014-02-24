@@ -15,7 +15,10 @@ class Deployment
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 
     @application = applications[@name]
-    @repository  = @application['repository'] if @application?
+
+    if @application?
+      @provider   = @application['provider'] || 'heroku'
+      @repository = @application['repository']
 
     @normalize_environment()
 
@@ -38,6 +41,7 @@ class Deployment
         room: @room
         user: @user
         adapter: @adapter
+      provider: @provider
       environment: @env
       heroku_name: @application['heroku_name']
       heroku_staging_name: @application['heroku_staging_name']

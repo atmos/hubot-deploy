@@ -3,6 +3,7 @@
     "repository": "MyOrg/my-org-hubot",
     "environments": ["production"],
 
+    "provider": "heroku",
     "heroku_name": "my-orgs-hubot"
   },
 
@@ -10,6 +11,7 @@
     "repository": "MyOrg/www",
     "environments": ["production","staging"],
 
+    "provider": "heroku",
     "heroku_name": "my-org-www",
     "heroku_staging_name": "my-org-www-staging"
   }

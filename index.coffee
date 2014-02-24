@@ -42,8 +42,8 @@ module.exports = (robot) ->
       msg.reply "#{name} doesn't seem to have an #{env} environment."
       return
 
-    deployment.room    = msg.message.user.room
-    deployment.user    = msg.envelope.user.name
+    deployment.room = msg.message.user.room
+    deployment.user = msg.envelope.user.name
 
     console.log JSON.stringify(deployment.requestBody())
 
