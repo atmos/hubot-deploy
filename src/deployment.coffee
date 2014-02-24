@@ -14,14 +14,12 @@ class Deployment
     @room     = 'unknown'
     @user     = 'unknown'
     @adapter  = 'unknown'
-    @provider = 'unknown'
 
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 
     @application = applications[@name]
 
     if @application?
-      @provider   = @application['provider'] || 'heroku'
       @repository = @application['repository']
 
     @normalize_environment()
@@ -45,7 +43,6 @@ class Deployment
         room: @room
         user: @user
         adapter: @adapter
-      provider: @provider
       environment: @env
       config: @application
 
