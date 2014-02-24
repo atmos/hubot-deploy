@@ -10,9 +10,9 @@
 #   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment
 #   hubot auto-deploy:disable <app> in <env> - disable auto-deployment for the app in environment
 #
-supported_tasks = [ 'deploy' ]
+supported_tasks = [ "deploy" ]
 
-Path          = require 'path'
+Path          = require("path")
 Deployment    = require("./src/deployment").Deployment
 DeployPattern = require("./src/patterns").DeployPattern
 
@@ -23,7 +23,7 @@ module.exports = (robot) ->
 
   robot.respond /deploy:version$/i, (msg) ->
     pkg = require Path.join __dirname, 'package.json'
-    msg.send "hubot-deploy:v#{pkg.version}"
+    msg.send "hubot-deploy:v#{pkg.version} running node #{process.version} [pid: #{process.pid}] [version: #{robot.version}]"
 
   robot.respond DeployPattern, (msg) ->
     task  = msg.match[1]
