@@ -1,4 +1,4 @@
-# hubot-deploy [![Build Status](https://travis-ci.org/tampopo/hubot-deploy.png?branch=master)](https://travis-ci.org/tampopo/hubot-deploy)
+# hubot-deploy [![Build Status](https://travis-ci.org/atmos/hubot-deploy.png?branch=master)](https://travis-ci.org/atmos/hubot-deploy)
 
 Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) from Hubot. This creates records on GitHub and dispatches deployment events to listeners.
 
