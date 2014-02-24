@@ -9,7 +9,7 @@ There are quite a few variants of this, but here are the basics.
 You can always check the version that you're running against.
 
     $ hubot deploy:version
-      hubot-deploy:v0.1.8
+      hubot-deploy:v0.2.6 running hubot 2.7.1 on node v0.10.26 [pid: 2]
 
 You can also trigger a variety of deployments with custom payloads.
 
