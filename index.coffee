@@ -13,8 +13,8 @@
 supported_tasks = [ "deploy" ]
 
 Path          = require("path")
-Deployment    = require("./src/deployment").Deployment
-DeployPattern = require("./src/patterns").DeployPattern
+Deployment    = require(Path.join(__dirname, "src", "deployment")).Deployment
+DeployPattern = require(Path.join(__dirname, "src", "patterns")).DeployPattern
 
 ###########################################################################
 module.exports = (robot) ->
@@ -44,7 +44,6 @@ module.exports = (robot) ->
 
     deployment.room    = msg.message.user.room
     deployment.user    = msg.envelope.user.name
-    deployment.adapter = robot.adapter
 
     console.log JSON.stringify(deployment.requestBody())
 

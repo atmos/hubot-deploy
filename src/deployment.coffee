@@ -38,7 +38,6 @@ class Deployment
         room: @room
         user: @user
         adapter: @adapter
-
       environment: @env
       heroku_name: @application['heroku_name']
       heroku_staging_name: @application['heroku_staging_name']

@@ -1,5 +1,3 @@
-class Patterns
-
 repository = "([-_\.0-9a-z]+)"
 
 DEPLOY_SYNTAX = ///
