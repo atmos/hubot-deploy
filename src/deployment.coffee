@@ -8,8 +8,9 @@ class Deployment
   @APPS_FILE = "apps.json"
 
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
-    @room_id  = 'unknown'
-    @deployer = 'unknown'
+    @room    = 'unknown'
+    @user    = 'unknown'
+    @adapter = 'unknown'
 
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 
@@ -33,8 +34,11 @@ class Deployment
       task: @task
       hosts: @hosts
       branch: @ref
-      room_id: @room_id
-      deployer: @deployer
+      chat:
+        room: @room
+        user: @user
+        adapter: @adapter
+
       environment: @env
       heroku_name: @application['heroku_name']
       heroku_staging_name: @application['heroku_staging_name']
