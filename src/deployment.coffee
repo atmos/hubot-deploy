@@ -34,7 +34,7 @@ class Deployment
       task: @task
       hosts: @hosts
       branch: @ref
-      chat:
+      notify:
         room: @room
         user: @user
         adapter: @adapter
