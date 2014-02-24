@@ -8,9 +8,10 @@ class Deployment
   @APPS_FILE = "apps.json"
 
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
-    @room    = 'unknown'
-    @user    = 'unknown'
-    @adapter = 'unknown'
+    @room     = 'unknown'
+    @user     = 'unknown'
+    @adapter  = 'unknown'
+    @provider = 'unknown'
 
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 

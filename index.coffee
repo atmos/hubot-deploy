@@ -15,7 +15,6 @@ supported_tasks = [ "deploy" ]
 Path          = require("path")
 Deployment    = require(Path.join(__dirname, "src", "deployment")).Deployment
 DeployPattern = require(Path.join(__dirname, "src", "patterns")).DeployPattern
-
 ###########################################################################
 module.exports = (robot) ->
   robot.respond /deploy\?$/i, (msg) ->
