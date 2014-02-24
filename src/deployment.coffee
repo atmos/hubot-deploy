@@ -2,6 +2,7 @@ Fs      = require "fs"
 Path    = require "path"
 Version = require(Path.join(__dirname, "version")).Version
 ###########################################################################
+
 api = require("octonode").client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
 api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 ###########################################################################
@@ -46,8 +47,7 @@ class Deployment
         adapter: @adapter
       provider: @provider
       environment: @env
-      heroku_name: @application['heroku_name']
-      heroku_staging_name: @application['heroku_staging_name']
+      config: @application
 
   post: (cb) ->
     path = "repos/#{@repository}/deployments"

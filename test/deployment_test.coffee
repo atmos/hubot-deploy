@@ -22,3 +22,9 @@ describe "Deployment fixtures", () ->
     it "is valid if the env can be found", () ->
       deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
       assert.equal(deployment.isValidEnv(), true)
+
+  describe "#requestBody()", () ->
+    it "shouldn't blow up", () ->
+      deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")
+      deployment.requestBody()
+      assert.equal(true, true)
