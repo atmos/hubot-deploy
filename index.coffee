@@ -22,7 +22,7 @@ module.exports = (robot) ->
 
   robot.respond /deploy:version$/i, (msg) ->
     pkg = require Path.join __dirname, 'package.json'
-    msg.send "hubot-deploy:v#{pkg.version} running hubot #{robot.version} on node #{process.version} [pid: #{process.pid}]"
+    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
 
   robot.respond DeployPattern, (msg) ->
     task  = msg.match[1]
