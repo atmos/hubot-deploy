@@ -4,6 +4,37 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 
 # Examples
 
+## apps.json
+
+`hubot-deploy` looks for an `apps.json` file in the root of your deployed hubot to map names to specific repos that should be deployed. Here's what the format looks like.
+
+```JSON
+{
+  "hubot": {
+    "repository": "MyOrg/my-org-hubot",
+    "environments": ["production"],
+
+    "heroku_name": "my-orgs-hubot"
+  },
+
+  "dotcom": {
+    "repository": "MyOrg/www",
+    "environments": ["production","staging"],
+
+    "heroku_name": "my-org-www",
+    "heroku_staging_name": "my-org-www-staging"
+  }
+}
+```
+
+Each entry can take a few attributes.
+
+* **environments**: An array of environments that you can deploy to.
+* **heroku\_name**: The name of the heroku app to push to.
+* **heroku\_staging\_name**: The name of the heroku app to push to.
+
+## Chatops
+
 There are quite a few variants of this, but here are the basics.
 
 You can always check the version that you're running against.
@@ -105,31 +136,3 @@ You need a resource file to easily name your apps and a token from GitHub.
 
 * **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes) scope.
 
-## apps.json
-
-`hubot-deploy` looks for an `apps.json` file in the root of your deployed hubot to map names to specific repos that should be deployed. Here's what the format looks like.
-
-```JSON
-{
-  "hubot": {
-    "repository": "MyOrg/my-org-hubot",
-    "environments": ["production"],
-
-    "heroku_name": "my-orgs-hubot"
-  },
-
-  "dotcom": {
-    "repository": "MyOrg/www",
-    "environments": ["production","staging"],
-
-    "heroku_name": "my-org-www",
-    "heroku_staging_name": "my-org-www-staging"
-  }
-}
-```
-
-Each entry can take a few attributes.
-
-* **environments**: An array of environments that you can deploy to.
-* **heroku\_name**: The name of the heroku app to push to.
-* **heroku\_staging\_name**: The name of the heroku app to push to.
