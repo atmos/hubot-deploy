@@ -29,6 +29,7 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 
 Each entry can take a few attributes.
 
+* **provider**: One of dpl's [supported providers](https://github.com/travis-ci/dpl#supported-providers).
 * **environments**: An array of environments that you can deploy to.
 * **heroku\_name**: The name of the heroku app to push to.
 * **heroku\_staging\_name**: The name of the heroku app to push to.
@@ -130,5 +131,5 @@ You can also trigger a variety of deployments with custom payloads.
 
 ## Runtime Environment
 
-* **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes) scope.
+* **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes), and gist scope.
 

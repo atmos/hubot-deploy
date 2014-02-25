@@ -77,4 +77,6 @@ class Deployment
     @env = 'staging' if @env == 'stg'
     @env = 'production' if @env == 'prod'
 
+  plainTextOutput: ->
+
 exports.Deployment = Deployment

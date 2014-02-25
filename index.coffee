@@ -20,6 +20,12 @@ module.exports = (robot) ->
   robot.respond /deploy\?$/i, (msg) ->
     msg.send DeployPattern.toString()
 
+  robot.respond /where can i deploy \([-_\.0-9a-z]+)$/i, (msg) ->
+    name = msg.match[1]
+
+    deployment = new Deployment(name, "unknown", "q")
+    msg.send deployment.plainTextOutput()
+
   robot.respond /deploy:version$/i, (msg) ->
     pkg = require Path.join __dirname, 'package.json'
     msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
