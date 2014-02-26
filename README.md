@@ -133,3 +133,7 @@ You can also trigger a variety of deployments with custom payloads.
 
 * **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes), and gist scope.
 
+# See Also
+
+* [heaven](https://github.com/atmos/heaven)
+* [heaven-notifier](https://github.com/atmos/heaven-notifier)
