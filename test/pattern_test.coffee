@@ -1,4 +1,6 @@
-DeployPattern = require("#{process.cwd()}/src/patterns").DeployPattern
+Path = require('path')
+
+DeployPattern = require(Path.join(__dirname, "..", "src", "patterns")).DeployPattern
 
 describe "Patterns", () ->
   describe "DeployPattern", () ->

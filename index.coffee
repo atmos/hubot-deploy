@@ -20,7 +20,7 @@ module.exports = (robot) ->
   robot.respond /deploy\?$/i, (msg) ->
     msg.send DeployPattern.toString()
 
-  robot.respond /where can i deploy \([-_\.0-9a-z]+)$/i, (msg) ->
+  robot.respond /where can i deploy ([-_\.0-9a-z]+)$/i, (msg) ->
     name = msg.match[1]
 
     deployment = new Deployment(name, "unknown", "q")
