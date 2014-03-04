@@ -47,26 +47,29 @@ class Deployment
       config: @application
 
   post: (cb) ->
-    path = "repos/#{@repository}/deployments"
+    path       = "repos/#{@repository}/deployments"
+    repository = @repository
 
     api.post path, @requestBody(), (err, status, body, headers) ->
       data = body
       if err
         data = err
-        console.log err
+        console.log err unless process.env.NODE_ENV == 'test'
 
       if data['message']
         bodyMessage = data['message']
 
         if bodyMessage.match(/No successful commit statuses/)
-          message = "I don't see a successful build for #{@repository} that covers the latest \"#{@ref}\" branch."
+          message = "I don't see a successful build for #{repository} that covers the latest \"#{@ref}\" branch."
 
         if bodyMessage.match(/Conflict merging ([-_\.0-9a-z]+)/)
           default_branch = data.message.match(/Conflict merging ([-_\.0-9a-z]+)/)[1]
-          message = "There was a problem merging the #{default_branch} for #{@repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
+          message = "There was a problem merging the #{default_branch} for #{repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
           console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+        if bodyMessage == "Not Found"
+          message = "Unable to create deployments for #{repository}. Check your scopes for this token."
         else
           message = bodyMessage
 

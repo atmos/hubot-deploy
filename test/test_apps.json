@@ -7,12 +7,17 @@
     "heroku_name": "my-orgs-hubot"
   },
 
-  "dotcom": {
-    "repository": "MyOrg/www",
+  "hubot-deploy": {
+    "repository": "atmos/hubot-deploy",
+    "environments": ["production"],
+
+    "provider": "npm"
+  },
+
+  "github": {
+    "repository": "github/github",
     "environments": ["production","staging"],
 
-    "provider": "heroku",
-    "heroku_name": "my-org-www",
-    "heroku_staging_name": "my-org-www-staging"
+    "provider": "capistrano"
   }
 }
