@@ -50,14 +50,33 @@ You can also trigger a variety of deployments with custom payloads.
 
 ```JSON
 {
-  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/786",
-  "id": 786,
-  "sha": "70aff8ebbf9dcbc085a9fe53d7456950ad286e30",
-  "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
-  "description": "Deploying from hubot",
+  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1077",
+  "id": 1077,
+  "sha": "cfbc1c744e106c2aa869fae6452ed249f12d8713",
+  "payload": {
+    "task": "deploy",
+    "hosts": "",
+    "branch": "master",
+    "notify": {
+      "room": "danger",
+      "user": "atmos",
+      "adapter": "unknown"
+    },
+    "environment": "production",
+    "config": {
+      "provider": "heroku",
+      "repository": "MyOrg/my-org-hubot",
+      "environments": [
+        "production"
+      ],
+      "heroku_name": "my-org-hubot",
+    }
+  },
+  "description": "Deploying from hubot-deploy-v0.3.8",
   "creator": {
-    "login": "atmos"
-  }
+    "login": "fakeatmos"
+  },
+  "statuses_url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1077/statuses"
 }
 ```
 
@@ -66,14 +85,33 @@ You can also trigger a variety of deployments with custom payloads.
 
 ```JSON
 {
-  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/787",
-  "id": 787,
+  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1078",
+  "id": 1078,
   "sha": "03ed31c1312478561d677bfe743eb13290b10d42",
-  "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"topic\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
-  "description": "Deploying from hubot",
+  "payload": {
+    "task": "deploy",
+    "hosts": "",
+    "branch": "topic",
+    "notify": {
+      "room": "danger",
+      "user": "atmos",
+      "adapter": "unknown"
+    },
+    "environment": "production",
+    "config": {
+      "provider": "heroku",
+      "repository": "MyOrg/my-org-hubot",
+      "environments": [
+        "production"
+      ],
+      "heroku_name": "my-org-hubot",
+    }
+  },
+  "description": "Deploying from hubot-deploy-v0.3.8",
   "creator": {
-    "login": "atmos"
-  }
+    "login": "fakeatmos"
+  },
+  "statuses_url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1078/statuses"
 }
 ```
     $ hubot deploy:migrate hubot
@@ -81,14 +119,33 @@ You can also trigger a variety of deployments with custom payloads.
 
 ```JSON
 {
-  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/788",
-  "id": 788,
-  "sha": "03ed31c1312478561d677bfe743eb13290b10d42",
-  "payload": "{\"task\":\"deploy:migrate\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
-  "description": "Deploying from hubot",
+  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1079",
+  "id": 1079,
+  "sha": "cfbc1c744e106c2aa869fae6452ed249f12d8713",
+  "payload": {
+    "task": "deploy:migrate",
+    "hosts": "",
+    "branch": "master",
+    "notify": {
+      "room": "danger",
+      "user": "atmos",
+      "adapter": "unknown"
+    },
+    "environment": "production",
+    "config": {
+      "provider": "heroku",
+      "repository": "MyOrg/my-org-hubot",
+      "environments": [
+        "production"
+      ],
+      "heroku_name": "my-org-hubot",
+    }
+  },
+  "description": "Deploying from hubot-deploy-v0.3.8",
   "creator": {
-    "login": "atmos"
-  }
+    "login": "fakeatmos"
+  },
+  "statuses_url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1079/statuses"
 }
 ```
 
@@ -97,14 +154,33 @@ You can also trigger a variety of deployments with custom payloads.
 
 ```JSON
 {
-  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/789",
-  "id": 789,
-  "sha": "03ed31c1312478561d677bfe743eb13290b10d42",
-  "payload": "{\"task\":\"deploy\",\"hosts\":\"\",\"branch\":\"master\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"production\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
-  "description": "Deploying from hubot",
+  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1080",
+  "id": 1080,
+  "sha": "cfbc1c744e106c2aa869fae6452ed249f12d8713",
+  "payload": {
+    "task": "deploy",
+    "hosts": "",
+    "branch": "master",
+    "notify": {
+      "room": "danger",
+      "user": "atmos",
+      "adapter": "unknown"
+    },
+    "environment": "production",
+    "config": {
+      "provider": "heroku",
+      "repository": "MyOrg/my-org-hubot",
+      "environments": [
+        "production"
+      ],
+      "heroku_name": "my-org-hubot",
+    }
+  },
+  "description": "Deploying from hubot-deploy-v0.3.8",
   "creator": {
-    "login": "atmos"
-  }
+    "login": "fakeatmos"
+  },
+  "statuses_url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1080/statuses"
 }
 ```
 
@@ -113,14 +189,33 @@ You can also trigger a variety of deployments with custom payloads.
 
 ```JSON
 {
-  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/790",
-  "id": 790,
+  "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1081",
+  "id": 1081,
   "sha": "03ed31c1312478561d677bfe743eb13290b10d42",
-  "payload": "{\"task\":\"deploy\",\"hosts\":\"fe\",\"branch\":\"topic\",\"room_id\":\"danger\",\"deployer\":\"atmos\",\"environment\":\"staging\",\"heroku_name\":\"my-org-hubot\",\"heroku_staging_name\":\"my-org-hubot-staging\"}",
-  "description": "Deploying from hubot",
+  "payload": {
+    "task": "deploy",
+    "hosts": "fe",
+    "branch": "topic",
+    "notify": {
+      "room": "danger",
+      "user": "atmos",
+      "adapter": "unknown"
+    },
+    "environment": "production",
+    "config": {
+      "provider": "heroku",
+      "repository": "MyOrg/my-org-hubot",
+      "environments": [
+        "production"
+      ],
+      "heroku_name": "my-org-hubot",
+    }
+  },
+  "description": "Deploying from hubot-deploy-v0.3.8",
   "creator": {
-    "login": "atmos"
-  }
+    "login": "fakeatmos"
+  },
+  "statuses_url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1081/statuses"
 }
 ```
 
