@@ -41,7 +41,7 @@ There are quite a few variants of this, but here are the basics.
 You can always check the version that you're running against.
 
     $ hubot deploy:version
-      hubot-deploy v0.3.2/hubot v2.7.1/node v0.10.26
+      hubot-deploy v0.3.10/hubot v2.7.1/node v0.10.26
 
 You can also trigger a variety of deployments with custom payloads.
 
@@ -72,7 +72,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.8",
+  "description": "Deploying from hubot-deploy-v0.3.10",
   "creator": {
     "login": "fakeatmos"
   },
@@ -107,7 +107,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.8",
+  "description": "Deploying from hubot-deploy-v0.3.10",
   "creator": {
     "login": "fakeatmos"
   },
@@ -141,7 +141,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.8",
+  "description": "Deploying from hubot-deploy-v0.3.10",
   "creator": {
     "login": "fakeatmos"
   },
@@ -176,7 +176,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.8",
+  "description": "Deploying from hubot-deploy-v0.3.10",
   "creator": {
     "login": "fakeatmos"
   },
@@ -211,7 +211,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.8",
+  "description": "Deploying from hubot-deploy-v0.3.10",
   "creator": {
     "login": "fakeatmos"
   },
