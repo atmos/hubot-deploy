@@ -11,9 +11,11 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 
 ## Runtime Environment
 
+* [chatops](doc/chatops): What to expect from telling hubot to deploy.
+* [apps.json](doc/apps.json): Your config file for making it easier to use with hubot.
 * **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes), and gist scope.
 
-# See Also
+## See Also
 
 * [heaven](https://github.com/atmos/heaven) - Listents for Deployment events from GitHub and executes the deployment for you.
 * [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listents for DeploymentStatus events from GitHub and notifies you.
