@@ -11,8 +11,8 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 
 ## Runtime Environment
 
-* [chatops](doc/chatops): What to expect from telling hubot to deploy.
-* [apps.json](doc/apps.json): Your config file for making it easier to use with hubot.
+* [chatops](doc/chatops.md): What to expect from telling hubot to deploy.
+* [apps.json](doc/apps.json.md): Your config file for making it easier to use with hubot.
 * **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes), and gist scope.
 
 ## See Also
