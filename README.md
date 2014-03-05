@@ -2,7 +2,7 @@
 
 Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) from Hubot. This creates records on GitHub and dispatches deployment events to listeners.
 
-![](https://f.cloud.github.com/assets/38/2330090/208fce50-a42a-11e3-94e6-46beaac78bfb.jpg)
+![](https://f.cloud.github.com/assets/38/2331107/f94fa60c-a443-11e3-9ca2-7ee9ceb4f160.jpg)
 
 ## apps.json is your config file
 
@@ -43,7 +43,7 @@ There are quite a few variants of this, but here are the basics.
 You can always check the version that you're running against.
 
     $ hubot deploy:version
-      hubot-deploy v0.4.0/hubot v2.7.1/node v0.10.26
+      hubot-deploy v0.4.4/hubot v2.7.1/node v0.10.26
 
 You can also trigger a variety of deployments with custom payloads.
 
@@ -74,7 +74,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.4.0",
+  "description": "Deploying from hubot-deploy-v0.4.4",
   "creator": {
     "login": "fakeatmos"
   },
@@ -109,7 +109,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.4.0",
+  "description": "Deploying from hubot-deploy-v0.4.4",
   "creator": {
     "login": "fakeatmos"
   },
@@ -143,7 +143,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.4.0",
+  "description": "Deploying from hubot-deploy-v0.4.4",
   "creator": {
     "login": "fakeatmos"
   },
@@ -178,7 +178,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.4.0",
+  "description": "Deploying from hubot-deploy-v0.4.4",
   "creator": {
     "login": "fakeatmos"
   },
@@ -213,7 +213,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.4.0",
+  "description": "Deploying from hubot-deploy-v0.4.4",
   "creator": {
     "login": "fakeatmos"
   },
