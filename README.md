@@ -41,7 +41,7 @@ There are quite a few variants of this, but here are the basics.
 You can always check the version that you're running against.
 
     $ hubot deploy:version
-      hubot-deploy v0.3.11/hubot v2.7.1/node v0.10.26
+      hubot-deploy v0.4.0/hubot v2.7.1/node v0.10.26
 
 You can also trigger a variety of deployments with custom payloads.
 
@@ -72,7 +72,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.11",
+  "description": "Deploying from hubot-deploy-v0.4.0",
   "creator": {
     "login": "fakeatmos"
   },
@@ -107,7 +107,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.11",
+  "description": "Deploying from hubot-deploy-v0.4.0",
   "creator": {
     "login": "fakeatmos"
   },
@@ -141,7 +141,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.11",
+  "description": "Deploying from hubot-deploy-v0.4.0",
   "creator": {
     "login": "fakeatmos"
   },
@@ -176,7 +176,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.11",
+  "description": "Deploying from hubot-deploy-v0.4.0",
   "creator": {
     "login": "fakeatmos"
   },
@@ -211,7 +211,7 @@ You can also trigger a variety of deployments with custom payloads.
       "heroku_name": "my-org-hubot",
     }
   },
-  "description": "Deploying from hubot-deploy-v0.3.11",
+  "description": "Deploying from hubot-deploy-v0.4.0",
   "creator": {
     "login": "fakeatmos"
   },
@@ -230,5 +230,5 @@ You can also trigger a variety of deployments with custom payloads.
 
 # See Also
 
-* [heaven](https://github.com/atmos/heaven)
-* [heaven-notifier](https://github.com/atmos/heaven-notifier)
+* [heaven](https://github.com/atmos/heaven) - Listents for Deployment events from GitHub and executes the deployment for you.
+* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listents for DeploymentStatus events from GitHub and notifies you.
