@@ -50,6 +50,8 @@ module.exports = (robot) ->
     deployment.room = msg.message.user.room
     deployment.user = msg.envelope.user.name
 
+    deployment.adapter = robot.adapterName
+
     console.log JSON.stringify(deployment.requestBody())
 
     deployment.post (responseMessage) ->
