@@ -10,7 +10,7 @@ There's a bunch of [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/d
 
 * Add hubot-deploy to your `package.json` file.
 * Add hubot-deploy to your `external-scripts.json` file.
-* [Configuration](https://github.com/atmos/hubot-deploy/blob/master/docs/apps.json.md): Config file for easy aliasing of repos and extra configuration.
+* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your repos and providers for easy aliasing and custom options.
 
 ## Runtime Environment
 
