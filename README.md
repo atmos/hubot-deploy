@@ -1,6 +1,6 @@
 # hubot-deploy [![Build Status](https://travis-ci.org/atmos/hubot-deploy.png?branch=master)](https://travis-ci.org/atmos/hubot-deploy)
 
-Trigger [GitHub Deployments][1] from Hubot. Create records on GitHub and dispatch Deployment events to listeners.
+[GitHub Flow][1] via [hubot][3]. Chatting with hubot creates [deployments][2] on GitHub and dispatches [Deployment Events][4].
 
 ![](https://f.cloud.github.com/assets/38/2331137/77036ef8-a444-11e3-97f6-68dab6975eeb.jpg)
 
@@ -20,4 +20,7 @@ Trigger [GitHub Deployments][1] from Hubot. Create records on GitHub and dispatc
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
 * [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listens for DeploymentStatus events from GitHub and notifies you.
 
-[1]: http://developer.github.com/v3/repos/deployments/
+[1]: https://guides.github.com/overviews/flow/
+[2]: https://developer.github.com/v3/repos/deployments/
+[3]: https://hubot.github.com
+[4]: https://developer.github.com/v3/activity/events/types/#deploymentevent
