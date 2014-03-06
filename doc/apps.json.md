@@ -1,4 +1,4 @@
-# apps.json is your config file
+## Configuration
 
 `hubot-deploy` looks for an `apps.json` file in the root of your deployed hubot to map names to specific repos that should be deployed. Here's what the format looks like.
 

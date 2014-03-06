@@ -13,7 +13,7 @@ Trigger [GitHub Deployments][1] from Hubot. Create records on GitHub and dispatc
 
 * [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/doc/chatops.md): What to expect from telling hubot to deploy.
 * [Configuration](https://github.com/atmos/hubot-deploy/blob/master/doc/apps.json.md): Config file for easy aliasing of repos and extra configuration.
-* Environmental variable **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments[1].
+* Environmental variable **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments][1].
 
 ## See Also
 
