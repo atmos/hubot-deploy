@@ -18,4 +18,4 @@ Trigger [GitHub Deployments](http://developer.github.com/v3/repos/deployments/) 
 ## See Also
 
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
-* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listents for DeploymentStatus events from GitHub and notifies you.
+* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listens for DeploymentStatus events from GitHub and notifies you.
