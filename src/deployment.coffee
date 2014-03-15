@@ -36,6 +36,7 @@ class Deployment
     auto_merge: true
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
+      name: @name
       task: @task
       hosts: @hosts
       branch: @ref
