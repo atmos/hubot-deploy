@@ -37,8 +37,9 @@ module.exports = (robot) ->
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
+    auto_merge = process.env.HUBOT_GITHUB_DEPLOYMENT_AUTO_MERGE != '0'
 
-    deployment = new Deployment(name, ref, task, env, force, hosts)
+    deployment = new Deployment(name, ref, task, env, force, hosts, auto_merge)
 
     unless deployment.isValidApp()
       msg.reply "#{name}? Never heard of it."

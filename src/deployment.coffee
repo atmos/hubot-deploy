@@ -10,7 +10,7 @@ api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-previ
 class Deployment
   @APPS_FILE = "apps.json"
 
-  constructor: (@name, @ref, @task, @env, @force, @hosts) ->
+  constructor: (@name, @ref, @task, @env, @force, @hosts, @auto_merge) ->
     @room     = 'unknown'
     @user     = 'unknown'
     @adapter  = 'unknown'
@@ -33,7 +33,7 @@ class Deployment
   requestBody: ->
     ref: @ref
     force: @force
-    auto_merge: true
+    auto_merge: @auto_merge
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
       name: @name
