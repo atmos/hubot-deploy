@@ -18,6 +18,10 @@ You need to set the following environmental variables.
 
 * **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments][1].
 
+Optional environmental variables
+
+* **HUBOT\_GITHUB\_DEPLOYMENT\_AUTO\_MERGE**: Enable/Disable the `auto-merge` github process, pass `'0'` or `'1'`. (Default to `'1'`)
+
 ## See Also
 
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
