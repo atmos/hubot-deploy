@@ -10,7 +10,7 @@ api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-previ
 class Deployment
   @APPS_FILE = "apps.json"
 
-  constructor: (@name, @ref, @task, @env, @force, @hosts) ->
+  constructor: (@name, @ref, @task, @env, @force, @hosts, @auto_merge) ->
     @room     = 'unknown'
     @user     = 'unknown'
     @adapter  = 'unknown'
@@ -33,7 +33,7 @@ class Deployment
   requestBody: ->
     ref: @ref
     force: @force
-    auto_merge: true
+    auto_merge: @auto_merge
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
       name: @name
@@ -68,7 +68,7 @@ class Deployment
           message = "There was a problem merging the #{default_branch} for #{repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
-          console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+          console.log "Successfully merged the default branch for #{repository} into #{@ref}. Normal push notifications should provide feedback."
         if bodyMessage == "Not Found"
           message = "Unable to create deployments for #{repository}. Check your scopes for this token."
         else
