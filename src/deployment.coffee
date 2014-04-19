@@ -68,7 +68,7 @@ class Deployment
           message = "There was a problem merging the #{default_branch} for #{repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
-          console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+          console.log "Successfully merged the default branch for #{repository} into #{@ref}. Normal push notifications should provide feedback."
         if bodyMessage == "Not Found"
           message = "Unable to create deployments for #{repository}. Check your scopes for this token."
         else
