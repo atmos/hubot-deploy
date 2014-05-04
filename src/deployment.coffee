@@ -34,17 +34,16 @@ class Deployment
     ref: @ref
     force: @force
     auto_merge: true
+    environment: @env
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
       name: @name
       task: @task
       hosts: @hosts
-      branch: @ref
       notify:
         room: @room
         user: @user
         adapter: @adapter
-      environment: @env
       config: @application
 
   post: (cb) ->
