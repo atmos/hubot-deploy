@@ -32,7 +32,7 @@ module.exports = (robot) ->
     msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
 
   robot.respond DeployPattern, (msg) ->
-    task  = msg.match[1]
+    task  = msg.match[1].replace(DeployPrefix, "deploy")
     force = msg.match[2] == '!'
     name  = msg.match[3]
     ref   = (msg.match[4]||'master')
