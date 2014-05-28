@@ -1,3 +1,8 @@
+0.6.1
+=====
+
+* Customizable script prefix, defaults to deploy still
+
 0.4.1
 =====
 
