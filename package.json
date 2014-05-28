@@ -1,6 +1,6 @@
 {
   "name": "hubot-deploy",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": "Corey Donohoe <atmos@atmos.org>",
   "description": "hubot script for GitHub Flow",
   "main": "index.coffee",
@@ -27,7 +27,7 @@
     }
   ],
   "dependencies": {
-    "hubot":    "^2.7.2",
+    "hubot":    ">=2.7.2",
     "octonode": "0.5.0"
   },
   "devDependencies": {
