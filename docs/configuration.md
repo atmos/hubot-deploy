@@ -25,7 +25,7 @@
 
 Each entry can take a few attributes.
 
-* **provider**: One of dpl's [supported providers](https://github.com/travis-ci/dpl#supported-providers).
+* **provider**: Either `heroku` or `capistrano`.
 * **environments**: An array of environments that you can deploy to.
 * **heroku\_name**: The name of the heroku app to push to.
 * **heroku\_staging\_name**: The name of the heroku app to push to.

@@ -12,6 +12,8 @@ You can also trigger a variety of deployments with custom payloads.
     $ hubot deploy hubot
       ... Deploys the master branch of hubot to the default environment
 
+If you already have `/deploy` style syntax you can override the deploy command prefix with the `HUBOT_DEPLOY_PREFIX` environmental variable.
+
 ```JSON
 {
   "url": "https://api.github.com/repos/MyOrg/my-org-hubot/deployments/1077",
