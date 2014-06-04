@@ -19,25 +19,10 @@ DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
 ###########################################################################
 module.exports = (robot) ->
 
-  deployHelpRegex = new RegExp("#{DeployPrefix}\\??$", "i")
-  robot.respond deployHelpRegex, (msg) ->
-    console.log robot.helpCommands()
-    cmds = robot.helpCommands().filter (cmd) ->
-      cmd.match new RegExp("deploy", 'i')
-
-    console.logs cmds
-    if cmds.length == 0
-      msg.send "No available commands match #{filter}"
-      return
-
-    prefix = robot.alias or robot.name
-    cmds = cmds.map (cmd) ->
-      cmd = cmd.replace /^hubot/, prefix
-      cmd = cmd.replace /hubot/ig, robot.name
-      cmd.replace /deploy/ig, DeployPrefix
-
-    msg.send cmds.join "\n"
-
+  ###########################################################################
+  # where can i deploy <app>
+  #
+  # Displays the available environments for an application
   deployEnvironmentRegex = new RegExp("where can i #{DeployPrefix} ([-_\.0-9a-z]+)\\?*$", "i")
   robot.respond deployEnvironmentRegex, (msg) ->
     name = msg.match[1]
@@ -52,11 +37,10 @@ module.exports = (robot) ->
 
     msg.send output
 
-  deployVersionRegex = new RegExp("#{DeployPrefix}\:version", "i")
-  robot.respond deployVersionRegex, (msg) ->
-    pkg = require Path.join __dirname, '..', 'package.json'
-    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
-
+  ###########################################################################
+  # deploy hubot/topic-branch to staging
+  #
+  # Actually dispatch deployment requests to GitHub
   robot.respond DeployPattern, (msg) ->
     task  = msg.match[1].replace(DeployPrefix, "deploy")
     force = msg.match[2] == '!'
@@ -64,8 +48,6 @@ module.exports = (robot) ->
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
-
-    console.log "ohai 3"
 
     deployment = new Deployment(name, ref, task, env, force, hosts)
 
@@ -86,3 +68,11 @@ module.exports = (robot) ->
     deployment.post (responseMessage) ->
       msg.reply responseMessage if responseMessage?
 
+  ###########################################################################
+  # deploy:version
+  #
+  # Useful for debugging
+  deployVersionRegex = new RegExp("#{DeployPrefix}\:version", "i")
+  robot.respond deployVersionRegex, (msg) ->
+    pkg = require Path.join __dirname, '..', 'package.json'
+    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
