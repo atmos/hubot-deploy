@@ -22,7 +22,7 @@ module.exports = (robot) ->
   # where can i deploy <app>
   #
   # Displays the available environments for an application
-  robot.respond ///where can i #{DeployPrefix} ([-_\.0-9a-z]+)\\?*$///i, (msg) ->
+  robot.respond ///where can i #{DeployPrefix} ([-_\.0-9a-z]+)\?*$///i, (msg) ->
     name = msg.match[1]
 
     deployment = new Deployment(name, "unknown", "q")
@@ -70,6 +70,6 @@ module.exports = (robot) ->
   # deploy:version
   #
   # Useful for debugging
-  robot.respond ///#{DeployPrefix}:version$///i, (msg) ->
+  robot.respond ///#{DeployPrefix}\:version$///i, (msg) ->
     pkg = require Path.join __dirname, '..', 'package.json'
     msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"

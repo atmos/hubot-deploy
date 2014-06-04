@@ -29,8 +29,15 @@ describe "The Hubot Script", () ->
   it "displays deployment environment help", () ->
     robot.adapter.sendToRobot("hubot where can i deploy github")
     result = robot.adapter.history
+    assert.match result, /|Environments for github/i
     assert.match result, /|production/i
     assert.match result, /|staging/i
+
+    robot.adapter.history = [ ]
+    robot.adapter.sendToRobot("hubot where can i deploy hubot?")
+    result = robot.adapter.history
+    assert.match result, /|Environments for hubot/i
+    assert.match result, /|production/i
 
   it "deploys hubot" #, () ->
     #robot.adapter.sendToRobot("hubot deploy hubot")
