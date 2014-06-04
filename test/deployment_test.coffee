@@ -23,6 +23,18 @@ describe "Deployment fixtures", () ->
       deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
       assert.equal(deployment.isValidEnv(), true)
 
+  describe "#autoMerge", () ->
+    it "works with auto-merging", () ->
+      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+      assert.equal(false, deployment.autoMerge)
+
+  describe "#requiredContexts", () ->
+    it "works with required contexts", () ->
+      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+      expectedContexts = ["ci/janky", "ci/travis-ci"]
+
+      assert.deepEqual(expectedContexts, deployment.requiredContexts)
+
   describe "#requestBody()", () ->
     it "shouldn't blow up", () ->
       deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")

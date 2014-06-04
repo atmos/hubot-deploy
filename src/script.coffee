@@ -2,9 +2,9 @@
 #   Cut GitHub deployments from chat that deploy via hooks - https://github.com/atmos/hubot-deploy
 #
 # Commands:
-#   hubot deploy - show detailed deployment usage, including apps and environments
-#   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot where can I deploy <app> - see what environments you can deploy app
+#   hubot deploy:version - show the script version and node/environment info
+#   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
 #   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment
@@ -18,19 +18,27 @@ DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
 DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond ///#{DeployPrefix}\??$///i, (msg) ->
-    msg.send DeployPattern.toString()
-
-  robot.respond /where can i deploy ([-_\.0-9a-z]+)$/i, (msg) ->
+  ###########################################################################
+  # where can i deploy <app>
+  #
+  # Displays the available environments for an application
+  robot.respond ///where can i #{DeployPrefix} ([-_\.0-9a-z]+)\?*$///i, (msg) ->
     name = msg.match[1]
 
     deployment = new Deployment(name, "unknown", "q")
-    msg.send deployment.plainTextOutput()
 
-  robot.respond ///#{DeployPrefix}:version$///i, (msg) ->
-    pkg = require Path.join __dirname, '..', 'package.json'
-    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
+    output  = "Environments for #{deployment.name}\n"
+    output += "----------------------------------------------------------\n"
+    for environment in deployment.environments
+      output += "#{environment}      | Unknown state :cry:\n"
+      output += "----------------------------------------------------------\n"
 
+    msg.send output
+
+  ###########################################################################
+  # deploy hubot/topic-branch to staging
+  #
+  # Actually dispatch deployment requests to GitHub
   robot.respond DeployPattern, (msg) ->
     task  = msg.match[1].replace(DeployPrefix, "deploy")
     force = msg.match[2] == '!'
@@ -58,3 +66,10 @@ module.exports = (robot) ->
     deployment.post (responseMessage) ->
       msg.reply responseMessage if responseMessage?
 
+  ###########################################################################
+  # deploy:version
+  #
+  # Useful for debugging
+  robot.respond ///#{DeployPrefix}\:version$///i, (msg) ->
+    pkg = require Path.join __dirname, '..', 'package.json'
+    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"

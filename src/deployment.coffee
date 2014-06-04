@@ -11,9 +11,12 @@ class Deployment
   @APPS_FILE = "apps.json"
 
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
-    @room     = 'unknown'
-    @user     = 'unknown'
-    @adapter  = 'unknown'
+    @room             = 'unknown'
+    @user             = 'unknown'
+    @adapter          = 'unknown'
+    @autoMerge        = true
+    @environments     = [ "production" ]
+    @requiredContexts = null
 
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
 
@@ -22,19 +25,22 @@ class Deployment
     if @application?
       @repository = @application['repository']
 
-    @normalize_environment()
+      @configureAutoMerge()
+      @configureRequiredContexts()
+      @configureEnvironments()
 
   isValidApp: ->
     @application?
 
   isValidEnv: ->
-    @env in @application['environments']
+    @env in @environments
 
   requestBody: ->
     ref: @ref
     force: @force
-    auto_merge: true
+    auto_merge: @autoMerge
     environment: @env
+    required_contexts: @requiredContexts
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
       name: @name
@@ -76,10 +82,23 @@ class Deployment
       cb(message)
 
   # Private Methods
-  normalize_environment: ->
+  configureEnvironments: ->
+    if @application['environments']?
+      @environments = @application['environments']
+
     @env = 'staging' if @env == 'stg'
     @env = 'production' if @env == 'prod'
 
-  plainTextOutput: ->
+  configureAutoMerge: ->
+    if @application['auto_merge']?
+      @autoMerge = @application['auto_merge']
+    if @force
+      @autoMerge = false
+
+  configureRequiredContexts: ->
+    if @application['required_contexts']?
+      @requiredContexts = @application['required_contexts']
+    if @force
+      @requiredContexts = [ ]
 
 exports.Deployment = Deployment

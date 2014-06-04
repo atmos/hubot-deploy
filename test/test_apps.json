@@ -1,7 +1,9 @@
 {
   "hubot": {
+    "auto_merge": false,
     "repository": "MyOrg/my-org-hubot",
     "environments": ["production"],
+    "required_contexts": ["ci/janky", "ci/travis-ci"],
 
     "provider": "heroku",
     "heroku_name": "my-orgs-hubot"
