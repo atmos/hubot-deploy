@@ -2,9 +2,9 @@
 #   Cut GitHub deployments from chat that deploy via hooks - https://github.com/atmos/hubot-deploy
 #
 # Commands:
-#   hubot deploy - show detailed deployment usage, including apps and environments
-#   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot where can I deploy <app> - see what environments you can deploy app
+#   hubot deploy:version - show the script version and node/environment info
+#   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
 #   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment

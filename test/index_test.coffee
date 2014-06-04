@@ -23,7 +23,7 @@ describe "The Hubot Script", () ->
 
   it "displays the version", () ->
     robot.adapter.sendToRobot("hubot deploy:version")
-    expected = "hubot-deploy v0.7.0/hubot v2.7.5/node v0.10.21"
+    expected = "hubot-deploy v0.6.7/hubot v2.7.5/node v0.10.21"
     assert.equal expected, robot.adapter.history
 
   it "displays deployment environment help", () ->
