@@ -14,24 +14,24 @@ describe "The Hubot Script", () ->
     robot.shutdown()
 
   it "displays deploy help", () ->
-    robot.adapter.sendToRobot("hubot deploy")
+    robot.adapter.receiveText("hubot deploy")
     expected = ""
     assert.equal expected, robot.adapter.history
 
   it "displays the version", () ->
-    robot.adapter.sendToRobot("hubot deploy:version")
+    robot.adapter.receiveText("hubot deploy:version")
     expected = "hubot-deploy v0.6.7/hubot v2.7.5/node v0.10.21"
     assert.equal expected, robot.adapter.history
 
   it "displays deployment environment help", () ->
-    robot.adapter.sendToRobot("hubot where can i deploy github")
+    robot.adapter.receiveText("hubot where can i deploy github")
     result = robot.adapter.history
     assert.match result, /|Environments for github/i
     assert.match result, /|production/i
     assert.match result, /|staging/i
 
     robot.adapter.history = [ ]
-    robot.adapter.sendToRobot("hubot where can i deploy hubot?")
+    robot.adapter.receiveText("hubot where can i deploy hubot?")
     result = robot.adapter.history
     assert.match result, /|Environments for hubot/i
     assert.match result, /|production/i

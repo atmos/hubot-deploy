@@ -11,8 +11,8 @@ class Test extends Adapter
     strings = strings.map (s) -> "#{envelope.user.name}: #{s}"
     @send envelope, strings...
 
-  sendToRobot: (input) ->
-    user = @robot.brain.userForId '1', name: 'Shell', room: 'Shell'
+  receiveText: (input) ->
+    user = @robot.brain.userForId '1', name: 'atmos', room: 'Test'
     textMessage = new TextMessage user, input, 'messageId'
     @receive textMessage
 
