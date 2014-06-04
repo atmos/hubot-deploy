@@ -39,7 +39,4 @@ describe "The Hubot Script", () ->
     assert.match result, /|Environments for hubot/i
     assert.match result, /|production/i
 
-  it "deploys hubot" #, () ->
-    #robot.adapter.sendToRobot("hubot deploy hubot")
-    #expected = ""
-    #assert.equal expected, robot.adapter.history
+  it "deploys hubot"
