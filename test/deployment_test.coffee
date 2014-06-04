@@ -35,7 +35,6 @@ describe "Deployment fixtures", () ->
 
       assert.deepEqual(expectedContexts, deployment.requiredContexts)
 
-
   describe "#requestBody()", () ->
     it "shouldn't blow up", () ->
       deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")

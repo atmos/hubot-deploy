@@ -1,9 +1,6 @@
 Path  = require("path")
 Robot = require("hubot").Robot
 
-User    = require("hubot/src/user")
-Message = require("hubot/src/message").TextMessage
-
 testAdapter = Path.join(__dirname, "adapters")
 
 describe "The Hubot Script", () ->
