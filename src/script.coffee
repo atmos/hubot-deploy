@@ -18,17 +18,43 @@ DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
 DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond /#{DeployPrefix}\?$/i, (msg) ->
-    msg.send DeployPattern.toString()
 
-  robot.respond /where can i deploy ([-_\.0-9a-z]+)$/i, (msg) ->
+  deployHelpRegex = new RegExp("#{DeployPrefix}\\??$", "i")
+  robot.respond deployHelpRegex, (msg) ->
+    console.log robot.helpCommands()
+    cmds = robot.helpCommands().filter (cmd) ->
+      cmd.match new RegExp("deploy", 'i')
+
+    console.logs cmds
+    if cmds.length == 0
+      msg.send "No available commands match #{filter}"
+      return
+
+    prefix = robot.alias or robot.name
+    cmds = cmds.map (cmd) ->
+      cmd = cmd.replace /^hubot/, prefix
+      cmd = cmd.replace /hubot/ig, robot.name
+      cmd.replace /deploy/ig, DeployPrefix
+
+    msg.send cmds.join "\n"
+
+  deployEnvironmentRegex = new RegExp("where can i #{DeployPrefix} ([-_\.0-9a-z]+)\\?*$", "i")
+  robot.respond deployEnvironmentRegex, (msg) ->
     name = msg.match[1]
 
     deployment = new Deployment(name, "unknown", "q")
-    msg.send deployment.plainTextOutput()
 
-  robot.respond /#{DeployPrefix}:version$/i, (msg) ->
-    pkg = require Path.join __dirname, 'package.json'
+    output  = "Environments for #{deployment.name}\n"
+    output += "----------------------------------------------------------\n"
+    for environment in deployment.environments
+      output += "#{environment}      | Unknown state :cry:\n"
+      output += "----------------------------------------------------------\n"
+
+    msg.send output
+
+  deployVersionRegex = new RegExp("#{DeployPrefix}\:version", "i")
+  robot.respond deployVersionRegex, (msg) ->
+    pkg = require Path.join __dirname, '..', 'package.json'
     msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
 
   robot.respond DeployPattern, (msg) ->
@@ -38,6 +64,8 @@ module.exports = (robot) ->
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
+
+    console.log "ohai 3"
 
     deployment = new Deployment(name, ref, task, env, force, hosts)
 

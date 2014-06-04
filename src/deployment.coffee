@@ -15,6 +15,7 @@ class Deployment
     @user             = 'unknown'
     @adapter          = 'unknown'
     @autoMerge        = true
+    @environments     = [ "production" ]
     @requiredContexts = null
 
     applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
@@ -26,14 +27,13 @@ class Deployment
 
       @configureAutoMerge()
       @configureRequiredContexts()
-
-    @configureEnvironment()
+      @configureEnvironments()
 
   isValidApp: ->
     @application?
 
   isValidEnv: ->
-    @env in @application['environments']
+    @env in @environments
 
   requestBody: ->
     ref: @ref
@@ -81,7 +81,10 @@ class Deployment
       cb(message)
 
   # Private Methods
-  configureEnvironment: ->
+  configureEnvironments: ->
+    if @application['environments']?
+      @environments = @application['environments']
+
     @env = 'staging' if @env == 'stg'
     @env = 'production' if @env == 'prod'
 
@@ -96,7 +99,5 @@ class Deployment
       @requiredContexts = @application['required_contexts']
     if @force
       @requiredContexts = [ ]
-
-  plainTextOutput: ->
 
 exports.Deployment = Deployment
