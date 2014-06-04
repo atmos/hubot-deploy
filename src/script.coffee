@@ -18,7 +18,7 @@ DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
 DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond /#{DeployPrefix}\?$/i, (msg) ->
+  robot.respond ///#{DeployPrefix}\??$///i, (msg) ->
     msg.send DeployPattern.toString()
 
   robot.respond /where can i deploy ([-_\.0-9a-z]+)$/i, (msg) ->
@@ -27,8 +27,8 @@ module.exports = (robot) ->
     deployment = new Deployment(name, "unknown", "q")
     msg.send deployment.plainTextOutput()
 
-  robot.respond /#{DeployPrefix}:version$/i, (msg) ->
-    pkg = require Path.join __dirname, 'package.json'
+  robot.respond ///#{DeployPrefix}:version$///i, (msg) ->
+    pkg = require Path.join __dirname, '..', 'package.json'
     msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
 
   robot.respond DeployPattern, (msg) ->
