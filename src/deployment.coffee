@@ -37,6 +37,7 @@ class Deployment
 
   requestBody: ->
     ref: @ref
+    force: @force
     auto_merge: @autoMerge
     environment: @env
     required_contexts: @requiredContexts
