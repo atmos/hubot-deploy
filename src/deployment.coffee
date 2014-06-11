@@ -74,6 +74,16 @@ class Deployment
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
           console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+
+        if bodyMessage.match(/Conflict: Commit status checks/)
+          errors = data['errors'][0]
+          commitContexts = errors.contexts
+
+          namedContexts  = (context.context for context in commitContexts)
+          failedContexts = (context.context for context in commitContexts when context.state isnt 'success')
+          if requiredContexts?
+            failedContexts.push(context) for context in requiredContexts when context not in namedContexts
+
         if bodyMessage == "Not Found"
           message = "Unable to create deployments for #{repository}. Check your scopes for this token."
         else
