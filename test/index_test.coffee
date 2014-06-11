@@ -1,7 +1,10 @@
 Path  = require("path")
 Robot = require("hubot").Robot
 
+pkg = require Path.join __dirname, "..", 'package.json'
 testAdapter = Path.join(__dirname, "adapters")
+
+Version = pkg.version
 
 describe "The Hubot Script", () ->
   robot = null
@@ -20,7 +23,7 @@ describe "The Hubot Script", () ->
 
   it "displays the version", () ->
     robot.adapter.receiveText("hubot deploy:version")
-    expected = "hubot-deploy v0.6.7/hubot v2.7.5/node v0.10.21"
+    expected = "hubot-deploy v#{Version}/hubot v2.7.5/node v0.10.21"
     assert.equal expected, robot.adapter.history
 
   it "displays deployment environment help", () ->
