@@ -79,10 +79,10 @@ class Deployment
           errors = data['errors'][0]
           commitContexts = errors.contexts
 
+          namedContexts  = (context.context for context in commitContexts)
           failedContexts = (context.context for context in commitContexts when context.state isnt 'success')
-          failedContexts.push(context) for context in @requiredContexts when context not in failedContexts
-
-          bodyMessage = "Unmet required commit status contexts: #{failedContexts.join(',')} failed."
+          if requiredContexts?
+            failedContexts.push(context) for context in requiredContexts when context not in namedContexts
 
         if bodyMessage == "Not Found"
           message = "Unable to create deployments for #{repository}. Check your scopes for this token."
