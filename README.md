@@ -21,7 +21,6 @@ You need to set the following environmental variables.
 ## See Also
 
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
-* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listens for DeploymentStatus events from GitHub and notifies you.
 
 [1]: https://guides.github.com/overviews/flow/
 [2]: https://developer.github.com/v3/repos/deployments/
