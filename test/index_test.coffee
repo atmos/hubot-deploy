@@ -2,7 +2,7 @@ Path   = require("path")
 Helper = require('hubot-test-helper-pull-request-1')
 
 pkg = require Path.join __dirname, "..", 'package.json'
-Version = pkg.version
+pkgVersion = pkg.version
 
 room   = null
 helper = new Helper(Path.join(__dirname, "..", "src", "script.coffee"))
@@ -13,7 +13,7 @@ describe "The Hubot Script", () ->
 
   it "displays the version", () ->
     room.user.say 'atmos', 'hubot deploy:version'
-    expected = "hubot-deploy v#{Version}/hubot v2.7.5/node v0.10.21"
+    expected = "hubot-deploy v#{pkgVersion}/hubot v2.7.5/node #{process.version}"
     assert.deepEqual ['atmos', 'hubot deploy:version'], room.messages[0]
     assert.deepEqual ['hubot', expected], room.messages[1]
 
