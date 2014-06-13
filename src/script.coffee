@@ -22,13 +22,17 @@ module.exports = (robot) ->
   # where can i deploy <app>
   #
   # Displays the available environments for an application
-  robot.respond ///where\ can\ i\ #{DeployPrefix}\ ([-_\.0-9a-z]+)\?*$///i, (msg) ->
+  robot.respond ///where\s+can\s+i\s+#{DeployPrefix}\s+([-_\.0-9a-z]+)///i, (msg) ->
     name = msg.match[1]
 
-    deployment = new Deployment(name, "unknown", "q")
+    try
+      deployment = new Deployment(name)
+    catch err
+      console.log err
 
     output  = "Environments for #{deployment.name}\n"
     output += "----------------------------------------------------------\n"
+
     for environment in deployment.environments
       output += "#{environment}      | Unknown state :cry:\n"
       output += "----------------------------------------------------------\n"

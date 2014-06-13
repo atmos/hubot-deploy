@@ -1,42 +1,35 @@
-Path  = require("path")
-Robot = require("hubot").Robot
+Path   = require("path")
+Helper = require('hubot-test-helper-pull-request-1')
 
 pkg = require Path.join __dirname, "..", 'package.json'
-testAdapter = Path.join(__dirname, "adapters")
+pkgVersion = pkg.version
 
-Version = pkg.version
+room   = null
+helper = new Helper(Path.join(__dirname, "..", "src", "script.coffee"))
 
 describe "The Hubot Script", () ->
-  robot = null
   beforeEach () ->
-    robot = new Robot testAdapter, "test", false, "hubot"
-    robot.loadFile  Path.join(__dirname, "..", "src"), "script.coffee"
-    robot.run()
-
-  afterEach () ->
-    robot.shutdown()
-
-  it "displays deploy help", () ->
-    robot.adapter.receiveText("hubot deploy")
-    expected = ""
-    assert.equal expected, robot.adapter.history
+    room = helper.createRoom()
 
   it "displays the version", () ->
-    robot.adapter.receiveText("hubot deploy:version")
-    expected = "hubot-deploy v#{Version}/hubot v2.7.5/node v0.10.21"
-    assert.equal expected, robot.adapter.history
+    room.user.say 'atmos', 'hubot deploy:version'
+    expected = "hubot-deploy v#{pkgVersion}/hubot v2.7.5/node #{process.version}"
+    assert.deepEqual ['atmos', 'hubot deploy:version'], room.messages[0]
+    assert.deepEqual ['hubot', expected], room.messages[1]
 
   it "displays deployment environment help", () ->
-    robot.adapter.receiveText("hubot where can i deploy github")
-    result = robot.adapter.history
-    assert.match result, /|Environments for github/i
-    assert.match result, /|production/i
-    assert.match result, /|staging/i
+    room.user.say 'atmos', 'hubot where can i deploy github'
 
-    robot.adapter.history = [ ]
-    robot.adapter.receiveText("hubot where can i deploy hubot?")
-    result = robot.adapter.history
-    assert.match result, /|Environments for hubot/i
-    assert.match result, /|production/i
+    result = room.messages[1][1]
+    assert.match result, /Environments for github/im
+    assert.match result, /production/im
+    assert.match result, /staging/im
+
+    room.user.say 'atmos', 'hubot where can i deploy hubot'
+    result = room.messages[3][1]
+
+    assert.match result, /Environments for hubot/im
+    assert.match result, /production/im
+    assert.notMatch result, /staging/im
 
   it "deploys hubot"
