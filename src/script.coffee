@@ -22,7 +22,7 @@ module.exports = (robot) ->
   # where can i deploy <app>
   #
   # Displays the available environments for an application
-  robot.respond ///where\ can\ i\ #{DeployPrefix}\ ([-_\.0-9a-z]+)\?*$///i, (msg) ->
+  robot.respond ///where\x20can\x20i\x20#{DeployPrefix}\x20([-_\.0-9a-z]+)\?*$///i, (msg) ->
     name = msg.match[1]
 
     deployment = new Deployment(name, "unknown", "q")
