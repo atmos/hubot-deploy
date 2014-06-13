@@ -1,5 +1,5 @@
 Path   = require("path")
-Helper = require('hubot-test-helper')
+Helper = require('hubot-test-helper-pull-request-1')
 
 pkg = require Path.join __dirname, "..", 'package.json'
 Version = pkg.version
