@@ -8,7 +8,7 @@ api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-previ
 ###########################################################################
 
 class Deployment
-  @APPS_FILE = "apps.json"
+  @APPS_FILE = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
 
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
     @room             = 'unknown'

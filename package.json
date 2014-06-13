@@ -33,7 +33,8 @@
   "devDependencies": {
     "chai":          "~1.0.3",
     "mocha":         "~1.1.0",
-    "coffee-script": ">=1.6.3"
+    "coffee-script": ">=1.6.3",
+    "hubot-test-helper": "0.0.1"
   },
   "engines": {
     "node": ">=0.8.0"
