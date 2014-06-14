@@ -24,7 +24,7 @@ class LatestFormatter extends Formatter
     output += Sprintf "%-15s | %-12s | %-12s\n", "Who", "What", "When"
     output += "-----------------------------------------------------------------\n"
 
-    for deployment in @extras
+    for deployment in @extras[0..10]
       login = deployment.payload.notify.user || deployment.payload.actor || deployment.creator.login
       output += Sprintf "%-15s | %-12s | %-12s\n", login, deployment.ref, deployment.created_at
 
