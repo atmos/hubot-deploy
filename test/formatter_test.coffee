@@ -13,9 +13,9 @@ describe "Formatter", () ->
       message = formatter.message()
 
       assert.match message, /Recent production Deployments for hubot/im
-      assert.match message, /atmos           \| master       \| (.*) 2014-06-13T20:55:21Z/
-      assert.match message, /atmos           \| 8efb8c88     \| (.*) 2014-06-13T20:52:13Z/
-      assert.match message, /atmos           \| master       \| (.*) 2014-06-11T22:47:34Z/
+      assert.match message, /atmos           \| master\(8efb8c88\)\s+\| (.*) 2014-06-13T20:55:21Z/
+      assert.match message, /atmos           \| 8efb8c88\s+\| (.*) 2014-06-13T20:52:13Z/
+      assert.match message, /atmos           \| master\(ffcabfea\)\s+\| (.*) 2014-06-11T22:47:34Z/
 
   describe "WhereFormatter", () ->
     it "displays deployment environments", () ->
