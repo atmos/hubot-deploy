@@ -31,6 +31,9 @@ class LatestFormatter extends Formatter
     for deployment in @extras[0..10]
       if deployment.ref is deployment.sha[0..7]
         ref = deployment.ref
+        if deployment.description.match(/auto deploy triggered by a commit status change/)
+          ref += "(auto-deploy)"
+
       else
         ref = "#{deployment.ref}(#{deployment.sha[0..7]})"
 
