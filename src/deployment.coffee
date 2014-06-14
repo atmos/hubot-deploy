@@ -52,6 +52,18 @@ class Deployment
         adapter: @adapter
       config: @application
 
+  latest: (cb) ->
+    path       = "repos/#{@repository}/deployments"
+    params     =
+      environment: @env
+
+    api.get path, params, (err, status, body, headers) ->
+      if err
+        body = err
+        console.log err['message'] unless process.env.NODE_ENV == 'test'
+
+      cb(body)
+
   post: (cb) ->
     path       = "repos/#{@repository}/deployments"
     repository = @repository

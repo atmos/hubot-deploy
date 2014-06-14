@@ -5,6 +5,7 @@
 #   hubot where can I deploy <app> - see what environments you can deploy app
 #   hubot deploy:version - show the script version and node/environment info
 #   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
+#   hubot deploys <app>/<branch> in <env> - Displays recent deployments for <app>'s <branch> in the <env> environment
 #   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
 #   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment
@@ -13,9 +14,15 @@
 supported_tasks = [ DeployPrefix ]
 
 Path          = require("path")
+Patterns      = require(Path.join(__dirname, "patterns"))
 Deployment    = require(Path.join(__dirname, "deployment")).Deployment
-DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
-DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
+
+DeployPrefix   = Patterns.DeployPrefix
+DeployPattern  = Patterns.DeployPattern
+DeploysPattern = Patterns.DeploysPattern
+
+Formatters    = require(Path.join(__dirname, "formatters"))
+
 ###########################################################################
 module.exports = (robot) ->
   ###########################################################################
@@ -27,17 +34,28 @@ module.exports = (robot) ->
 
     try
       deployment = new Deployment(name)
+      formatter  = new Formatters.WhereFormatter(deployment)
+
+      msg.send formatter.message()
     catch err
       console.log err
 
-    output  = "Environments for #{deployment.name}\n"
-    output += "----------------------------------------------------------\n"
+  ###########################################################################
+  # deploys <app> in <env>
+  #
+  # Displays the available environments for an application
+  robot.respond DeploysPattern, (msg) ->
+    name        = msg.match[2]
+    environment = msg.match[4] || 'production'
 
-    for environment in deployment.environments
-      output += "#{environment}      | Unknown state :cry:\n"
-      output += "----------------------------------------------------------\n"
+    try
+      deployment = new Deployment(name, null, null, environment)
+      deployment.latest (deployments) ->
+        formatter = new Formatters.LatestFormatter(deployment, deployments)
+        msg.send formatter.message()
 
-    msg.send output
+    catch err
+      console.log err
 
   ###########################################################################
   # deploy hubot/topic-branch to staging

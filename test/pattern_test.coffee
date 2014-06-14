@@ -1,6 +1,9 @@
 Path = require('path')
 
-DeployPattern = require(Path.join(__dirname, "..", "src", "patterns")).DeployPattern
+Patterns = require(Path.join(__dirname, "..", "src", "patterns"))
+
+DeployPattern  = Patterns.DeployPattern
+DeploysPattern = Patterns.DeploysPattern
 
 describe "Patterns", () ->
   describe "DeployPattern", () ->
@@ -64,3 +67,29 @@ describe "Patterns", () ->
       assert.equal "atmos/branch", matches[4], "incorrect branch name"
       assert.equal "production",   matches[5], "incorrect environment name"
       assert.equal "fe",           matches[6], "incorrect branch name"
+
+  describe "DeploysPattern", () ->
+    it "rejects things that don't start with deploy", () ->
+      assert !"ping".match(DeploysPattern)
+      assert !"image me pugs".match(DeploysPattern)
+
+    it "handles simple deploys listing", () ->
+      matches = "deploys hubot".match(DeploysPattern)
+      assert.equal "deploys", matches[1], "incorrect task"
+      assert.equal "hubot",   matches[2], "incorrect app name"
+      assert.equal undefined, matches[3], "incorrect branch"
+      assert.equal undefined, matches[4], "incorrect environment"
+
+    it "handles deploys with environments", () ->
+      matches = "deploys hubot in production".match(DeploysPattern)
+      assert.equal "deploys",     matches[1], "incorrect task"
+      assert.equal "hubot",       matches[2], "incorrect app name"
+      assert.equal undefined,     matches[3], "incorrect branch name"
+      assert.equal "production",  matches[4], "incorrect environment name"
+
+    it "handles deploys with branches", () ->
+      matches = "deploys hubot/mybranch to production".match(DeploysPattern)
+      assert.equal "deploys",     matches[1], "incorrect task"
+      assert.equal "hubot",       matches[2], "incorrect app name"
+      assert.equal "mybranch",    matches[3], "incorrect branch name"
+      assert.equal "production",  matches[4], "incorrect environment name"
