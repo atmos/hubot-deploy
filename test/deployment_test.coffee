@@ -39,6 +39,12 @@ describe "Deployment fixtures", () ->
       deployment.requestBody()
       assert.equal(true, true)
 
+  #describe "#latest()", () ->
+  #  it "fetches the latest deployments", (done) ->
+  #    deployment = new Deployment("hubot")
+  #    deployment.latest (deployments) ->
+  #      done()
+
   #describe "#post()", () ->
   #  it "404s with a handy message", (done) ->
   #    failureMessage = "Unable to create deployments for github/github. Check your scopes for this token."

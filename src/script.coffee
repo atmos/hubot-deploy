@@ -13,9 +13,12 @@
 supported_tasks = [ DeployPrefix ]
 
 Path          = require("path")
+Patterns      = require(Path.join(__dirname, "patterns"))
 Deployment    = require(Path.join(__dirname, "deployment")).Deployment
-DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
-DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
+
+DeployPrefix   = Patterns.DeployPrefix
+DeployPattern  = Patterns.DeployPattern
+DeploysPattern = Patterns.DeploysPattern
 
 Formatters    = require(Path.join(__dirname, "formatters"))
 
@@ -33,6 +36,23 @@ module.exports = (robot) ->
       formatter  = new Formatters.WhereFormatter(deployment)
 
       msg.send formatter.message()
+    catch err
+      console.log err
+
+  ###########################################################################
+  # deployed <app> in <env>
+  #
+  # Displays the available environments for an application
+  robot.respond DeploysPattern, (msg) ->
+    name        = msg.match[2]
+    environment = msg.match[4] || 'production'
+
+    try
+      deployment = new Deployment(name, null, null, environment)
+      deployment.latest (deployments) ->
+        formatter = new Formatters.LatestFormatter(deployments)
+        msg.send formatter.message()
+
     catch err
       console.log err
 
