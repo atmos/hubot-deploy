@@ -32,4 +32,10 @@ describe "The Hubot Script", () ->
     assert.match result, /production/im
     assert.notMatch result, /staging/im
 
+    #it "displays recent deployments", () ->
+    #  room.user.say 'atmos', 'hubot deployed hubot'
+
+    #  result = room.messages[1][1]
+    #  assert.equal "", result
+
   it "deploys hubot"
