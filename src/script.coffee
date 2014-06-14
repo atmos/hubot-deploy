@@ -50,7 +50,7 @@ module.exports = (robot) ->
     try
       deployment = new Deployment(name, null, null, environment)
       deployment.latest (deployments) ->
-        formatter = new Formatters.LatestFormatter(deployments)
+        formatter = new Formatters.LatestFormatter(deployment, deployments)
         msg.send formatter.message()
 
     catch err
