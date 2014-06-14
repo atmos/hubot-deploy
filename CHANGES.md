@@ -1,6 +1,7 @@
 0.7.0
 =====
 
+* Support recent deployments listing in chat `/deploys hubot`
 * Support required_contexts in deployment API
 
 0.6.x
