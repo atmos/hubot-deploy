@@ -25,7 +25,7 @@ class LatestFormatter extends Formatter
     output += "-----------------------------------------------------------------\n"
 
     for deployment in @extras
-      login = deployment.payload.actor || deployment.creator.login
+      login = deployment.payload.notify.user || deployment.payload.actor || deployment.creator.login
       output += Sprintf "%-15s | %-12s | %-12s\n", login, deployment.ref, deployment.created_at
 
     output += "-----------------------------------------------------------------\n"
