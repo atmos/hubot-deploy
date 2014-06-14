@@ -16,6 +16,9 @@ Path          = require("path")
 Deployment    = require(Path.join(__dirname, "deployment")).Deployment
 DeployPrefix  = require(Path.join(__dirname, "patterns")).DeployPrefix
 DeployPattern = require(Path.join(__dirname, "patterns")).DeployPattern
+
+Formatters    = require(Path.join(__dirname, "formatters"))
+
 ###########################################################################
 module.exports = (robot) ->
   ###########################################################################
@@ -27,17 +30,11 @@ module.exports = (robot) ->
 
     try
       deployment = new Deployment(name)
+      formatter  = new Formatters.WhereFormatter(deployment)
+
+      msg.send formatter.message()
     catch err
       console.log err
-
-    output  = "Environments for #{deployment.name}\n"
-    output += "----------------------------------------------------------\n"
-
-    for environment in deployment.environments
-      output += "#{environment}      | Unknown state :cry:\n"
-      output += "----------------------------------------------------------\n"
-
-    msg.send output
 
   ###########################################################################
   # deploy hubot/topic-branch to staging
