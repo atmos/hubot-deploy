@@ -5,6 +5,7 @@
 #   hubot where can I deploy <app> - see what environments you can deploy app
 #   hubot deploy:version - show the script version and node/environment info
 #   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
+#   hubot deploys <app>/<branch> in <env> - Displays recent deployments for <app>'s <branch> in the <env> environment
 #   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
 #   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment
@@ -40,7 +41,7 @@ module.exports = (robot) ->
       console.log err
 
   ###########################################################################
-  # deployed <app> in <env>
+  # deploys <app> in <env>
   #
   # Displays the available environments for an application
   robot.respond DeploysPattern, (msg) ->

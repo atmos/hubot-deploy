@@ -80,7 +80,7 @@ describe "Patterns", () ->
       assert.equal undefined, matches[3], "incorrect branch"
       assert.equal undefined, matches[4], "incorrect environment"
 
-    it "handles deployed with environments", () ->
+    it "handles deploys with environments", () ->
       matches = "deploys hubot in production".match(DeploysPattern)
       assert.equal "deploys",     matches[1], "incorrect task"
       assert.equal "hubot",       matches[2], "incorrect app name"

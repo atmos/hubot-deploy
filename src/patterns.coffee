@@ -17,11 +17,11 @@ DEPLOY_SYNTAX = ///
 
 
 # Supports tasks like
-# /deployed github
+# /deploys github
 #
 # and
 #
-# /deployed github in staging
+# /deploys github in staging
 inflectedScriptPrefix = Inflection.pluralize(scriptPrefix)
 DEPLOYS_SYNTAX = ///
   (#{inflectedScriptPrefix})      # / prefix
