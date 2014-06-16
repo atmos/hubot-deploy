@@ -37,7 +37,7 @@
     "chai":          "~1.0.3",
     "mocha":         "~1.1.0",
     "coffee-script": ">=1.6.3",
-    "hubot-test-helper-pull-request-1": "0.0.2"
+    "hubot-test-helper": "0.0.2"
   },
   "engines": {
     "node": ">=0.8.0"
