@@ -66,6 +66,7 @@ class Deployment
 
   post: (cb) ->
     path       = "repos/#{@repository}/deployments"
+    name       = @name
     repository = @repository
 
     api.post path, @requestBody(), (err, status, body, headers) ->
