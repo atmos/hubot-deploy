@@ -68,9 +68,14 @@ class Deployment
     path       = "repos/#{@repository}/deployments"
     name       = @name
     repository = @repository
+    env        = @env
+    ref        = @ref
 
     api.post path, @requestBody(), (err, status, body, headers) ->
       data = body
+
+      success = status == 201
+
       if err
         data = err
         console.log err unless process.env.NODE_ENV == 'test'
@@ -104,7 +109,10 @@ class Deployment
         else
           message = bodyMessage
 
-      cb(message)
+      if success and not message
+        message = "Deployment of #{name}/#{ref} to #{env} created"
+
+      cb message
 
   # Private Methods
   configureEnvironments: ->
