@@ -8,8 +8,6 @@
 #   hubot deploys <app>/<branch> in <env> - Displays recent deployments for <app>'s <branch> in the <env> environment
 #   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
 #   hubot deploy:unlock <app> in <env> - unlock an app in an environment
-#   hubot auto-deploy:enable <app> in <env> - enable auto-deployment for the app in environment
-#   hubot auto-deploy:disable <app> in <env> - disable auto-deployment for the app in environment
 #
 supported_tasks = [ DeployPrefix ]
 
