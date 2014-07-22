@@ -37,6 +37,7 @@ class Deployment
 
   requestBody: ->
     ref: @ref
+    task: @task
     force: @force
     auto_merge: @autoMerge
     environment: @env
@@ -44,7 +45,6 @@ class Deployment
     description: "Deploying from hubot-deploy-v#{Version}"
     payload:
       name: @name
-      task: @task
       hosts: @hosts
       notify:
         room: @room
