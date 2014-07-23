@@ -18,7 +18,10 @@ class Deployment
     @environments     = [ "production" ]
     @requiredContexts = null
 
-    applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
+    try
+      applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
+    catch
+      throw new Error("Unable to parse your apps.json file in hubot-deploy")
 
     @application = applications[@name]
 
