@@ -16,13 +16,18 @@ There's a bunch of [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/d
 
 You need to set the following environmental variables.
 
-* **HUBOT\_GITHUB\_TOKEN**: A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo\_deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments][1].
+| Environmental Variables |                                                 |
+|-------------------------|-------------------------------------------------|
+| HUBOT_GITHUB_TOKEN            |A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo:deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments][5].
 
 ## See Also
 
+* [hubot](https://github.com/github/hubot) - A chat robot with support for a lot of networks.
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
+* [hubot-auto-deploy](https://github.com/atmos/hubot-auto-deploy) - Manage automated deployments on GitHub from chat.
 
 [1]: https://guides.github.com/overviews/flow/
 [2]: https://developer.github.com/v3/repos/deployments/
 [3]: https://hubot.github.com
 [4]: https://developer.github.com/v3/activity/events/types/#deploymentevent
+[5]: https://developer.github.com/v3/repos/deployments/
