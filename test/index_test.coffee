@@ -13,7 +13,7 @@ describe "The Hubot Script", () ->
 
   it "displays the version", () ->
     room.user.say 'atmos', 'hubot deploy:version'
-    expected = "hubot-deploy v#{pkgVersion}/hubot v2.7.5/node #{process.version}"
+    expected = "hubot-deploy v#{pkgVersion}/hubot v#{room.robot.version}/node #{process.version}"
     assert.deepEqual ['atmos', 'hubot deploy:version'], room.messages[0]
     assert.deepEqual ['hubot', expected], room.messages[1]
 
