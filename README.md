@@ -25,6 +25,7 @@ You need to set the following environmental variables.
 * [hubot](https://github.com/github/hubot) - A chat robot with support for a lot of networks.
 * [heaven](https://github.com/atmos/heaven) - Listens for Deployment events from GitHub and executes the deployment for you.
 * [hubot-auto-deploy](https://github.com/atmos/hubot-auto-deploy) - Manage automated deployments on GitHub from chat.
+* [github-credentials](https://github.com/github/hubot-scripts/blob/master/src/scripts/github-credentials.coffee) - Map your chat username to your GitHub username if they differ
 
 [1]: https://guides.github.com/overviews/flow/
 [2]: https://developer.github.com/v3/repos/deployments/
