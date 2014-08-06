@@ -67,6 +67,8 @@ module.exports = (robot) ->
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
 
+    username = msg.envelope.user.githubLogin or msg.envelope.user.name
+
     deployment = new Deployment(name, ref, task, env, force, hosts)
 
     unless deployment.isValidApp()
@@ -76,8 +78,8 @@ module.exports = (robot) ->
       msg.reply "#{name} doesn't seem to have an #{env} environment."
       return
 
+    deployment.user = username
     deployment.room = msg.message.user.room
-    deployment.user = msg.envelope.user.name
 
     deployment.adapter = robot.adapterName
 
