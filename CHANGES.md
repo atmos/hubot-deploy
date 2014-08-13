@@ -1,6 +1,8 @@
 0.7.0
 =====
 
+* Support `deploy-token:set` commands to have chat user specific tokens for
+  deployment creation.
 * The `task` attribute is first class and not in the payload anymore.
 * Support recent deployments listing in chat `/deploys hubot`
 * Support required_contexts in deployment API

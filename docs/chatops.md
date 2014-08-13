@@ -5,7 +5,7 @@ There are quite a few variants of this, but here are the basics.
 You can always check the version that you're running against.
 
     $ hubot deploy:version
-      hubot-deploy v0.5.1/hubot v2.7.1/node v0.10.26
+      hubot-deploy v0.6.43/hubot v2.7.4/node v0.10.26
 
 You can also trigger a variety of deployments with custom payloads.
 
