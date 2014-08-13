@@ -12,7 +12,7 @@ The hubot-deploy script provides a way to override the token from the environmen
 
 **To prevent chat networks from logging your password it's good practice to lock the room if available.**
 
-To configure your own token, make a [personal OAuth token]() with both `user` and `repo_deployment` scopes. Then provide it to hubot.
+To configure your own token, make a [personal OAuth token](https://github.com/settings/applications) with both `user` and `repo_deployment` scopes. Then provide it to hubot.
 
     $ hubot deploy-token:set <mytoken>
 
