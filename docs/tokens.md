@@ -20,6 +20,6 @@ Hubot will respond and tell you whether the token is sufficient or not. Subseque
 
 If you want to go back having the robot token create your deployments you can reset things like.
 
-    $ hubot deploy:token:reset
+    $ hubot deploy-token:reset
 
 Hubot will respond and tell you that your token has been forgotten and removed from the robot's brain.
