@@ -6,20 +6,18 @@
 #   hubot deploy:version - show the script version and node/environment info
 #   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
 #   hubot deploys <app>/<branch> in <env> - Displays recent deployments for <app>'s <branch> in the <env> environment
-#   hubot deploy:lock <app> in <env> <reason> - lock the app in an environment with a reason
-#   hubot deploy:unlock <app> in <env> - unlock an app in an environment
 #
 supported_tasks = [ DeployPrefix ]
 
 Path          = require("path")
-Patterns      = require(Path.join(__dirname, "patterns"))
-Deployment    = require(Path.join(__dirname, "deployment")).Deployment
+Version       = require(Path.join(__dirname, "..", "version")).Version
+Patterns      = require(Path.join(__dirname, "..", "patterns"))
+Deployment    = require(Path.join(__dirname, "..", "deployment")).Deployment
+Formatters    = require(Path.join(__dirname, "..", "formatters"))
 
 DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern
-
-Formatters    = require(Path.join(__dirname, "formatters"))
 
 ###########################################################################
 module.exports = (robot) ->
@@ -93,5 +91,4 @@ module.exports = (robot) ->
   #
   # Useful for debugging
   robot.respond ///#{DeployPrefix}\:version$///i, (msg) ->
-    pkg = require Path.join __dirname, '..', 'package.json'
-    msg.send "hubot-deploy v#{pkg.version}/hubot v#{robot.version}/node #{process.version}"
+    msg.send "hubot-deploy v#{Version}/hubot v#{robot.version}/node #{process.version}"

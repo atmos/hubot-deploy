@@ -5,7 +5,7 @@ pkg = require Path.join __dirname, "..", 'package.json'
 pkgVersion = pkg.version
 
 room   = null
-helper = new Helper(Path.join(__dirname, "..", "src", "script.coffee"))
+helper = new Helper(Path.join(__dirname, "..", "src", "scripts", "deploy.coffee"))
 
 describe "The Hubot Script", () ->
   beforeEach () ->
