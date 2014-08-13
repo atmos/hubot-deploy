@@ -7,11 +7,9 @@ class TokenVerifier
     @api   = Octonode.client(@token)
 
   valid: (cb) ->
-    console.log "'#{@token}'"
     @api.get "/user", (err, status, body, headers) ->
       scopes = headers? and headers['x-oauth-scopes']
       if scopes
-        console.log "'#{scopes}'"
         if scopes.indexOf('repo') >= 0
           cb(true)
         else if scopes.indexOf('repo_deployment') >= 0
