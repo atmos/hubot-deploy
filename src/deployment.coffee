@@ -24,7 +24,7 @@ class Deployment
 
     @application = applications[@name]
 
-    @api = Octonode.client(process.env.HUBOT_GITHUB_TOKEN or 'unknown')
+    @api = Octonode.client(process.env.HUBOT_GITHUB_TOKEN or 'unknown', { hostname: process.env.HUBOT_GITHUB_API or 'api.github.com' })
     @api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 
     if @application?
