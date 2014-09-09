@@ -24,10 +24,12 @@ module.exports = (robot) ->
     verifier.valid (result) ->
       if result
         msg.reply "Your token is valid. I stored it for future use."
-        msg.envelope.user.githubDeployToken = verifier.token
+        user = robot.brain.userForId msg.envelope.user.id
+        user.githubDeployToken = verifier.token
       else
         msg.reply "Your token is invalid, verify that it has 'repo_deployment' scope."
 
   robot.respond ///#{DeployPrefix}-token:reset///i, (msg) ->
-    delete(msg.envelope.user.githubDeployToken)
+    user = robot.brain.userForId msg.envelope.user.id
+    delete(user.githubDeployToken)
     msg.reply "I nuked your deployment token. I'll use my default token until you configure another."
