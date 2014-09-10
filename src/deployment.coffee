@@ -4,8 +4,6 @@ Version  = require(Path.join(__dirname, "version")).Version
 Octonode = require("octonode")
 ###########################################################################
 
-###########################################################################
-
 class Deployment
   @APPS_FILE = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
 
@@ -24,9 +22,6 @@ class Deployment
 
     @application = applications[@name]
 
-    @api = Octonode.client(process.env.HUBOT_GITHUB_TOKEN or 'unknown', { hostname: process.env.HUBOT_GITHUB_API or 'api.github.com' })
-    @api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
-
     if @application?
       @repository = @application['repository']
 
@@ -35,8 +30,7 @@ class Deployment
       @configureEnvironments()
 
   setUserToken: (token) ->
-    @api = Octonode.client(token.trim())
-    @api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+    @userToken = token.trim()
 
   isValidApp: ->
     @application?
@@ -61,12 +55,19 @@ class Deployment
         adapter: @adapter
       config: @application
 
+  api: ->
+    githubToken = @userToken or process.env.HUBOT_GITHUB_TOKEN or 'unknown'
+    githubApi = @application['github_api'] or process.env.HUBOT_GITHUB_API or 'api.github.com'
+    api = Octonode.client(githubToken, { hostname: githubApi })
+    api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+    api
+
   latest: (cb) ->
     path       = "repos/#{@repository}/deployments"
     params     =
       environment: @env
 
-    @api.get path, params, (err, status, body, headers) ->
+    @api().get path, params, (err, status, body, headers) ->
       if err
         body = err
         console.log err['message'] unless process.env.NODE_ENV == 'test'
@@ -80,7 +81,7 @@ class Deployment
     env        = @env
     ref        = @ref
 
-    @api.post path, @requestBody(), (err, status, body, headers) ->
+    @api().post path, @requestBody(), (err, status, body, headers) ->
       data = body
 
       success = status == 201
