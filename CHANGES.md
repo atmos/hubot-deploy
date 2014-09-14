@@ -1,6 +1,7 @@
 0.7.0
 =====
 
+* Support different api endpoints(enterprise) on a per application basis.
 * Support `deploy-token:set` commands to have chat user specific tokens for
   deployment creation.
 * The `task` attribute is first class and not in the payload anymore.
