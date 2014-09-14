@@ -1,8 +1,9 @@
-Fs       = require "fs"
-Url      = require "url"
-Path     = require "path"
-Version  = require(Path.join(__dirname, "version")).Version
-Octonode = require("octonode")
+Fs        = require "fs"
+Url       = require "url"
+Path      = require "path"
+Version   = require(Path.join(__dirname, "version")).Version
+Octonode  = require("octonode")
+ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
 
 class Deployment
@@ -30,26 +31,11 @@ class Deployment
       @configureRequiredContexts()
       @configureEnvironments()
 
-  setUserToken: (token) ->
-    @userToken = token.trim()
-
   isValidApp: ->
     @application?
 
   isValidEnv: ->
     @env in @environments
-
-  apiUri: ->
-    @application['github_api'] or process.env.HUBOT_GITHUB_API or 'https://api.github.com'
-
-  parsedApiUri: ->
-    Url.parse(@apiUri())
-
-  apiPath: (path) ->
-    [@parsedApiUri().path, path].join('/')
-
-  apiHost: ->
-    @parsedApiUri().host
 
   requestBody: ->
     ref: @ref
@@ -68,14 +54,19 @@ class Deployment
         adapter: @adapter
       config: @application
 
+  setUserToken: (token) ->
+    @userToken = token.trim()
+
+  apiConfig: ->
+    new ApiConfig(@userToken, @application)
+
   api: ->
-    githubToken = @userToken or process.env.HUBOT_GITHUB_TOKEN or 'unknown'
-    api = Octonode.client(githubToken, { hostname: @apiHost() })
+    api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
     api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
     api
 
   latest: (cb) ->
-    path       = @apiPath("repos/#{@repository}/deployments")
+    path       = @apiConfig().path("repos/#{@repository}/deployments")
     params     =
       environment: @env
 
@@ -87,7 +78,7 @@ class Deployment
       cb(body)
 
   post: (cb) ->
-    path       = @apiPath("repos/#{@repository}/deployments")
+    path       = @apiConfig().path("repos/#{@repository}/deployments")
     name       = @name
     repository = @repository
     env        = @env
