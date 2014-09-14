@@ -1,4 +1,5 @@
 Fs       = require "fs"
+Url      = require "url"
 Path     = require "path"
 Version  = require(Path.join(__dirname, "version")).Version
 Octonode = require("octonode")
@@ -38,6 +39,18 @@ class Deployment
   isValidEnv: ->
     @env in @environments
 
+  apiUri: ->
+    @application['github_api'] or process.env.HUBOT_GITHUB_API or 'https://api.github.com'
+
+  parsedApiUri: ->
+    Url.parse(@apiUri())
+
+  apiPath: (path) ->
+    [@parsedApiUri().path, path].join('/')
+
+  apiHost: ->
+    @parsedApiUri().host
+
   requestBody: ->
     ref: @ref
     task: @task
@@ -57,13 +70,12 @@ class Deployment
 
   api: ->
     githubToken = @userToken or process.env.HUBOT_GITHUB_TOKEN or 'unknown'
-    githubApi = @application['github_api'] or process.env.HUBOT_GITHUB_API or 'api.github.com'
-    api = Octonode.client(githubToken, { hostname: githubApi })
+    api = Octonode.client(githubToken, { hostname: @apiHost() })
     api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
     api
 
   latest: (cb) ->
-    path       = "repos/#{@repository}/deployments"
+    path       = @apiPath("repos/#{@repository}/deployments")
     params     =
       environment: @env
 
@@ -75,7 +87,7 @@ class Deployment
       cb(body)
 
   post: (cb) ->
-    path       = "repos/#{@repository}/deployments"
+    path       = @apiPath("repos/#{@repository}/deployments")
     name       = @name
     repository = @repository
     env        = @env
