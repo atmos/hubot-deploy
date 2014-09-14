@@ -1,9 +1,9 @@
-Fs       = require "fs"
-Path     = require "path"
-Version  = require(Path.join(__dirname, "version")).Version
-Octonode = require("octonode")
-###########################################################################
-
+Fs        = require "fs"
+Url       = require "url"
+Path      = require "path"
+Version   = require(Path.join(__dirname, "version")).Version
+Octonode  = require("octonode")
+ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
 
 class Deployment
@@ -24,19 +24,12 @@ class Deployment
 
     @application = applications[@name]
 
-    @api = Octonode.client(process.env.HUBOT_GITHUB_TOKEN or 'unknown', { hostname: process.env.HUBOT_GITHUB_API or 'api.github.com' })
-    @api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
-
     if @application?
       @repository = @application['repository']
 
       @configureAutoMerge()
       @configureRequiredContexts()
       @configureEnvironments()
-
-  setUserToken: (token) ->
-    @api = Octonode.client(token.trim())
-    @api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
 
   isValidApp: ->
     @application?
@@ -61,12 +54,23 @@ class Deployment
         adapter: @adapter
       config: @application
 
+  setUserToken: (token) ->
+    @userToken = token.trim()
+
+  apiConfig: ->
+    new ApiConfig(@userToken, @application)
+
+  api: ->
+    api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
+    api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+    api
+
   latest: (cb) ->
-    path       = "repos/#{@repository}/deployments"
+    path       = @apiConfig().path("repos/#{@repository}/deployments")
     params     =
       environment: @env
 
-    @api.get path, params, (err, status, body, headers) ->
+    @api().get path, params, (err, status, body, headers) ->
       if err
         body = err
         console.log err['message'] unless process.env.NODE_ENV == 'test'
@@ -74,13 +78,13 @@ class Deployment
       cb(body)
 
   post: (cb) ->
-    path       = "repos/#{@repository}/deployments"
+    path       = @apiConfig().path("repos/#{@repository}/deployments")
     name       = @name
     repository = @repository
     env        = @env
     ref        = @ref
 
-    @api.post path, @requestBody(), (err, status, body, headers) ->
+    @api().post path, @requestBody(), (err, status, body, headers) ->
       data = body
 
       success = status == 201
