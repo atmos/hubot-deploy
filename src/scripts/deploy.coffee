@@ -81,6 +81,7 @@ module.exports = (robot) ->
 
     deployment.user = username
     deployment.room = msg.message.user.room
+    deployment.thread = msg.message.user.thread_id
 
     deployment.adapter = robot.adapterName
 
