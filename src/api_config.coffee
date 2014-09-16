@@ -14,7 +14,9 @@ class ApiConfig
       'https://api.github.com'
 
   apiToken: ->
-    (@application? and @application['github_token']) or @userToken
+    (@application? and @application['github_token']) or
+      @userToken or
+      process.env.HUBOT_GITHUB_TOKEN
 
   filterPaths: ->
     newArr = @pathParts().filter (word) -> word isnt ""
