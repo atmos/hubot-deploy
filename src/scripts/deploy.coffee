@@ -84,7 +84,7 @@ module.exports = (robot) ->
     deployment.room = msg.message.user.room
 
     if robot.adapterName == 'flowdock'
-      deployment.message_thread = msg.message.user.thread_id
+      deployment.message_thread = msg.message.user.message || msg.message.user.thread_id
 
     deployment.adapter = robot.adapterName
 
