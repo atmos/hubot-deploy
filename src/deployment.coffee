@@ -38,7 +38,15 @@ class Deployment
   isValidEnv: ->
     @env in @environments
 
+  # Retrieves a fully constructed request body and removes sensitive config info
+  # A hash to be converted into the body of the post to create a GitHub Deployment
   requestBody: ->
+    body = JSON.parse(JSON.stringify(@unfilteredRequestBody()))
+    delete(body.payload.config.github_api)
+    delete(body.payload.config.github_token)
+    body
+
+  unfilteredRequestBody: ->
     ref: @ref
     task: @task
     force: @force

@@ -76,7 +76,8 @@ module.exports = (robot) ->
       msg.reply "#{name} doesn't seem to have an #{env} environment."
       return
 
-    if user = robot.brain.userForId msg.envelope.user.id
+    user = robot.brain.userForId msg.envelope.user.id
+    if user? and user.githubDeployToken?
       deployment.setUserToken(user.githubDeployToken)
 
     deployment.user = username

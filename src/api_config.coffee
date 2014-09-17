@@ -15,7 +15,7 @@ class ApiConfig
 
   apiToken: ->
     (@application? and @application['github_token']) or
-      @userToken or
+      (@userToken? and @userToken) or
       process.env.HUBOT_GITHUB_TOKEN
 
   filterPaths: ->
