@@ -1,37 +1,32 @@
 ## Configuration
 
-`hubot-deploy` looks for an `apps.json` file in the root of your deployed hubot to map names to specific repos that should be deployed. Here's what the format looks like.
+In order to create deployments on GitHub you need to configure a few things. Fallback configurations are configured by environmental variables.
 
-```JSON
-{
-  "hubot": {
-    "provider": "heroku",
-    "auto_merge": false,
-    "repository": "MyOrg/my-org-hubot",
-    "environments": ["production"],
-
-    "heroku_production_name": "my-orgs-hubot"
-  },
-
-  "dotcom": {
-    "provider": "heroku",
-    "repository": "MyOrg/www",
-    "environments": ["production","staging"],
-    "required_contexts": ["ci/janky", "security/brakeman"],
-
-    "heroku_staging_name": "my-org-www-staging",
-    "heroku_production_name": "my-org-www"
-  }
-}
-```
-
-Each entry can take a few attributes.
-
-| Attributes              |                                                 |
+| Common Attributes       |                                                 |
 |-------------------------|-------------------------------------------------|
-| provider                | Either 'heroku' or 'capistrano'. **Required**   |
-| repository              | The name with owner path to a repo on github. e.g. "atmos/heaven". **Required** |
-| environments            | An array of environments that you can deploy to. Default: "production" |
-| required_contexts       | An array of commit status context names to verify against.|
-| heroku_<env>_name       | The name of the heroku app to push to. Multiple environments are available with things like 'heroku_production_name' and 'heroku_staging_name'. |
+| HUBOT_GITHUB_API        | A String of the full URL to the GitHub API. Default: "https://api.github.com" |
+| HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. |
 
+### The Highlander Token
+
+If you're only going to use the `HUBOT_GITHUB_TOKEN` then all deployments will be created by a single user. Since you're deploying from chat, it's nice to know who requested the actual deployment.
+
+### User Tokens
+
+The hubot-deploy script provides a way to have user specific tokens for interacting with the API.
+
+**To prevent chat networks from logging your password it's good practice to lock the room if available.**
+
+To configure your own token, make a [personal OAuth token][1] with both `user` and `repo_deployment` scopes. Then provide it to hubot.
+
+    $ hubot deploy-token:set <mytoken>
+
+Hubot will respond and tell you whether the token is sufficient or not. Subsequent deployments will be properly attributed to your user in the API.
+
+If you want to go back having the highlander token create your deployments you can reset things like.
+
+    $ hubot deploy-token:reset
+
+Hubot will respond and tell you that your token has been forgotten and removed from the robot's brain.
+
+[1]: https://github.com/settings/applications

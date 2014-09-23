@@ -4,22 +4,13 @@
 
 ![](https://f.cloud.github.com/assets/38/2331137/77036ef8-a444-11e3-97f6-68dab6975eeb.jpg)
 
-There's a bunch of [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/docs/chatops.md) commands.
-
 ## Installation
 
 * Add hubot-deploy to your `package.json` file.
 * Add hubot-deploy to your `external-scripts.json` file.
-* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your repos and providers for easy aliasing and custom options.
-* Understand how the [GitHub API tokens are used](https://github.com/atmos/hubot-deploy/blob/master/docs/tokens.md).
-
-## Runtime Environment
-
-You need to set the following environmental variables.
-
-| Environmental Variables |                                                 |
-|-------------------------|-------------------------------------------------|
-| HUBOT_GITHUB_TOKEN            |A [GitHub token](https://github.com/settings/applications#personal-access-tokens) with [repo:deployment](https://developer.github.com/v3/oauth/#scopes). The owner of this token creates [Deployments][5].
+* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your runtime environment to interaction with the GitHub API.
+* Understand how [apps.json](https://github.com/atmos/hubot-deploy/blob/master/docs/config-file.md) works.
+* Learn about [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/docs/chatops.md) deploys.
 
 ## See Also
 
