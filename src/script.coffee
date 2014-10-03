@@ -75,7 +75,7 @@ module.exports = (robot) ->
       msg.reply "#{name}? Never heard of it."
       return
     unless deployment.isValidEnv()
-      msg.reply "#{name} doesn't seem to have an #{env} environment."
+      msg.reply "Please provide a valid environment for the deploy"
       return
 
     deployment.room = msg.message.user.room
