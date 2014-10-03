@@ -66,7 +66,7 @@ module.exports = (robot) ->
     force = msg.match[2] == '!'
     name  = msg.match[3]
     ref   = (msg.match[4]||'master')
-    env   = (msg.match[5]||'production')
+    env   = (msg.match[5])
     hosts = (msg.match[6]||'')
 
     deployment = new Deployment(name, ref, task, env, force, hosts)
