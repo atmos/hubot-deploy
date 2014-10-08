@@ -64,7 +64,7 @@ module.exports = (robot) ->
     ref      = (msg.match[4]||'master')
     env      = (msg.match[5]||'production')
     hosts    = (msg.match[6]||'')
-    task     = (msg.match[6]||command)
+    task     = (msg.match[7]||command)
 
     username = msg.envelope.user.githubLogin or msg.envelope.user.name
 
