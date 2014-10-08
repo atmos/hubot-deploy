@@ -4,7 +4,7 @@
 # Commands:
 #   hubot where can I deploy <app> - see what environments you can deploy app
 #   hubot deploy:version - show the script version and node/environment info
-#   hubot deploy <app>/<branch> to <env>/<roles> - deploys <app>'s <branch> to the <env> environment's <roles> servers
+#   hubot deploy <app>/<branch> to <env>/<roles> using task <task> - deploys <app>'s <branch> to the <env> environment's <roles> servers using <task> deploy task
 #   hubot deploys <app>/<branch> in <env> - Displays recent deployments for <app>'s <branch> in the <env> environment
 #
 supported_tasks = [ DeployPrefix ]
@@ -58,12 +58,13 @@ module.exports = (robot) ->
   #
   # Actually dispatch deployment requests to GitHub
   robot.respond DeployPattern, (msg) ->
-    task  = msg.match[1].replace(DeployPrefix, "deploy")
-    force = msg.match[2] == '!'
-    name  = msg.match[3]
-    ref   = (msg.match[4]||'master')
-    env   = (msg.match[5]||'production')
-    hosts = (msg.match[6]||'')
+    command  = msg.match[1].replace(DeployPrefix, "deploy")
+    force    = msg.match[2] == '!'
+    name     = msg.match[3]
+    ref      = (msg.match[4]||'master')
+    env      = (msg.match[5]||'production')
+    hosts    = (msg.match[6]||'')
+    task     = (msg.match[6]||command)
 
     username = msg.envelope.user.githubLogin or msg.envelope.user.name
 
