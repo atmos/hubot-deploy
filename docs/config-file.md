@@ -12,6 +12,7 @@ It's a javascript object where application aliases are used as the names(keys). 
 | required_contexts       | An array of commit status context names to verify against.|
 | github_api              | A String with the full URL to the API. Useful for enterprise installs. Default: "https://api.github.com" |
 | github_token            | A token for creating deployments in the GitHub API specific to the specific repository.|
+| allowed_rooms           | An array of room id's for restricting the deployments to be started only in those rooms.|
 
 Any extra parameters will be passed along to GitHub in the `payload` field. This should allow for a decent amount of customization.
 
