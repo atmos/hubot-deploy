@@ -21,5 +21,13 @@
     "environments": ["production","staging"],
 
     "provider": "capistrano"
+  },
+
+  "restricted-app": {
+    "repository": "acme/example",
+    "enironments": ["production"],
+    "provider": "capistrano",
+    "allowed_rooms": ["ops"]
   }
+
 }

@@ -32,11 +32,16 @@ class Deployment
       @configureRequiredContexts()
       @configureEnvironments()
 
+      @allowedRooms = @application['allowed_rooms']
+
   isValidApp: ->
     @application?
 
   isValidEnv: ->
     @env in @environments
+
+  isAllowedRoom: (room) ->
+    !@allowedRooms? || room in @allowedRooms
 
   # Retrieves a fully constructed request body and removes sensitive config info
   # A hash to be converted into the body of the post to create a GitHub Deployment
