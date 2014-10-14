@@ -39,6 +39,17 @@ describe "Deployment fixtures", () ->
       deployment.requestBody()
       assert.equal(true, true)
 
+  describe "#isAllowedRoom()", () ->
+    it "allows everything when there is no configuration", ->
+      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+      assert.equal(deployment.isAllowedRoom('anything'), true)
+    it "is allowed with room that is in configuration", ->
+      deployment = new Deployment("restricted-app", "master", "deploy", "production", "", "")
+      assert.equal(deployment.isAllowedRoom('ops'), true)
+    it "is not allowed with room that is not in configuration", ->
+      deployment = new Deployment("restricted-app", "master", "deploy", "production", "", "")
+      assert.equal(deployment.isAllowedRoom('watercooler'), false)
+
   #describe "#latest()", () ->
   #  it "fetches the latest deployments", (done) ->
   #    deployment = new Deployment("hubot")

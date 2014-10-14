@@ -42,4 +42,9 @@ describe "The Hubot Script", () ->
     assert.equal 1, room.messages.length
     # TODO stub out the response or something?
 
+  it "does not allow deploying in random room if allowed_rooms is configured", () ->
+    room.user.say 'atmos', 'hubot deploy restricted-app to production'
+    result = room.messages[1][1]
+    assert.match result, /not allowed to be deployed from this room/im
+
   it "deploys hubot"
