@@ -68,6 +68,10 @@ describe "Patterns", () ->
       assert.equal "production",   matches[5], "incorrect environment name"
       assert.equal "fe",           matches[6], "incorrect branch name"
 
+    it "does not match typos", () ->
+      matches = "deploy hubot/branch tos taging".match(DeployPattern)
+      assert.equal matches, null
+
   describe "DeploysPattern", () ->
     it "rejects things that don't start with deploy", () ->
       assert !"ping".match(DeploysPattern)
