@@ -8,6 +8,7 @@ ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 
 class Deployment
   @APPS_FILE = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
+  @CA_FILE = process.env['HUBOT_CA_FILE']
 
   constructor: (@name, @ref, @task, @env, @force, @hosts) ->
     @room             = 'unknown'
@@ -17,6 +18,7 @@ class Deployment
     @autoMerge        = true
     @environments     = [ "production" ]
     @requiredContexts = null
+    @caFile           = Fs.readFileSync(@constructor.CA_FILE) if @constructor.CA_FILE
 
     try
       applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
@@ -78,6 +80,7 @@ class Deployment
   api: ->
     api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
     api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+    api.requestDefaults.agentOptions = { ca: @caFile } if @caFile
     api
 
   latest: (cb) ->
