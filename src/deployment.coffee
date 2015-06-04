@@ -17,6 +17,7 @@ class Deployment
     @autoMerge        = true
     @environments     = [ "production" ]
     @requiredContexts = null
+    @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
     try
       applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
@@ -78,6 +79,7 @@ class Deployment
   api: ->
     api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
     api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
+    api.requestDefaults.agentOptions = { ca: @caFile } if @caFile
     api
 
   latest: (cb) ->

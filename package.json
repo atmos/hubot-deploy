@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "chai":          "~1.0.3",
-    "mocha":         "~1.1.0",
+    "mocha":         "~2.2.5",
     "coffee-script": ">=1.6.3",
     "hubot-test-helper": "0.0.2"
   },
