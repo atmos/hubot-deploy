@@ -50,6 +50,20 @@ describe "Deployment fixtures", () ->
       deployment = new Deployment("restricted-app", "master", "deploy", "production", "", "")
       assert.equal(deployment.isAllowedRoom('watercooler'), false)
 
+  describe "#api", () ->
+    context "with no ca file", () ->
+      it "doesnt set agentOptions", () ->
+        deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+        api = deployment.api()
+        assert.equal(api.requestDefaults.agentOptions, null)
+
+    context "with ca file", () ->
+      it "sets agentOptions.ca", () ->
+        process.env.HUBOT_CA_FILE = Path.join(__dirname, "fixtures", "cafile.txt")
+        deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+        api = deployment.api()
+        assert(api.requestDefaults.agentOptions.ca)
+
   #describe "#latest()", () ->
   #  it "fetches the latest deployments", (done) ->
   #    deployment = new Deployment("hubot")
