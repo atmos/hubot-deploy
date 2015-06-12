@@ -7,6 +7,7 @@
 * The `task` attribute is first class and not in the payload anymore.
 * Support recent deployments listing in chat `/deploys hubot`
 * Support required_contexts in deployment API
+* Use user tokens if present for fetching recent deployments
 
 0.6.x
 =====
