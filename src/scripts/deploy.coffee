@@ -46,6 +46,11 @@ module.exports = (robot) ->
 
     try
       deployment = new Deployment(name, null, null, environment)
+
+      user = robot.brain.userForId msg.envelope.user.id
+      if user? and user.githubDeployToken?
+        deployment.setUserToken(user.githubDeployToken)
+
       deployment.latest (deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
         msg.send formatter.message()
