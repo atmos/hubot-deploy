@@ -21,6 +21,15 @@ class LatestFormatter extends Formatter
   delimiter: ->
     "-----------------------------------------------------------------------------------\n"
 
+  loginForDeployment: (deployment) ->
+    result = null
+    if deployment.payload?
+      if deployment.payload.notify
+        result or= deployment.payload.notify.user
+      result or= deployment.payload.actor
+
+    result or= deployment.creator.login
+
   message: ->
     output  = "Recent #{@deployment.env} Deployments for #{@deployment.name}\n"
     output += @delimiter()
@@ -36,7 +45,7 @@ class LatestFormatter extends Formatter
       else
         ref = "#{deployment.ref}(#{deployment.sha[0..7]})"
 
-      login = deployment.payload.notify.user || deployment.payload.actor || deployment.creator.login
+      login = @loginForDeployment(deployment)
       timestamp = Sprintf "%18s / %-21s", Timeago(deployment.created_at), deployment.created_at
 
       output += Sprintf "%-15s | %-21s | %38s\n", login, ref, timestamp
