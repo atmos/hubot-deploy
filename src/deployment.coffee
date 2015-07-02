@@ -13,7 +13,8 @@ class Deployment
     @room             = 'unknown'
     @user             = 'unknown'
     @adapter          = 'unknown'
-    @message_thread   = 'unknown'
+    @thread_id        = 'unknown'
+    @message_id       = 'unknown'
     @autoMerge        = true
     @environments     = [ "production" ]
     @requiredContexts = null
@@ -67,7 +68,8 @@ class Deployment
         room: @room
         user: @user
         adapter: @adapter
-        message_thread: @message_thread
+        message_id: @message_id
+        thread_id: @thread_id
       config: @application
 
   setUserToken: (token) ->
