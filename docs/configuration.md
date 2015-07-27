@@ -29,4 +29,4 @@ If you want to go back having the highlander token create your deployments you c
 
 Hubot will respond and tell you that your token has been forgotten and removed from the robot's brain.
 
-[1]: https://github.com/settings/applications
+[1]: https://github.com/settings/tokens
