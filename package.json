@@ -1,6 +1,6 @@
 {
   "name": "hubot-deploy",
-  "version": "0.6.53",
+  "version": "0.6.54",
   "author": "Corey Donohoe <atmos@atmos.org>",
   "description": "hubot script for GitHub Flow",
   "main": "index.coffee",
@@ -45,10 +45,5 @@
   "bugs": {
     "url": "https://github.com/atmos/hubot-deploy/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/atmos/hubot-deploy/raw/master/LICENSE.md"
-    }
-  ]
+  "license": "MIT"
 }
