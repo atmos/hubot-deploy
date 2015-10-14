@@ -60,7 +60,7 @@ class Deployment
     auto_merge: @autoMerge
     environment: @env
     required_contexts: @requiredContexts
-    description: "Deploying from hubot-deploy-v#{Version}"
+    description: "{@task} on {@env} from hubot-deploy-v#{Version}"
     payload:
       name: @name
       hosts: @hosts
