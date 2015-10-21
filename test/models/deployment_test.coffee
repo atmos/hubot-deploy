@@ -1,6 +1,6 @@
 Path = require('path')
 
-Deployment = require(Path.join(__dirname, "..", "src", "deployment")).Deployment
+Deployment = require(Path.join(__dirname, "..", "..", "src", "deployment")).Deployment
 
 describe "Deployment fixtures", () ->
   describe "#isValidApp()", () ->
@@ -59,7 +59,7 @@ describe "Deployment fixtures", () ->
 
     context "with ca file", () ->
       it "sets agentOptions.ca", () ->
-        process.env.HUBOT_CA_FILE = Path.join(__dirname, "fixtures", "cafile.txt")
+        process.env.HUBOT_CA_FILE = Path.join(__dirname, "..", "fixtures", "cafile.txt")
         deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
         api = deployment.api()
         assert(api.requestDefaults.agentOptions.ca)
