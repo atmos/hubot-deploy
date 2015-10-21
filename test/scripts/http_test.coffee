@@ -8,16 +8,10 @@ describe "Deployment Status HTTP Callbacks", () ->
   adapter = null
 
   beforeEach (done) ->
-    robot = new Robot(null, "mock-adapter", false, "Eddie")
+    robot = new Robot(null, "mock-adapter", true, "Hubot")
 
     robot.adapter.on "connected", () ->
       process.env.HUBOT_AUTH_ADMIN = "1"
-      #robot.loadFile(
-      #    Path.resolve(
-      #        Path.join("node_modules/hubot/src/scripts")
-      #    ),
-      #    "auth.coffee"
-      #)
 
       require("../../index")(robot)
 
@@ -33,6 +27,7 @@ describe "Deployment Status HTTP Callbacks", () ->
     robot.run()
 
   afterEach () ->
+    robot.server.close()
     robot.shutdown()
 
   it "responds when greeted", (done) ->
@@ -42,3 +37,8 @@ describe "Deployment Status HTTP Callbacks", () ->
 
     message = new TextMessage(user, "Computer!")
     adapter.receive(message)
+
+  it "starts the server", (done) ->
+    console.log robot.server.address()
+    #assert.match robot.router.address().port, /\d+/
+    done()
