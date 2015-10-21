@@ -38,6 +38,10 @@ describe "Deployment fixtures", () ->
       deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")
       deployment.requestBody()
       assert.equal(true, true)
+    it "should have the right description", () ->
+      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
+      body = deployment.requestBody()
+      assert.equal(body.description, 'deploy on production from hubot-deploy-v0.6.56')
 
   describe "#isAllowedRoom()", () ->
     it "allows everything when there is no configuration", ->
