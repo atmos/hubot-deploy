@@ -40,9 +40,17 @@ describe "GitHubEvents.Deployment fixtures", () ->
       deployment = deploymentFor "production"
       assert.equal deployment.number, 1875476
       assert.equal deployment.repoName, "atmos/my-robot"
+      assert.equal deployment.ref, "heroku"
+      assert.equal deployment.sha, "3c9f42c"
+      assert.equal deployment.name, "my-robot"
+      assert.equal deployment.environment, "production"
 
   describe "staging", () ->
     it "works", () ->
       deployment = deploymentFor "staging"
       assert.equal deployment.number, 1875476
+      assert.equal deployment.name, "heaven"
       assert.equal deployment.repoName, "atmos/heaven"
+      assert.equal deployment.ref, "heroku"
+      assert.equal deployment.sha, "3c9f42c"
+      assert.equal deployment.environment, "staging"
