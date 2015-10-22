@@ -42,7 +42,7 @@ module.exports = (robot) ->
 
       catch err
         robot.logger.error err
-  else
+  else if process.env.NODE_ENV is not test
     robot.logger.error "You're using hubot-deploy without specifying the shared webhook secret"
     robot.logger.error "Take a second to learn about them: https://developer.github.com/webhooks/securing/"
     robot.logger.error "Then set the HUBOT_DEPLOY_WEBHOOK_SECRET variable in the robot environment"
