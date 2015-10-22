@@ -5,7 +5,8 @@
 #   hubot deploy-hooks:sync - Sets your user's deployment token. Requires repo_deployment scope.
 #
 
-Path             = require("path")
+Path             = require "path"
+Crypto           = require "crypto"
 Deployment       = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
 DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).DeployPrefix
 DeploymentStatus = require(Path.join(__dirname, "..", "models", "deployment_status")).DeploymentStatus
@@ -29,7 +30,7 @@ module.exports = (robot) ->
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
-        expectedSignature = crypto.createHmac("sha1", GitHubSecret).update(req.body).digest("hex")
+        expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(req.body).digest("hex")
         if payloadSignature is not "sha1=#{expectedSignature}"
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
