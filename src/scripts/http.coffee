@@ -23,31 +23,32 @@ module.exports = (robot) ->
     msg.reply("Why hello there! (ticker tape, ticker tape)")
 
   if GitHubSecret
-    robot.router.post "/github/deployments", (req, res) ->
+    robot.router.post "/hubot-deploy", (req, res) ->
       try
-        eventType = req.headers['x-github-event']
-
-        if eventType is "ping"
-          res.writeHead 200, {'content-type': 'application/json' }
-          res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
-
-        if eventType is not "deployment_status"
-          res.writeHead 200, {'content-type': 'application/json' }
-          res.end(JSON.stringify({message: "Received but not processed"}))
-
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
-
         expectedSignature = crypto.createHmac("sha1", GitHubSecret).update(req.body).digest("hex")
         if payloadSignature is not "sha1=#{expectedSignature}"
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
-        deliveryId = req.headers['x-github-delivery']
-        deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(req.body)
-        robot.emit "deploymentStatus", deploymentStatus
+        switch req.headers['x-github-event']
+          when "ping"
+            res.writeHead 200, {'content-type': 'application/json' }
+            res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+          when "deployment_status"
+            deliveryId = req.headers['x-github-delivery']
+            deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(req.body)
+
+            robot.emit "deploymentStatus", deploymentStatus
+
+            res.writeHead 200, {'content-type': 'application/json' }
+            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment request"}))
+          else
+            res.writeHead 200, {'content-type': 'application/json' }
+            res.end(JSON.stringify({message: "Received but not processed"}))
 
       catch err
         robot.logger.error err
