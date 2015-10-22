@@ -47,11 +47,11 @@ module.exports = (robot) ->
             robot.emit "github_deployment_status", deploymentStatus
 
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment status request."}))
+            res.end(JSON.stringify({message: "#{deploymentStatus.repoName}: dispatched a deployment status event."}))
           when "deployment"
-            robot.emit "github_deployment", { }
+            robot.emit "github_deployment", req.body
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received #{req.body.repository.full_name} deployment request but did not process it."}))
+            res.end(JSON.stringify({message: "#{req.body.repository.full_name}: dispatched a deployment event"}))
           else
             res.writeHead 400, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Received but not processed."}))
