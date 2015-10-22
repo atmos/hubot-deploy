@@ -54,7 +54,7 @@ class DeploymentStatus
       when "failure", "error"
         msg += "failed."
       else
-        msg += "is still running."
+        msg += "is running."
 
     if @targetUrl?
       msg += " " + @targetUrl

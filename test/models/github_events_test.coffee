@@ -16,7 +16,7 @@ describe "GitHubEvents.DeploymentStatus fixtures", () ->
       status = deploymentStatusFor "pending"
       assert.equal status.state, "pending"
       assert.equal status.repoName, "atmos/my-robot"
-      assert.equal status.toSimpleString(), "hubot-deploy: atmos\'s deployment #123456 of my-robot/break-up-notifiers to production is still running. https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c"
+      assert.equal status.toSimpleString(), "hubot-deploy: atmos\'s deployment #123456 of my-robot/break-up-notifiers to production is running. https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c"
 
   describe "failure", () ->
     it "knows the statue and repo", () ->
