@@ -67,6 +67,9 @@ class Deployment
       notify:
         room: @room
         user: @user
+        jids:
+          room: @roomJid
+          user: @userJid
         adapter: @adapter
         message_id: @message_id
         thread_id: @thread_id
