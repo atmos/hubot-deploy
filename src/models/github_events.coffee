@@ -1,33 +1,52 @@
 ###########################################################################
 class Deployment
   constructor: (@id, @payload) ->
-    @sha         = @payload.deployment.sha.substring(0,7)
-    @ref         = @payload.deployment.ref
+    deployment   = @payload.deployment
     @name        = @payload.repository.name
-    @notify      = @payload.deployment.payload.notify
-    @number      = @payload.deployment.id
     @repoName    = @payload.repository.full_name
-    @environment = @payload.deployment.environment
+
+    @number      = deployment.id
+    @sha         = deployment.sha.substring(0,7)
+    @ref         = deployment.ref
+    @environment = deployment.environment
+    @notify      = deployment.payload.notify
+    if @notify? and @notify.user?
+      @actorName = @notify.user
+    else
+      @actorName = deployment.creator.login
 
     if @payload.deployment.sha is @ref
       @ref = @sha
+
+  toSimpleString: ->
+    "hubot-deploy: #{@actorName}'s ##{@number} of #{@name}/#{@ref} to #{@environment} created."
 
 exports.Deployment = Deployment
 
 ###########################################################################
 class DeploymentStatus
   constructor: (@id, @payload) ->
-    @ref         = @payload.deployment.ref
-    @sha         = @payload.deployment.sha.substring(0,7)
+    deployment   = @payload.deployment
     @name        = @payload.repository.name
-    @state       = @payload.deployment_status.state
-    @notify      = @payload.deployment.payload.notify
-    @number      = @payload.deployment.id
     @repoName    = @payload.repository.full_name
+
+    @number      = deployment.id
+    @sha         = deployment.sha.substring(0,7)
+    @ref         = deployment.ref
+    @environment = deployment.environment
+    @notify      = deployment.payload.notify
+    if @notify? and @notify.user?
+      @actorName = @notify.user
+    else
+      @actorName = deployment.creator.login
+
+    @state       = @payload.deployment_status.state
     @targetUrl   = @payload.deployment_status.target_url
-    @environment = @payload.deployment.environment
 
     if @payload.deployment.sha is @ref
       @ref = @sha
+
+  toSimpleString: ->
+    "hubot-deploy: ##{@number} of #{@name}/#{@ref} to #{@environment} is #{@state}. #{@targetUrl}."
 
 exports.DeploymentStatus = DeploymentStatus

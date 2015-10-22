@@ -51,8 +51,7 @@ module.exports = (robot) ->
             robot.emit "github_deployment_event", deployment
 
             res.writeHead 200, {'content-type': 'application/json' }
-            msg = "hubot-deploy: ##{deployment.number} of #{deployment.name}/#{deployment.ref} to #{deployment.environment} created."
-            return res.end(JSON.stringify({message: msg}))
+            return res.end(JSON.stringify({message: deployment.toSimpleString()}))
 
           when "deployment_status"
             status = new DeploymentStatus deliveryId, req.body
@@ -60,8 +59,7 @@ module.exports = (robot) ->
             robot.emit "github_deployment_status_event", status
 
             res.writeHead 200, {'content-type': 'application/json' }
-            msg = "hubot-deploy: ##{status.number} of #{status.name}/#{status.ref} to #{status.environment} is #{status.state}."
-            return res.end(JSON.stringify({message: msg}))
+            return res.end(JSON.stringify({message: status.toSimpleString()}))
 
           else
             res.writeHead 400, {'content-type': 'application/json' }
