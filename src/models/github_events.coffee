@@ -19,7 +19,7 @@ class Deployment
       @ref = @sha
 
   toSimpleString: ->
-    "hubot-deploy: #{@actorName}'s ##{@number} of #{@name}/#{@ref} to #{@environment} created."
+    "hubot-deploy: #{@actorName}'s deployment ##{@number} of #{@name}/#{@ref} to #{@environment} requested."
 
 exports.Deployment = Deployment
 
@@ -47,6 +47,14 @@ class DeploymentStatus
       @ref = @sha
 
   toSimpleString: ->
-    "hubot-deploy: ##{@number} of #{@name}/#{@ref} to #{@environment} is #{@state}. #{@targetUrl}."
+    msg = "hubot-deploy: #{@actorName}'s deployment ##{@number} of #{@name}/#{@ref} to #{@environment} "
+    switch @state
+      when "success"
+        msg += "was successful."
+      when "failure", "error"
+        msg += "failed."
+      else
+        msg += "is still running."
+    msg + " " + @targetUrl
 
 exports.DeploymentStatus = DeploymentStatus

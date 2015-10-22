@@ -16,18 +16,21 @@ describe "GitHubEvents.DeploymentStatus fixtures", () ->
       status = deploymentStatusFor "pending"
       assert.equal status.state, "pending"
       assert.equal status.repoName, "atmos/my-robot"
+      assert.equal status.toSimpleString(), "hubot-deploy: atmos\'s deployment #123456 of my-robot/break-up-notifiers to production is still running. https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c"
 
   describe "failure", () ->
     it "knows the statue and repo", () ->
       status = deploymentStatusFor "failure"
       assert.equal status.state, "failure"
       assert.equal status.repoName, "atmos/my-robot"
+      assert.equal status.toSimpleString(), "hubot-deploy: atmos\'s deployment #123456 of my-robot/break-up-notifiers to production failed. https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c"
 
   describe "success", () ->
     it "knows the statue and repo", () ->
       status = deploymentStatusFor "success"
       assert.equal status.state, "success"
       assert.equal status.repoName, "atmos/my-robot"
+      assert.equal status.toSimpleString(), "hubot-deploy: atmos\'s deployment #11627 of my-robot/break-up-notifiers to production was successful. https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c"
 
 describe "GitHubEvents.Deployment fixtures", () ->
   deploymentFor = (fixtureName) ->
@@ -46,6 +49,7 @@ describe "GitHubEvents.Deployment fixtures", () ->
       assert.equal deployment.environment, "production"
       assert.isDefined deployment.notify
       assert.isNotNull deployment.notify
+      assert.equal deployment.toSimpleString(), "hubot-deploy: atmos\'s deployment #1875476 of my-robot/heroku to production requested."
 
   describe "staging", () ->
     it "works", () ->
@@ -58,3 +62,4 @@ describe "GitHubEvents.Deployment fixtures", () ->
       assert.equal deployment.environment, "staging"
       assert.isDefined deployment.notify
       assert.isNotNull deployment.notify
+      assert.equal deployment.toSimpleString(), "hubot-deploy: atmos\'s deployment #1875476 of heaven/heroku to staging requested."
