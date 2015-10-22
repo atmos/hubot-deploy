@@ -27,7 +27,6 @@ module.exports = (robot) ->
     robot.router.post "/hubot-deploy", (req, res) ->
       try
         requestBody = JSON.stringify(req.body)
-        robot.logger.info requestBody
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
@@ -52,7 +51,7 @@ module.exports = (robot) ->
           when "deployment"
             robot.emit "github_deployment", { }
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment request but did not process it."}))
+            res.end(JSON.stringify({message: "Received #{req.body.repository.full_name} deployment request but did not process it."}))
           else
             res.writeHead 400, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Received but not processed."}))
