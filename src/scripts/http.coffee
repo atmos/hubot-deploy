@@ -7,9 +7,12 @@
 
 Path             = require "path"
 Crypto           = require "crypto"
-Deployment       = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
+
+GitHubEvents     = require(Path.join(__dirname, "..", "models", "github_events"))
+Deployment       = GitHubEvents.Deployment
+DeploymentStatus = GitHubEvents.DeploymentStatus
+
 DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).DeployPrefix
-DeploymentStatus = require(Path.join(__dirname, "..", "models", "deployment_status")).DeploymentStatus
 
 GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
@@ -26,12 +29,11 @@ module.exports = (robot) ->
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
       try
-        requestBody = JSON.stringify(req.body)
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
-        expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(requestBody).digest("hex")
+        expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(JSON.stringify(req.body)).digest("hex")
         if payloadSignature is not "sha1=#{expectedSignature}"
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
@@ -41,17 +43,23 @@ module.exports = (robot) ->
           when "ping"
             res.writeHead 200, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+
           when "deployment"
-            robot.emit "github_deployment", req.body
+            deployment = new Deployment deliveryId, req.body
+
+            robot.emit "github_deployment", deployment
+
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "#{req.body.repository.full_name}: dispatched a deployment event"}))
+            res.end(JSON.stringify({message: "#{deployment.repoName}: dispatched a deployment event"}))
+
           when "deployment_status"
-            deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(requestBody)
+            status = new DeploymentStatus deliveryId, req.body
 
-            robot.emit "github_deployment_status", deploymentStatus
+            robot.emit "github_deployment_status", status
 
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "#{deploymentStatus.repoName}: dispatched a deployment status event."}))
+            res.end(JSON.stringify({message: "#{status.repoName}: dispatched a deployment status event."}))
+
           else
             res.writeHead 400, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Received but not processed."}))

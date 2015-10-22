@@ -1,9 +1,11 @@
 Fs   = require "fs"
 Path = require "path"
 
-DeploymentStatus = require(Path.join(__dirname, "..", "..", "src", "models", "deployment_status")).DeploymentStatus
+GitHubEvents     = require(Path.join(__dirname, "..", "..", "src", "models", "github_events"))
+Deployment       = GitHubEvents.Deployment
+DeploymentStatus = GitHubEvents.DeploymentStatus
 
-describe "DeploymentStatus fixtures", () ->
+describe "GitHubEvents.DeploymentStatus fixtures", () ->
   deploymentStatusFor = (fixtureName) ->
     fixtureData = Path.join __dirname, "..", "fixtures", "deployment_statuses", "#{fixtureName}.json"
     fixturePayload = JSON.parse(Fs.readFileSync(fixtureData))
@@ -26,3 +28,21 @@ describe "DeploymentStatus fixtures", () ->
       status = deploymentStatusFor "success"
       assert.equal status.status, "success"
       assert.equal status.repoName, "atmos/my-robot"
+
+describe "GitHubEvents.Deployment fixtures", () ->
+  deploymentFor = (fixtureName) ->
+    fixtureData = Path.join __dirname, "..", "fixtures", "deployments", "#{fixtureName}.json"
+    fixturePayload = JSON.parse(Fs.readFileSync(fixtureData))
+    new Deployment "uuid", fixturePayload
+
+  describe "production", () ->
+    it "works", () ->
+      deployment = deploymentFor "production"
+      assert.equal deployment.number, 1875476
+      assert.equal deployment.repoName, "atmos/my-robot"
+
+  describe "staging", () ->
+    it "works", () ->
+      deployment = deploymentFor "staging"
+      assert.equal deployment.number, 1875476
+      assert.equal deployment.repoName, "atmos/heaven"
