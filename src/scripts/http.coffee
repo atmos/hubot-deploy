@@ -32,17 +32,18 @@ module.exports = (robot) ->
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
-          res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
+          return res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
+
         expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(JSON.stringify(req.body)).digest("hex")
         if payloadSignature is not "sha1=#{expectedSignature}"
           res.writeHead 400, {'content-type': 'application/json' }
-          res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
+          return res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
         deliveryId = req.headers['x-github-delivery']
         switch req.headers['x-github-event']
           when "ping"
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+            return res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
 
           when "deployment"
             deployment = new Deployment deliveryId, req.body
@@ -51,7 +52,7 @@ module.exports = (robot) ->
 
             res.writeHead 200, {'content-type': 'application/json' }
             msg = "hubot-deploy: ##{deployment.number} of #{deployment.name}/#{deployment.ref} to #{deployment.environment} created."
-            res.end(JSON.stringify({message: msg}))
+            return res.end(JSON.stringify({message: msg}))
 
           when "deployment_status"
             status = new DeploymentStatus deliveryId, req.body
@@ -60,16 +61,16 @@ module.exports = (robot) ->
 
             res.writeHead 200, {'content-type': 'application/json' }
             msg = "hubot-deploy: ##{status.number} of #{status.name}/#{status.ref} to #{status.environment} is #{status.state}."
-            res.end(JSON.stringify({message: msg}))
+            return res.end(JSON.stringify({message: msg}))
 
           else
             res.writeHead 400, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received but not processed."}))
+            return res.end(JSON.stringify({message: "Received but not processed."}))
 
       catch err
         robot.logger.error err
         res.writeHead 500, {'content-type': 'application/json' }
-        res.end(JSON.stringify({error: "Something went crazy processing the request."}))
+        return res.end(JSON.stringify({error: "Something went crazy processing the request."}))
 
   else if process.env.NODE_ENV is not "test"
     robot.logger.error "You're using hubot-deploy without specifying the shared webhook secret"
