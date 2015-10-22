@@ -93,8 +93,8 @@ module.exports = (robot) ->
       deployment.userJid = msg.envelope.user.jid
 
     deployment.room = msg.message.user.room
-    if msg.envelope.room.jid?
-      deployment.roomJid = msg.envelope.room.jid
+    if msg.envelope.user.reply_to?
+      deployment.roomJid = msg.envelope.user.reply_to
 
     if robot.adapterName == 'flowdock'
       deployment.thread_id = msg.message.metadata.thread_id
