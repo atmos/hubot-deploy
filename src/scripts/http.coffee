@@ -26,7 +26,7 @@ module.exports = (robot) ->
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
       try
-        requestBody = req.body
+        requestBody = JSON.stringify(req.body)
         robot.logger.info requestBody
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
