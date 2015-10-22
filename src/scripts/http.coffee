@@ -22,7 +22,7 @@ module.exports = (robot) ->
   robot.hear /Computer!/, (msg) ->
     msg.reply("Why hello there! (ticker tape, ticker tape)")
 
-  robot.handleHttpRequest = (body, headers) ->
+  robot.handleHttpRequest = (deliveryId, parsedBody) ->
     robot.logger.info "GitHubSecret is #{GitHubSecret}"
     console.log body
     console.log headers
@@ -30,8 +30,6 @@ module.exports = (robot) ->
   if GitHubSecret
     robot.router.post "/github/deployments", (req, res) ->
       try
-        id    = req.headers['x-github-delivery']
-
         eventType = req.headers['x-github-event']
         unless eventType? and eventType is "deployment_status"
           res.writeHead 200, {'content-type': 'application/json' }
@@ -42,9 +40,13 @@ module.exports = (robot) ->
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
 
-        originalBody = req.body
+        expectedSignature = crypto.createHmac("sha1", GitHubSecret).update(req.body).digest("hex")
+        if payloadSignature is not "sha1=#{expectedSignature}"
+          res.writeHead 400, {'content-type': 'application/json' }
+          res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
-        data = JSON.parse(originalBody)
+        deliveryId = req.headers['x-github-delivery']
+        robot.handleHttpRequest(deliveryId, JSON.parse(req.body))
       catch err
         robot.logger.error err
 
