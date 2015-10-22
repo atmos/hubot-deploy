@@ -2,7 +2,7 @@ Fs        = require "fs"
 Url       = require "url"
 Path      = require "path"
 Version   = require(Path.join(__dirname, "version")).Version
-Octonode  = require("octonode")
+Octonode  = require "octonode"
 ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
 

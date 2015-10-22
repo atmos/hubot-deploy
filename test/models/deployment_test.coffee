@@ -1,4 +1,4 @@
-Path = require('path')
+Path = require "path"
 
 Deployment = require(Path.join(__dirname, "..", "..", "src", "deployment")).Deployment
 
