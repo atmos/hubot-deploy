@@ -13,8 +13,6 @@ class Deployment
     @room             = 'unknown'
     @user             = 'unknown'
     @adapter          = 'unknown'
-    @thread_id        = 'unknown'
-    @message_id       = 'unknown'
     @autoMerge        = true
     @environments     = [ "production" ]
     @requiredContexts = null

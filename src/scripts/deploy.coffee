@@ -89,12 +89,12 @@ module.exports = (robot) ->
       deployment.setUserToken(user.githubDeployToken)
 
     deployment.user = username
-    if msg.envelope.user.jid?
-      deployment.userJid = msg.envelope.user.jid
+    if msg.message.user.jid?
+      deployment.userJid = msg.message.user.jid
 
     deployment.room = msg.message.user.room
-    if msg.envelope.user.reply_to?
-      deployment.roomJid = msg.envelope.user.reply_to
+    if msg.message.user.reply_to?
+      deployment.roomJid = msg.message.user.reply_to
 
     if robot.adapterName == 'flowdock'
       deployment.thread_id = msg.message.metadata.thread_id
