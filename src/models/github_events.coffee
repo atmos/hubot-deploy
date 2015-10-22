@@ -55,6 +55,10 @@ class DeploymentStatus
         msg += "failed."
       else
         msg += "is still running."
-    msg + " " + @targetUrl
+
+    if @targetUrl?
+      msg += " " + @targetUrl
+
+    msg
 
 exports.DeploymentStatus = DeploymentStatus
