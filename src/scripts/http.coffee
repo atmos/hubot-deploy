@@ -59,7 +59,7 @@ module.exports = (robot) ->
             robot.emit "github_deployment_status_event", status
 
             res.writeHead 200, {'content-type': 'application/json' }
-            msg = "hubot-deploy: ##{deployment.number} of #{deployment.name}/#{deployment.ref} to #{deployment.environment} dispatched as #{status.status}."
+            msg = "hubot-deploy: ##{status.number} of #{status.name}/#{status.ref} to #{status.environment} dispatched as #{status.status}."
             res.end(JSON.stringify({message: msg}))
 
           else
