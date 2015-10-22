@@ -26,11 +26,13 @@ module.exports = (robot) ->
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
       try
+        requestBody = req.body
+        robot.logger.info requestBody
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "No GitHub payload signature headers present"}))
-        expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(req.body).digest("hex")
+        expectedSignature = Crypto.createHmac("sha1", GitHubSecret).update(requestBody).digest("hex")
         if payloadSignature is not "sha1=#{expectedSignature}"
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
@@ -41,7 +43,7 @@ module.exports = (robot) ->
             res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
           when "deployment_status"
             deliveryId = req.headers['x-github-delivery']
-            deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(req.body)
+            deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(requestBody)
 
             robot.emit "deploymentStatus", deploymentStatus
 
