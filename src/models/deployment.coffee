@@ -141,9 +141,6 @@ class Deployment
         else
           message = bodyMessage
 
-      if success and not message
-        message = "Deployment of #{name}/#{ref} to #{env} created"
-
       cb message
 
   # Private Methods
