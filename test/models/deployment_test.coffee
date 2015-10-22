@@ -1,6 +1,6 @@
 Path = require "path"
 
-Deployment = require(Path.join(__dirname, "..", "..", "src", "deployment")).Deployment
+Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "deployment")).Deployment
 
 describe "Deployment fixtures", () ->
   describe "#isValidApp()", () ->

@@ -1,7 +1,7 @@
 Path = require('path')
 
-Deployment = require(Path.join(__dirname, "..", "..", "src", "deployment")).Deployment
-Formatter  = require(Path.join(__dirname, "..", "..", "src", "formatters"))
+Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "deployment")).Deployment
+Formatter  = require(Path.join(__dirname, "..", "..", "src", "models", "formatters"))
 
 describe "Formatter", () ->
   describe "LatestFormatter", () ->

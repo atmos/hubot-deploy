@@ -6,11 +6,11 @@
 #
 
 Path             = require("path")
-Deployment       = require(Path.join(__dirname, "..", "deployment")).Deployment
-DeployPrefix     = require(Path.join(__dirname, "..", "patterns")).DeployPrefix
-DeploymentStatus = require(Path.join(__dirname, "..", "deployment_status")).DeploymentStatus
+Deployment       = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
+DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).DeployPrefix
+DeploymentStatus = require(Path.join(__dirname, "..", "models", "deployment_status")).DeploymentStatus
 
-GitHubSecret = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
+GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
 supported_tasks = [ "#{DeployPrefix}-hooks:sync" ]
 ###########################################################################

@@ -1,5 +1,5 @@
-Url      = require "url"
-Path     = require "path"
+Url  = require "url"
+Path = require "path"
 ###########################################################################
 class ApiConfig
   constructor: (@userToken, @application) ->

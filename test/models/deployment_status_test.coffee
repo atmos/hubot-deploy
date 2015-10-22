@@ -1,7 +1,7 @@
 Fs   = require "fs"
 Path = require "path"
 
-DeploymentStatus = require(Path.join(__dirname, "..", "..", "src", "deployment_status")).DeploymentStatus
+DeploymentStatus = require(Path.join(__dirname, "..", "..", "src", "models", "deployment_status")).DeploymentStatus
 
 describe "DeploymentStatus fixtures", () ->
   deploymentStatusFor = (fixtureName) ->
