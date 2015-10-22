@@ -50,7 +50,7 @@ module.exports = (robot) ->
             robot.emit "github_deployment_event", deployment
 
             res.writeHead 200, {'content-type': 'application/json' }
-            msg = "hubot-deploy: ##{deployment.number} of #{deployment.name}/#{deployment.ref} to #{deployment.environment} dispatched."
+            msg = "hubot-deploy: ##{deployment.number} of #{deployment.name}/#{deployment.ref} to #{deployment.environment} created."
             res.end(JSON.stringify({message: msg}))
 
           when "deployment_status"
@@ -59,7 +59,7 @@ module.exports = (robot) ->
             robot.emit "github_deployment_status_event", status
 
             res.writeHead 200, {'content-type': 'application/json' }
-            msg = "hubot-deploy: ##{status.number} of #{status.name}/#{status.ref} to #{status.environment} dispatched as #{status.status}."
+            msg = "hubot-deploy: ##{status.number} of #{status.name}/#{status.ref} to #{status.environment} is #{status.state}."
             res.end(JSON.stringify({message: msg}))
 
           else

@@ -14,19 +14,19 @@ describe "GitHubEvents.DeploymentStatus fixtures", () ->
   describe "pending", () ->
     it "knows the statue and repo", () ->
       status = deploymentStatusFor "pending"
-      assert.equal status.status, "pending"
+      assert.equal status.state, "pending"
       assert.equal status.repoName, "atmos/my-robot"
 
   describe "failure", () ->
     it "knows the statue and repo", () ->
       status = deploymentStatusFor "failure"
-      assert.equal status.status, "failure"
+      assert.equal status.state, "failure"
       assert.equal status.repoName, "atmos/my-robot"
 
   describe "success", () ->
     it "knows the statue and repo", () ->
       status = deploymentStatusFor "success"
-      assert.equal status.status, "success"
+      assert.equal status.state, "success"
       assert.equal status.repoName, "atmos/my-robot"
 
 describe "GitHubEvents.Deployment fixtures", () ->
