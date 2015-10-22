@@ -4,6 +4,7 @@ class Deployment
     @ref         = @payload.deployment.ref
     @sha         = @payload.deployment.sha.substring(0,7)
     @name        = @payload.repository.name
+    @notify      = @payload.deployment.payload.notify
     @number      = @payload.deployment.id
     @repoName    = @payload.repository.full_name
     @environment = @payload.deployment.environment
@@ -17,6 +18,7 @@ class DeploymentStatus
     @sha         = @payload.deployment.sha.substring(0,7)
     @name        = @payload.repository.name
     @state       = @payload.deployment_status.state
+    @notify      = @payload.deployment.payload.notify
     @number      = @payload.deployment.id
     @repoName    = @payload.repository.full_name
     @targetUrl   = @payload.deployment_status.target_url

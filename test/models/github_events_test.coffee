@@ -44,6 +44,8 @@ describe "GitHubEvents.Deployment fixtures", () ->
       assert.equal deployment.sha, "3c9f42c"
       assert.equal deployment.name, "my-robot"
       assert.equal deployment.environment, "production"
+      assert.isDefined deployment.notify
+      assert.isNotNull deployment.notify
 
   describe "staging", () ->
     it "works", () ->
@@ -54,3 +56,5 @@ describe "GitHubEvents.Deployment fixtures", () ->
       assert.equal deployment.ref, "heroku"
       assert.equal deployment.sha, "3c9f42c"
       assert.equal deployment.environment, "staging"
+      assert.isDefined deployment.notify
+      assert.isNotNull deployment.notify
