@@ -36,22 +36,22 @@ module.exports = (robot) ->
           res.writeHead 400, {'content-type': 'application/json' }
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
+        deliveryId = req.headers['x-github-delivery']
         switch req.headers['x-github-event']
           when "ping"
             res.writeHead 200, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+          when "deployment"
+            robot.emit "github_deployment", req.body
+            res.writeHead 200, {'content-type': 'application/json' }
+            res.end(JSON.stringify({message: "#{req.body.repository.full_name}: dispatched a deployment event"}))
           when "deployment_status"
-            deliveryId = req.headers['x-github-delivery']
             deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(requestBody)
 
             robot.emit "github_deployment_status", deploymentStatus
 
             res.writeHead 200, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "#{deploymentStatus.repoName}: dispatched a deployment status event."}))
-          when "deployment"
-            robot.emit "github_deployment", req.body
-            res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "#{req.body.repository.full_name}: dispatched a deployment event"}))
           else
             res.writeHead 400, {'content-type': 'application/json' }
             res.end(JSON.stringify({message: "Received but not processed."}))
