@@ -45,13 +45,17 @@ module.exports = (robot) ->
             deliveryId = req.headers['x-github-delivery']
             deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(requestBody)
 
-            robot.emit "deploymentStatus", deploymentStatus
+            robot.emit "github_deployment_status", deploymentStatus
 
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment request"}))
-          else
+            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment status request."}))
+          when "deployment"
+            robot.emit "github_deployment", { }
             res.writeHead 200, {'content-type': 'application/json' }
-            res.end(JSON.stringify({message: "Received but not processed"}))
+            res.end(JSON.stringify({message: "Received #{deploymentStatus.repo} deployment request but did not process it."}))
+          else
+            res.writeHead 400, {'content-type': 'application/json' }
+            res.end(JSON.stringify({message: "Received but not processed."}))
 
       catch err
         robot.logger.error err
