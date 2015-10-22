@@ -26,7 +26,12 @@ module.exports = (robot) ->
     robot.router.post "/github/deployments", (req, res) ->
       try
         eventType = req.headers['x-github-event']
-        unless eventType? and eventType is "deployment_status"
+
+        if eventType is "ping"
+          res.writeHead 200, {'content-type': 'application/json' }
+          res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+
+        if eventType is not "deployment_status"
           res.writeHead 200, {'content-type': 'application/json' }
           res.end(JSON.stringify({message: "Received but not processed"}))
 
