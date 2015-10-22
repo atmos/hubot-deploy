@@ -5,11 +5,10 @@
 #   hubot deploy-hooks:sync - Sets your user's deployment token. Requires repo_deployment scope.
 #
 
-Path           = require("path")
-Patterns       = require(Path.join(__dirname, "..", "patterns"))
-Deployment     = require(Path.join(__dirname, "..", "deployment")).Deployment
-
-DeployPrefix   = Patterns.DeployPrefix
+Path             = require("path")
+Deployment       = require(Path.join(__dirname, "..", "deployment")).Deployment
+DeployPrefix     = require(Path.join(__dirname, "..", "patterns")).DeployPrefix
+DeploymentStatus = require(Path.join(__dirname, "..", "deployment_status")).DeploymentStatus
 
 GitHubSecret = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
@@ -46,7 +45,9 @@ module.exports = (robot) ->
           res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
         deliveryId = req.headers['x-github-delivery']
-        robot.handleHttpRequest(deliveryId, JSON.parse(req.body))
+        deploymentStatus = new DeploymentStatus deliveryId, JSON.parse(req.body)
+        robot.emit "deploymentStatus", deploymentStatus
+
       catch err
         robot.logger.error err
 
