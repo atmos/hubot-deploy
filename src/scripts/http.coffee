@@ -16,15 +16,7 @@ supported_tasks = [ "#{DeployPrefix}-hooks:sync" ]
 ###########################################################################
 module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-hooks:sync (.*)///i, (msg) ->
-    msg.reply "Syncing hooks for"
-
-  robot.hear /Computer!/, (msg) ->
-    msg.reply("Why hello there! (ticker tape, ticker tape)")
-
-  robot.handleHttpRequest = (deliveryId, parsedBody) ->
-    robot.logger.info "GitHubSecret is #{GitHubSecret}"
-    console.log body
-    console.log headers
+    msg.reply "I can't quite sync hooks yet, sorry."
 
   if GitHubSecret
     robot.router.post "/github/deployments", (req, res) ->
@@ -50,4 +42,7 @@ module.exports = (robot) ->
 
       catch err
         robot.logger.error err
-
+  else
+    robot.logger.error "You're using hubot-deploy without specifying the shared webhook secret"
+    robot.logger.error "Take a second to learn about them: https://developer.github.com/webhooks/securing/"
+    robot.logger.error "Then set the HUBOT_DEPLOY_WEBHOOK_SECRET variable in the robot environment"
