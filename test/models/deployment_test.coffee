@@ -1,5 +1,6 @@
 Path = require "path"
 
+Version    = require(Path.join(__dirname, "..", "..", "src", "version")).Version
 Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "deployment")).Deployment
 
 describe "Deployment fixtures", () ->
@@ -41,7 +42,7 @@ describe "Deployment fixtures", () ->
     it "should have the right description", () ->
       deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
       body = deployment.requestBody()
-      assert.equal(body.description, 'deploy on production from hubot-deploy-v0.6.56')
+      assert.equal(body.description, "deploy on production from hubot-deploy-v#{Version}")
 
   describe "#isAllowedRoom()", () ->
     it "allows everything when there is no configuration", ->

@@ -1,6 +1,6 @@
 Path = require('path')
 
-Patterns = require(Path.join(__dirname, "..", "..", "src", "patterns"))
+Patterns = require(Path.join(__dirname, "..", "..", "src", "models", "patterns"))
 
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern

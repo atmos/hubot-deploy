@@ -18,6 +18,10 @@ module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-hooks:sync (.*)///i, (msg) ->
     msg.reply "I can't quite sync hooks yet, sorry."
 
+  process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
+  robot.hear ///#{process.env.HUBOT_DEPLOY_RANDOM_REPLY}///, (msg) ->
+    msg.reply("Why hello there! (ticker tape, ticker tape)")
+
   if GitHubSecret
     robot.router.post "/github/deployments", (req, res) ->
       try
@@ -42,7 +46,8 @@ module.exports = (robot) ->
 
       catch err
         robot.logger.error err
-  else if process.env.NODE_ENV is not test
+
+  else if process.env.NODE_ENV is not "test"
     robot.logger.error "You're using hubot-deploy without specifying the shared webhook secret"
     robot.logger.error "Take a second to learn about them: https://developer.github.com/webhooks/securing/"
     robot.logger.error "Then set the HUBOT_DEPLOY_WEBHOOK_SECRET variable in the robot environment"

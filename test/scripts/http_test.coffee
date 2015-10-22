@@ -1,5 +1,5 @@
-Path        = require("path")
-Robot       = require("hubot/src/robot")
+Path        = require "path"
+Robot       = require "hubot/src/robot"
 TextMessage = require("hubot/src/message").TextMessage
 
 describe "Deployment Status HTTP Callbacks", () ->
@@ -11,7 +11,7 @@ describe "Deployment Status HTTP Callbacks", () ->
     robot = new Robot(null, "mock-adapter", true, "Hubot")
 
     robot.adapter.on "connected", () ->
-      process.env.HUBOT_AUTH_ADMIN = "1"
+      process.env.HUBOT_DEPLOY_RANDOM_REPLY = "sup-dude"
 
       require("../../index")(robot)
 
@@ -32,13 +32,8 @@ describe "Deployment Status HTTP Callbacks", () ->
 
   it "responds when greeted", (done) ->
     adapter.on "reply", (envelope, strings) ->
-      assert.match strings[0], /Why hello there/
+      assert.equal strings[0], "Why hello there! (ticker tape, ticker tape)"
       done()
 
-    message = new TextMessage(user, "Computer!")
+    message = new TextMessage(user, process.env.HUBOT_DEPLOY_RANDOM_REPLY)
     adapter.receive(message)
-
-  it "starts the server", (done) ->
-    console.log robot.server.address()
-    #assert.match robot.router.address().port, /\d+/
-    done()

@@ -11,9 +11,9 @@ supported_tasks = [ DeployPrefix ]
 
 Path          = require("path")
 Version       = require(Path.join(__dirname, "..", "version")).Version
-Patterns      = require(Path.join(__dirname, "..", "patterns"))
-Deployment    = require(Path.join(__dirname, "..", "deployment")).Deployment
-Formatters    = require(Path.join(__dirname, "..", "formatters"))
+Patterns      = require(Path.join(__dirname, "..", "models", "patterns"))
+Deployment    = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
+Formatters    = require(Path.join(__dirname, "..", "models", "formatters"))
 
 DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern

@@ -8,13 +8,13 @@
 supported_tasks = [ "#{DeployPrefix}-token" ]
 
 Path           = require("path")
-Patterns       = require(Path.join(__dirname, "..", "patterns"))
-Deployment     = require(Path.join(__dirname, "..", "deployment")).Deployment
+Patterns       = require(Path.join(__dirname, "..", "models", "patterns"))
+Deployment     = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
 DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern
 
-TokenVerifier  = require(Path.join(__dirname, "..", "token_verifier")).TokenVerifier
+TokenVerifier  = require(Path.join(__dirname, "..", "models", "token_verifier")).TokenVerifier
 ###########################################################################
 module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-token:set (.*)///i, (msg) ->
