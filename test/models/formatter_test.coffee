@@ -1,13 +1,13 @@
 Path = require('path')
 
-Deployment = require(Path.join(__dirname, "..", "src", "deployment")).Deployment
-Formatter  = require(Path.join(__dirname, "..", "src", "formatters"))
+Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "deployment")).Deployment
+Formatter  = require(Path.join(__dirname, "..", "..", "src", "models", "formatters"))
 
 describe "Formatter", () ->
   describe "LatestFormatter", () ->
     it "displays recent deployments", () ->
       deployment = new Deployment("hubot", null, null, "production")
-      deployments = require(Path.join(__dirname, "fixtures", "deployments"))
+      deployments = require(Path.join(__dirname, "..", "fixtures", "deployments"))
       formatter = new Formatter.LatestFormatter(deployment, deployments)
 
       message = formatter.message()
@@ -20,7 +20,7 @@ describe "Formatter", () ->
   describe "WhereFormatter", () ->
     it "displays deployment environments", () ->
       deployment = new Deployment("hubot", null, null, "production")
-      deployments = require(Path.join(__dirname, "fixtures", "deployments"))
+      deployments = require(Path.join(__dirname, "..", "fixtures", "deployments"))
       formatter = new Formatter.WhereFormatter(deployment)
 
       message = formatter.message()

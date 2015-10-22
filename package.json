@@ -1,6 +1,6 @@
 {
   "name": "hubot-deploy",
-  "version": "0.6.56",
+  "version": "0.7.1",
   "author": "Corey Donohoe <atmos@atmos.org>",
   "description": "hubot script for GitHub Flow",
   "main": "index.coffee",
@@ -37,7 +37,8 @@
     "chai":          "~1.0.3",
     "mocha":         "~2.2.5",
     "coffee-script": ">=1.6.3",
-    "hubot-test-helper": "0.0.2"
+    "hubot-test-helper": "0.0.2",
+    "hubot-mock-adapter": "1.0.0"
   },
   "engines": {
     "node": ">=0.8.0"

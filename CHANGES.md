@@ -1,3 +1,8 @@
+0.7.1
+=====
+* Support incoming deployment status hooks. Emit events that can be handled programatically in the bot.
+
+
 0.7.0
 =====
 

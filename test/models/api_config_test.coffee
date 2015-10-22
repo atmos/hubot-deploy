@@ -1,6 +1,6 @@
 Path = require('path')
 
-ApiConfig = require(Path.join(__dirname, "..", "src", "api_config"))
+ApiConfig = require(Path.join(__dirname, "..", "..", "src", "models", "api_config"))
 
 describe "ApiConfig", () ->
   describe "defaults", () ->
