@@ -79,6 +79,10 @@ describe "Patterns", () ->
       assert.equal "fe",           matches[6], "incorrect host name"
       assert.equal "ccccccdlnncbtuevhdbctrccukdciveuclhbkvehbeve", matches[7], "incorrect yubikey pattern"
 
+    it "doesn't match on malformed yubikeys", () ->
+      matches = "deploy hubot/atmos/branch to production/fe burgers".match(DeployPattern)
+      assert.equal null, matches
+
     it "does not match typos", () ->
       matches = "deploy hubot/branch tos taging".match(DeployPattern)
       assert.equal matches, null
