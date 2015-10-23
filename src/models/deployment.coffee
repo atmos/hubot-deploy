@@ -18,6 +18,12 @@ class Deployment
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
+    @userId = null
+    @roomJid = null
+    @userJid = null
+    @messageId = null
+    @threadId = null
+
     try
       applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
     catch
@@ -64,14 +70,15 @@ class Deployment
       hosts: @hosts
       yubikey: @yubikey
       notify:
+        adapter: @adapter
         room: @room
         user: @user
+        userId: @userId
         jids:
           room: @roomJid
           user: @userJid
-        adapter: @adapter
-        message_id: @message_id
-        thread_id: @thread_id
+        message_id: @messageId
+        thread_id: @threadId
       config: @application
 
   setUserToken: (token) ->

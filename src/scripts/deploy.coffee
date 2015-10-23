@@ -89,12 +89,13 @@ module.exports = (robot) ->
     if user? and user.githubDeployToken?
       deployment.setUserToken(user.githubDeployToken)
 
-    deployment.user = username
-    deployment.room = msg.message.user.room
+    deployment.user   = username
+    deployment.room   = msg.message.user.room
+    deployment.userId = msg.envelope.user.id
 
     if robot.adapterName is "flowdock"
-      deployment.thread_id = msg.message.metadata.thread_id
-      deployment.message_id = msg.message.id
+      deployment.threadId = msg.message.metadata.thread_id
+      deployment.messageId = msg.message.id
 
     if robot.adapterName is "hipchat"
       if msg.message.user.jid?
