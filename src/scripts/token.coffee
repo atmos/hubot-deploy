@@ -2,8 +2,8 @@
 #   Enable deployments from chat that correctly attribute you as the creator - https://github.com/atmos/hubot-deploy
 #
 # Commands:
-#   hubot deploy-token:set <token> - Sets your user's deployment token. Requires repo_deployment scope.
-#   hubot deploy-token:reset - Resets your user's deployment token. Requires repo_deployment scope.
+#   hubot deploy-token:set:github <token> - Sets your user's GitHub deployment token. Requires repo_deployment scope.
+#   hubot deploy-token:reset:github - Resets your user's GitHub deployment token.
 #
 supported_tasks = [ "#{DeployPrefix}-token" ]
 
@@ -17,7 +17,7 @@ DeploysPattern = Patterns.DeploysPattern
 TokenVerifier  = require(Path.join(__dirname, "..", "models", "token_verifier")).TokenVerifier
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond ///#{DeployPrefix}-token:set (.*)///i, (msg) ->
+  robot.respond ///#{DeployPrefix}-token:set:github (.*)///i, (msg) ->
     token = msg.match[1]
 
     verifier = new TokenVerifier(token)
@@ -29,7 +29,7 @@ module.exports = (robot) ->
       else
         msg.reply "Your token is invalid, verify that it has 'repo_deployment' scope."
 
-  robot.respond ///#{DeployPrefix}-token:reset///i, (msg) ->
+  robot.respond ///#{DeployPrefix}-token:reset:github$///i, (msg) ->
     user = robot.brain.userForId msg.envelope.user.id
     delete(user.githubDeployToken)
     msg.reply "I nuked your deployment token. I'll use my default token until you configure another."
