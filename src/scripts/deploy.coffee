@@ -105,10 +105,11 @@ module.exports = (robot) ->
     deployment.adapter = robot.adapterName
     deployment.yubikey = yubikey
 
-    console.log JSON.stringify(deployment.requestBody())
-
-    deployment.post (responseMessage) ->
-      msg.reply responseMessage if responseMessage?
+    if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS
+      robot.emit "github_deployment", deployment
+    else
+      deployment.post (responseMessage) ->
+        msg.reply responseMessage if responseMessage?
 
   ###########################################################################
   # deploy:version
