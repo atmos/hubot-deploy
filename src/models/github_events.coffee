@@ -15,6 +15,9 @@ class Deployment
     else
       @actorName = deployment.creator.login
 
+    if deployment.payload.yubikey?
+      @yubikey = deployment.payload.yubikey
+
     if @payload.deployment.sha is @ref
       @ref = @sha
 

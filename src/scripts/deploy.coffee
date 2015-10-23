@@ -69,6 +69,7 @@ module.exports = (robot) ->
     ref   = (msg.match[4]||'master')
     env   = (msg.match[5]||'production')
     hosts = (msg.match[6]||'')
+    yubikey = msg.match[7]
 
     username = msg.envelope.user.githubLogin or msg.envelope.user.name
 
@@ -102,6 +103,7 @@ module.exports = (robot) ->
         deployment.roomJid = msg.envelope.user.reply_to
 
     deployment.adapter = robot.adapterName
+    deployment.yubikey = yubikey
 
     console.log JSON.stringify(deployment.requestBody())
 

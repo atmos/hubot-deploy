@@ -62,6 +62,7 @@ class Deployment
     payload:
       name: @name
       hosts: @hosts
+      yubikey: @yubikey
       notify:
         room: @room
         user: @user
