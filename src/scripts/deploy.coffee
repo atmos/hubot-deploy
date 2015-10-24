@@ -97,7 +97,8 @@ module.exports = (robot) ->
       deployment.messageId = msg.message.id
 
     if robot.adapterName is "hipchat"
-      robot.logger.info msg
+      robot.logger.info JSON.stringify(msg.message)
+      robot.logger.info JSON.stringify(msg.envelope)
       if msg.message.user.jid?
         deployment.user  = msg.message.user.jid
       if msg.envelope.user.reply_to?
