@@ -99,8 +99,6 @@ module.exports = (robot) ->
     if robot.adapterName is "hipchat"
       if msg.envelope.user.id?
         deployment.user = msg.envelope.user.id
-      if msg.envelope.user.reply_to?
-        deployment.room = msg.envelope.user.reply_to
 
     deployment.adapter = robot.adapterName
     deployment.yubikey = yubikey

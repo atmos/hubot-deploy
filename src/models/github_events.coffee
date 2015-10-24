@@ -10,6 +10,7 @@ class Deployment
     @ref         = deployment.ref
     @environment = deployment.environment
     @notify      = deployment.payload.notify
+
     if @notify? and @notify.user?
       @actorName = @notify.user
     else
