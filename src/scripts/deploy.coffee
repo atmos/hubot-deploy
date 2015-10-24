@@ -106,7 +106,7 @@ module.exports = (robot) ->
     deployment.yubikey = yubikey
 
     if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS
-      robot.emit "github_deployment", deployment
+      robot.emit "github_deployment", msg, deployment
     else
       deployment.post (responseMessage) ->
         msg.reply responseMessage if responseMessage?
