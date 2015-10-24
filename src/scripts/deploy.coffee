@@ -71,7 +71,9 @@ module.exports = (robot) ->
     hosts = (msg.match[6]||'')
     yubikey = msg.match[7]
 
-    username = msg.envelope.user.githubLogin or msg.envelope.user.name
+    robot.logger.info "Message user: #{JSON.stringify(msg.message)}"
+    robot.logger.info "Envelope user: #{JSON.stringify(msg.envelope)}"
+    robot.logger.info "Envelope userId: #{JSON.stringify(msg.envelope.user.id)}"
 
     deployment = new Deployment(name, ref, task, env, force, hosts)
 
@@ -86,10 +88,10 @@ module.exports = (robot) ->
       return
 
     user = robot.brain.userForId msg.envelope.user.id
-    if user? and user.githubDeployToken?
+    if user?.githubDeployToken?
       deployment.setUserToken(user.githubDeployToken)
 
-    deployment.user   = username
+    deployment.user   = user.id
     deployment.room   = msg.message.user.room
 
     if robot.adapterName is "flowdock"
@@ -97,8 +99,6 @@ module.exports = (robot) ->
       deployment.messageId = msg.message.id
 
     if robot.adapterName is "hipchat"
-      if msg.message.user.jid?
-        deployment.user  = msg.message.user.jid
       if msg.envelope.user.reply_to?
         deployment.room = msg.envelope.user.reply_to
 
