@@ -18,11 +18,11 @@ class Deployment
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
-    @userId = null
-    @roomJid = null
-    @userJid = null
-    @messageId = null
-    @threadId = null
+    @userId = undefined
+    @roomJid = undefined
+    @userJid = undefined
+    @messageId = undefined
+    @threadId = undefined
 
     try
       applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
