@@ -91,7 +91,6 @@ module.exports = (robot) ->
 
     deployment.user   = username
     deployment.room   = msg.message.user.room
-    deployment.userId = msg.envelope.user.id
 
     if robot.adapterName is "flowdock"
       deployment.threadId = msg.message.metadata.thread_id
@@ -99,9 +98,9 @@ module.exports = (robot) ->
 
     if robot.adapterName is "hipchat"
       if msg.message.user.jid?
-        deployment.userJid = msg.message.user.jid
+        deployment.user  = msg.message.user.jid
       if msg.envelope.user.reply_to?
-        deployment.roomJid = msg.envelope.user.reply_to
+        deployment.room = msg.envelope.user.reply_to
 
     deployment.adapter = robot.adapterName
     deployment.yubikey = yubikey

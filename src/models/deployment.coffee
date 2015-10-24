@@ -18,9 +18,6 @@ class Deployment
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
-    @userId = undefined
-    @roomJid = undefined
-    @userJid = undefined
     @messageId = undefined
     @threadId = undefined
 
@@ -73,10 +70,6 @@ class Deployment
         adapter: @adapter
         room: @room
         user: @user
-        userId: @userId
-        jids:
-          room: @roomJid
-          user: @userJid
         message_id: @messageId
         thread_id: @threadId
       config: @application
