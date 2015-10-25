@@ -1,3 +1,4 @@
+Path      = require "path"
 Octonode  = require "octonode"
 ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
