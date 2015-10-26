@@ -29,11 +29,3 @@ describe "Deployment Status HTTP Callbacks", () ->
   afterEach () ->
     robot.server.close()
     robot.shutdown()
-
-  it "responds when greeted", (done) ->
-    adapter.on "reply", (envelope, strings) ->
-      assert.equal strings[0], "Why hello there! (ticker tape, ticker tape)"
-      done()
-
-    message = new TextMessage(user, process.env.HUBOT_DEPLOY_RANDOM_REPLY)
-    adapter.receive(message)

@@ -23,9 +23,6 @@ module.exports = (robot) ->
     msg.reply "I can't quite sync hooks yet, sorry."
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
-  robot.hear ///#{process.env.HUBOT_DEPLOY_RANDOM_REPLY}///, (msg) ->
-    msg.reply("Why hello there! (ticker tape, ticker tape)")
-
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
       try
