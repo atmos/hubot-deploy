@@ -8,7 +8,7 @@ class TokenVerifier
     @token = token.trim()
 
     config = new ApiConfig(@token, null)
-    @api   = Octonode.client(config.apiToken(), {hostname: config().hostname })
+    @api   = Octonode.client(config.apiToken, {hostname: config().hostname })
 
   valid: (cb) ->
     @api.get "/user", (err, data, headers) ->
