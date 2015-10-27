@@ -13,6 +13,8 @@ class TokenVerifier
   valid: (cb) ->
     @api.get "/user", (err, data, headers) ->
       scopes = headers? and headers['x-oauth-scopes']
+      robot.logger.info scopes
+
       if scopes
         if scopes.indexOf('repo') >= 0
           cb(true)
