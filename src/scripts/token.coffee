@@ -21,12 +21,13 @@ module.exports = (robot) ->
     token = msg.match[1]
 
     verifier = new TokenVerifier(token)
-    verifier.valid (result) ->
+    verifier.valid (err, result) ->
       if result
         msg.reply "Your token is valid. I stored it for future use."
         user = robot.brain.userForId msg.envelope.user.id
         user.githubDeployToken = verifier.token
       else
+        robot.logger.error err
         msg.reply "Your token is invalid, verify that it has 'repo_deployment' scope."
 
   robot.respond ///#{DeployPrefix}-token:reset:github$///i, (msg) ->
