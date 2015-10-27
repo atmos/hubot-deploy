@@ -11,7 +11,7 @@ class TokenVerifier
     @api   = Octonode.client(config.apiToken(), {hostname: config.hostname })
 
   valid: (cb) ->
-    @api.get "/user", (err, data, headers) ->
+    @api.get "/user", (err, status, data, headers) ->
       scopes = headers? and headers['X-OAuth-Scopes']
 
       if err
@@ -26,6 +26,6 @@ class TokenVerifier
         else
           cb({message: 'repo or repo_deployment not found in scopes', scopes: scopes}, false)
       else
-        cb({message: 'scopes not found in headers', scopes: JSON.stringify(scopes), headers: JSON.stringify(headers)}, false)
+        cb({message: 'scopes not found in headers'}, false)
 
 exports.TokenVerifier = TokenVerifier
