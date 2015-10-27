@@ -12,7 +12,7 @@ class TokenVerifier
 
   valid: (cb) ->
     @api.get "/user", (err, data, headers) ->
-      scopes = headers? and headers['x-oauth-scopes']
+      scopes = headers? and headers['X-OAuth-Scopes']
 
       if err
         cb({message: 'error making get request to /user', err: err}, false)
@@ -26,6 +26,6 @@ class TokenVerifier
         else
           cb({message: 'repo or repo_deployment not found in scopes', scopes: scopes}, false)
       else
-        cb({message: 'scopes not found in headers', headers: headers}, false)
+        cb({message: 'scopes not found in headers'}, false)
 
 exports.TokenVerifier = TokenVerifier
