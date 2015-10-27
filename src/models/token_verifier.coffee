@@ -12,7 +12,7 @@ class TokenVerifier
 
   valid: (cb) ->
     @api.get "/user", {}, (err, status, data, headers) ->
-      scopes = headers? and headers['X-OAuth-Scopes']
+      scopes = headers? and headers['x-oauth-scopes']
 
       if err
         cb({message: 'error making get request to /user', err: err}, false)
