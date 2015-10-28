@@ -19,13 +19,13 @@ The hubot-deploy script provides a way to have user specific tokens for interact
 
 To configure your own token, make a [personal OAuth token][1] with both `user` and `repo_deployment` scopes. Then provide it to hubot.
 
-    $ hubot deploy-token:set <mytoken>
+    $ hubot deploy-token:set:github <mytoken>
 
 Hubot will respond and tell you whether the token is sufficient or not. Subsequent deployments will be properly attributed to your user in the API.
 
 If you want to go back having the highlander token create your deployments you can reset things like.
 
-    $ hubot deploy-token:reset
+    $ hubot deploy-token:reset:github
 
 Hubot will respond and tell you that your token has been forgotten and removed from the robot's brain.
 
