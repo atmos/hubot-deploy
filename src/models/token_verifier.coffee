@@ -11,7 +11,7 @@ class TokenVerifier
     @api   = Octonode.client(config.token, {hostname: config.hostname })
 
   valid: (cb) ->
-    @api.get "/user", (err, data, headers) ->
+    @api.get "/user", (err, status, data, headers) ->
       scopes = headers? and headers['x-oauth-scopes']
       if scopes
         if scopes.indexOf('repo') >= 0
