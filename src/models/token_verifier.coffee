@@ -16,8 +16,6 @@ class TokenVerifier
       if scopes
         if scopes.indexOf('repo') >= 0
           cb(true)
-        else if scopes.indexOf('repo_deployment') >= 0
-          cb(true)
         else
           cb(false)
       else
