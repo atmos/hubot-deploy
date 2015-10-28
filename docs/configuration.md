@@ -6,6 +6,8 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 |-------------------------|-------------------------------------------------|
 | HUBOT_GITHUB_API        | A String of the full URL to the GitHub API. Default: "https://api.github.com" |
 | HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. |
+| HUBOT_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain.|
+| HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting to the GitHub API. This allows you to do customization of your deployment. |
 
 ### The Highlander Token
 
@@ -15,7 +17,7 @@ If you're only going to use the `HUBOT_GITHUB_TOKEN` then all deployments will b
 
 The hubot-deploy script provides a way to have user specific tokens for interacting with the API.
 
-**To prevent chat networks from logging your password it's good practice to lock the room if available.**
+**To prevent chat networks from logging your password it's good practice to lock the room or use private messages if available.**
 
 To configure your own token, make a [personal OAuth token][1] with both `user`, `repo` scopes. Then provide it to hubot.
 

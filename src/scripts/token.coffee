@@ -20,16 +20,20 @@ module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-token:set:github (.*)///i, (msg) ->
     token = msg.match[1]
 
+    # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
+    delete(user.githubDeployToken)
+
     verifier = new TokenVerifier(token)
     verifier.valid (result) ->
       if result
         msg.reply "Your token is valid. I stored it for future use."
-        user = robot.brain.userForId msg.envelope.user.id
-        user.githubDeployToken = verifier.token
+        vault(user).set("hubot-deploy-token-github", verifier.token)
       else
         msg.reply "Your token is invalid, verify that it has 'repo_deployment' scope."
 
   robot.respond ///#{DeployPrefix}-token:reset:github$///i, (msg) ->
     user = robot.brain.userForId msg.envelope.user.id
+    vault(user).unset("hubot-deploy-token-github")
+    # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
     delete(user.githubDeployToken)
     msg.reply "I nuked your deployment token. I'll use my default token until you configure another."
