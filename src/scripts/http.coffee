@@ -2,7 +2,6 @@
 #   Enable deployment statuses from the GitHub API
 #
 # Commands:
-#   hubot deploy-hooks:sync - Sets your user's deployment token. Requires repo_deployment scope.
 #
 
 Path             = require "path"
@@ -19,9 +18,6 @@ GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 supported_tasks = [ "#{DeployPrefix}-hooks:sync" ]
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond ///#{DeployPrefix}-hooks:sync (.*)///i, (msg) ->
-    msg.reply "I can't quite sync hooks yet, sorry."
-
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
