@@ -19,6 +19,7 @@ TokenVerifier  = require(Path.join(__dirname, "..", "models", "token_verifier"))
 ###########################################################################
 module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-token:set:github (.*)///i, (msg) ->
+    user  = robot.brain.userForId msg.envelope.user.id
     token = msg.match[1]
 
     # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
