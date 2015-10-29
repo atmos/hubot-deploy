@@ -7,8 +7,8 @@ class TokenVerifier
   constructor: (token) ->
     @token = token?.trim()
 
-    config = new ApiConfig(@token, null)
-    @api   = Octonode.client(config.token, {hostname: config.hostname})
+    @config = new ApiConfig(@token, null)
+    @api   = Octonode.client(@config.token, {hostname: @config.hostname})
 
   valid: (cb) ->
     @api.get "/user", (err, status, data, headers) ->
