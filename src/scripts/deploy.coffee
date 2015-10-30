@@ -72,10 +72,6 @@ module.exports = (robot) ->
     hosts = (msg.match[6]||'')
     yubikey = msg.match[7]
 
-    robot.logger.info "Message user: #{JSON.stringify(msg.message)}"
-    robot.logger.info "Envelope user: #{JSON.stringify(msg.envelope)}"
-    robot.logger.info "Envelope userId: #{JSON.stringify(msg.envelope.user.id)}"
-
     deployment = new Deployment(name, ref, task, env, force, hosts)
 
     unless deployment.isValidApp()
