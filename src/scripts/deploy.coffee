@@ -32,9 +32,10 @@ module.exports = (robot) ->
       deployment = new Deployment(name)
       formatter  = new Formatters.WhereFormatter(deployment)
 
-      msg.send formatter.message()
+      robot.emit "hubot_deploy_available_environments", msg, deployment, formatter
+
     catch err
-      console.log err
+      robot.logger.info "Exploded looking for deployment locations: #{err}"
 
   ###########################################################################
   # deploys <app> in <env>
@@ -53,10 +54,10 @@ module.exports = (robot) ->
 
       deployment.latest (deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
-        msg.send formatter.message()
+        robot.emit "hubot_deploy_recent_deployments", msg, deployment, deployments, formatter
 
     catch err
-      console.log err
+      robot.logger.info "Exploded looking for recent deployments: #{err}"
 
   ###########################################################################
   # deploy hubot/topic-branch to staging
