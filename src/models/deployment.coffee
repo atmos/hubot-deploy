@@ -13,6 +13,7 @@ class Deployment
     @room             = 'unknown'
     @user             = 'unknown'
     @adapter          = 'unknown'
+    @robotName        = 'hubot'
     @autoMerge        = true
     @environments     = [ "production" ]
     @requiredContexts = null
@@ -64,6 +65,7 @@ class Deployment
     description: "#{@task} on #{@env} from hubot-deploy-v#{Version}"
     payload:
       name: @name
+      robotName: @robotName
       hosts: @hosts
       yubikey: @yubikey
       notify:
