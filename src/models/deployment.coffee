@@ -133,6 +133,7 @@ class Deployment
           errors = data['errors'][0]
           commitContexts = errors.contexts
 
+          console.log errors
           console.log @requiredContexts
           namedContexts  = (context.context for context in commitContexts)
           console.log namedContexts
