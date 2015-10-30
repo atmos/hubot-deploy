@@ -102,8 +102,9 @@ module.exports = (robot) ->
       if msg.envelope.user.reply_to?
         deployment.room = msg.envelope.user.reply_to
 
-    deployment.adapter = robot.adapterName
-    deployment.yubikey = yubikey
+    deployment.yubikey   = yubikey
+    deployment.adapter   = robot.adapterName
+    deployment.robotName = robot.name
 
     if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS
       robot.emit "github_deployment", msg, deployment
