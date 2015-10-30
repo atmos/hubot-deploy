@@ -133,13 +133,13 @@ class Deployment
           errors = data['errors'][0]
           commitContexts = errors.contexts
 
-          console.log requiredContexts
+          console.log @requiredContexts
           namedContexts  = (context.context for context in commitContexts)
           console.log namedContexts
           failedContexts = (context.context for context in commitContexts when context.state isnt 'success')
           console.log failedContexts
-          if requiredContexts?
-            failedContexts.push(context) for context in requiredContexts when context not in namedContexts
+          if @requiredContexts?
+            failedContexts.push(context) for context in @requiredContexts when context not in namedContexts
 
           bodyMessage = "Unmet required commit status contexts for #{name}: #{failedContexts.join(',')} failed."
 
