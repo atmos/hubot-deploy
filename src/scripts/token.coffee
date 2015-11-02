@@ -26,12 +26,13 @@ module.exports = (robot) ->
     delete(user.githubDeployToken)
 
     verifier = new TokenVerifier(token)
-    verifier.valid (result) ->
-      if result
+    verifier.valid (err, result) ->
+      unless err
         msg.reply "Your GitHub token is valid. I stored it for future use."
         robot.vault.forUser(user).set("hubot-deploy-github-secret", verifier.token)
       else
-        msg.reply "Your GitHub token is invalid, verify that it has 'repo' scope."
+        robot.logger.info err
+        msg.reply err.message
 
   robot.respond ///#{DeployPrefix}-token:reset:github$///i, (msg) ->
     user = robot.brain.userForId msg.envelope.user.id
@@ -46,8 +47,9 @@ module.exports = (robot) ->
     delete(user.githubDeployToken)
     token = robot.vault.forUser(user).get("hubot-deploy-github-secret")
     verifier = new TokenVerifier(token)
-    verifier.valid (result) ->
-      if result
+    verifier.valid (err, result) ->
+      unless err
         msg.reply "Your GitHub token is valid on #{verifier.config.hostname}."
       else
-        msg.reply "Your GitHub token is invalid, verify that it has 'repo' scope."
+        robot.logger.info err
+        msg.reply err.message
