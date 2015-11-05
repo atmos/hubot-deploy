@@ -52,7 +52,7 @@ module.exports = (robot) ->
       if user? and user.githubDeployToken?
         deployment.setUserToken(user.githubDeployToken)
 
-      deployment.latest (deployments) ->
+      deployment.latest (err, deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
         robot.emit "hubot_deploy_recent_deployments", msg, deployment, deployments, formatter
 

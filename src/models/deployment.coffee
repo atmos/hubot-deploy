@@ -88,17 +88,13 @@ class Deployment
     api.requestDefaults.agentOptions = { ca: @caFile } if @caFile
     api
 
-  latest: (cb) ->
+  latest: (callback) ->
     path       = @apiConfig().path("repos/#{@repository}/deployments")
     params     =
       environment: @env
 
     @api().get path, params, (err, status, body, headers) ->
-      if err
-        body = err
-        console.log err['message'] unless process.env.NODE_ENV == 'test'
-
-      cb(body)
+      callback(err, body)
 
   post: (cb) ->
     path       = @apiConfig().path("repos/#{@repository}/deployments")

@@ -4,56 +4,12 @@ Version    = require(Path.join(__dirname, "..", "..", "src", "version")).Version
 Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "deployment")).Deployment
 
 describe "Deployment fixtures", () ->
-  describe "#isValidApp()", () ->
-    it "is invalid if the app can't be found", () ->
-      deployment = new Deployment("hubot-reloaded", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isValidApp(), false)
 
-    it "is valid if the app can be found", () ->
-      deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isValidApp(), true)
-
-  describe "#isValidEnv()", () ->
-    it "is invalid if the env can't be found", () ->
-      deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")
-      assert.equal(deployment.isValidEnv(), false)
-
-    it "is valid if the env can be found", () ->
-      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isValidEnv(), true)
 
   describe "#autoMerge", () ->
     it "works with auto-merging", () ->
       deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
       assert.equal(false, deployment.autoMerge)
-
-  describe "#requiredContexts", () ->
-    it "works with required contexts", () ->
-      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
-      expectedContexts = ["ci/janky", "ci/travis-ci"]
-
-      assert.deepEqual(expectedContexts, deployment.requiredContexts)
-
-  describe "#requestBody()", () ->
-    it "shouldn't blow up", () ->
-      deployment = new Deployment("hubot", "master", "deploy", "garage", "", "")
-      deployment.requestBody()
-      assert.equal(true, true)
-    it "should have the right description", () ->
-      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
-      body = deployment.requestBody()
-      assert.equal(body.description, "deploy on production from hubot-deploy-v#{Version}")
-
-  describe "#isAllowedRoom()", () ->
-    it "allows everything when there is no configuration", ->
-      deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isAllowedRoom('anything'), true)
-    it "is allowed with room that is in configuration", ->
-      deployment = new Deployment("restricted-app", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isAllowedRoom('ops'), true)
-    it "is not allowed with room that is not in configuration", ->
-      deployment = new Deployment("restricted-app", "master", "deploy", "production", "", "")
-      assert.equal(deployment.isAllowedRoom('watercooler'), false)
 
   describe "#api", () ->
     context "with no ca file", () ->
