@@ -2,7 +2,7 @@ VCR           = require "ys-vcr"
 Path          = require "path"
 Robot         = require "hubot/src/robot"
 TextMessage   = require("hubot/src/message").TextMessage
-Verifiers     = require("./../../src/models/verifiers")
+Verifiers     = require(Path.join(__dirname, "..", "..", "src", "models", "verifiers"))
 
 describe "Setting tokens and such", () ->
   user  = null
