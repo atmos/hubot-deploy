@@ -39,7 +39,7 @@ describe "Latest deployments", () ->
     robot.on "hubot_deploy_recent_deployments", (msg, deployment, deployments, formatter) ->
       assert.equal "hubot-deploy", deployment.name
       assert.equal "production", deployment.env
-      assert.deepEqual [ ], deployments
+      assert.deepEqual 2, deployments.length
       done()
 
     adapter.receive(new TextMessage(user, "Hubot deploys hubot-deploy in production"))
@@ -49,7 +49,7 @@ describe "Latest deployments", () ->
     robot.on "hubot_deploy_recent_deployments", (msg, deployment, deployments, formatter) ->
       assert.equal "hubot-deploy", deployment.name
       assert.equal "staging", deployment.env
-      assert.deepEqual [ ], deployments
+      assert.deepEqual 2, deployments.length
       done()
 
     adapter.receive(new TextMessage(user, "Hubot deploys hubot-deploy in staging"))
