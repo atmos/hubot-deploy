@@ -3,6 +3,7 @@ Octonode  = require "octonode"
 ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
 
+VaultKey = "hubot-deploy-github-secret"
 class TokenVerifier
   constructor: (token) ->
     @token = token?.trim()
@@ -12,13 +13,11 @@ class TokenVerifier
 
   valid: (cb) ->
     @api.get "/user", (err, status, data, headers) ->
-      scopes = headers? and headers['x-oauth-scopes']
-      if scopes
-        if scopes.indexOf('repo') >= 0
-          cb(true)
-        else
-          cb(false)
+      scopes = headers?['x-oauth-scopes']
+      if scopes?.indexOf('repo') >= 0
+        cb(true)
       else
         cb(false)
 
+exports.VaultKey      = VaultKey
 exports.TokenVerifier = TokenVerifier
