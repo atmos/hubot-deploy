@@ -1,26 +1,20 @@
 Path = require('path')
 
-Address4 = require("ip-address").Address4
+GitHubWebHookIpVerifier = require(Path.join(__dirname, "..", "..", "src", "models", "github_webhook_ip_verifier"))
 
-describe "GitHubSourceValidator", () ->
-  it "rejects things that don't start with deploy", () ->
-    topic = new Address4("192.30.252.0/22")
-    goodRangeOfIps = [
-      "192.30.252.1/24",
-      "192.30.253.1/24",
-      "192.30.254.1/24",
-      "192.30.255.1/24"
-    ]
-    badRangeOfIps = [
-      "192.30.250.1/24",
-      "192.30.251.1/24",
-      "192.168.1.1/24"
-    ]
+describe "GitHubWebHookIpVerifier", () ->
+  it "verifies correct ip addresses", () ->
+    verifier = new GitHubWebHookIpVerifier.GitHubWebHookIpVerifier
 
-    for ip in goodRangeOfIps
-      address = new Address4(ip)
-      assert.isTrue address.isInSubnet(topic)
+    assert.isTrue verifier.ipIsValid("192.30.252.1")
+    assert.isTrue verifier.ipIsValid("192.30.253.1")
+    assert.isTrue verifier.ipIsValid("192.30.254.1")
+    assert.isTrue verifier.ipIsValid("192.30.255.1")
 
-    for ip in badRangeOfIps
-      address = new Address4(ip)
-      assert.isFalse address.isInSubnet(topic)
+  it "rejects incorrect ip addresses", () ->
+    verifier = new GitHubWebHookIpVerifier.GitHubWebHookIpVerifier
+
+    assert.isFalse verifier.ipIsValid("192.30.250.1")
+    assert.isFalse verifier.ipIsValid("192.30.251.1")
+    assert.isFalse verifier.ipIsValid("192.168.1.1")
+    assert.isFalse verifier.ipIsValid("127.0.0.1")
