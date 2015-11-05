@@ -17,7 +17,9 @@ describe "Deployment#latest", () ->
     deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
     deployment.latest (err, deployments) ->
       throw err if err
-      assert.deepEqual [ ], deployments
+      assert.equal "hubot-deploy", deployment.name
+      assert.equal "production", deployment.env
+      assert.equal 2, deployments.length
       done()
 
   it "gets the latest deployments from the api", (done) ->
@@ -25,6 +27,8 @@ describe "Deployment#latest", () ->
     deployment = new Deployment("hubot-deploy", "master", "deploy", "staging", "", "")
     deployment.latest (err, deployments) ->
       throw err if err
-      assert.deepEqual [ ], deployments
+      assert.equal "hubot-deploy", deployment.name
+      assert.equal "staging", deployment.env
+      assert.equal 2, deployments.length
       done()
 
