@@ -29,4 +29,3 @@ module.exports.cassettes =
       id: 1
       login: "octocat"
       avatar_url: "https://github.com/images/error/octocat_happy.gif"
-  
