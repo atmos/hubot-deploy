@@ -15,13 +15,23 @@ DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).Dep
 
 GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
-supported_tasks = [ "#{DeployPrefix}-hooks:sync" ]
+supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
+
+GitHubWebHookIpVerifier = require(Path.join(__dirname, "..", "models", "github_webhook_ip_verifier")).GitHubWebHookIpVerifier
+
 ###########################################################################
 module.exports = (robot) ->
+  ipVerifier = new GitHubWebHookIpVerifier
+
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
     robot.router.post "/hubot-deploy", (req, res) ->
       try
+        remoteIp = req.headers['x-forwarded-for'] or req.connection.remoteAddress
+        unless ipVerifier.ipIsValid(remoteIp)
+          res.writeHead 400, {'content-type': 'application/json' }
+          return res.end(JSON.stringify({error: "Webhook requested from a non-GitHub IP address."}))
+
         payloadSignature = req.headers['x-hub-signature']
         unless payloadSignature?
           res.writeHead 400, {'content-type': 'application/json' }
