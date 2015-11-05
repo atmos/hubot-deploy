@@ -1,10 +1,12 @@
 Path      = require "path"
 Octonode  = require "octonode"
+Address4  = require("ip-address").Address4
 ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
 ###########################################################################
 
 VaultKey = "hubot-deploy-github-secret"
-class TokenVerifier
+
+class ApiTokenVerifier
   constructor: (token) ->
     @token = token?.trim()
 
@@ -19,5 +21,16 @@ class TokenVerifier
       else
         cb(false)
 
-exports.VaultKey      = VaultKey
-exports.TokenVerifier = TokenVerifier
+class GitHubWebHookIpVerifier
+  constructor: () ->
+    @subnets = [ new Address4("192.30.252.0/22") ]
+
+  ipIsValid: (ipAddress) ->
+    address = new Address4("#{ipAddress}/24")
+    for subnet in @subnets
+      return true if address.isInSubnet(subnet)
+    false
+
+exports.VaultKey                 = VaultKey
+exports.ApiTokenVerifier         = ApiTokenVerifier
+exports.GitHubWebHookIpVerifier  = GitHubWebHookIpVerifier

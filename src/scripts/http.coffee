@@ -17,11 +17,12 @@ GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
 supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
 
-GitHubWebHookIpVerifier = require(Path.join(__dirname, "..", "models", "github_webhook_ip_verifier")).GitHubWebHookIpVerifier
+
+Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
 
 ###########################################################################
 module.exports = (robot) ->
-  ipVerifier = new GitHubWebHookIpVerifier
+  ipVerifier = new Verifiers.GitHubWebHookIpVerifier
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret

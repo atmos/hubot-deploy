@@ -2,7 +2,7 @@ VCR           = require "ys-vcr"
 Path          = require "path"
 Robot         = require "hubot/src/robot"
 TextMessage   = require("hubot/src/message").TextMessage
-TokenVerifier = require("./../../src/models/token_verifier")
+Verifiers     = require("./../../src/models/verifiers")
 
 describe "Setting tokens and such", () ->
   user  = null
@@ -46,14 +46,14 @@ describe "Setting tokens and such", () ->
     expectedResponse = /Your GitHub token is valid. I stored it for future use./
     adapter.on "send", (envelope, strings) ->
       assert.match strings[0], expectedResponse
-      assert robot.vault.forUser(user).get(TokenVerifier.VaultKey)
-      assert.equal robot.vault.forUser(user).get(TokenVerifier.VaultKey), "123456789"
+      assert robot.vault.forUser(user).get(Verifiers.VaultKey)
+      assert.equal robot.vault.forUser(user).get(Verifiers.VaultKey), "123456789"
       done()
     adapter.receive(new TextMessage(user, "Hubot deploy-token:set:github 123456789"))
 
   it "tells you when your stored GitHub token is invalid", (done) ->
     VCR.play "/user-invalid-auth"
-    robot.vault.forUser(user).set(TokenVerifier.VaultKey, "123456789")
+    robot.vault.forUser(user).set(Verifiers.VaultKey, "123456789")
     adapter.on "send", (envelope, strings) ->
       assert.match strings[0], /Your GitHub token is invalid, verify that it has \'repo\' scope./
       done()
@@ -61,7 +61,7 @@ describe "Setting tokens and such", () ->
 
   it "tells you when your stored GitHub token is valid", (done) ->
     VCR.play "/user-valid"
-    robot.vault.forUser(user).set(TokenVerifier.VaultKey, "123456789")
+    robot.vault.forUser(user).set(Verifiers.VaultKey, "123456789")
     adapter.on "send", (envelope, strings) ->
       assert.match strings[0], /Your GitHub token is valid on api.github.com./
       done()

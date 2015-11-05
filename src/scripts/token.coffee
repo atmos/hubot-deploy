@@ -15,8 +15,10 @@ DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern
 
-TokenForBrain  = require(Path.join(__dirname, "..", "models", "token_verifier")).VaultKey
-TokenVerifier  = require(Path.join(__dirname, "..", "models", "token_verifier")).TokenVerifier
+Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
+
+TokenForBrain    = Verifiers.VaultKey
+ApiTokenVerifier = Verifiers.ApiTokenVerifier
 ###########################################################################
 module.exports = (robot) ->
   robot.respond ///#{DeployPrefix}-token:set:github\s+(.*)///i, (msg) ->
@@ -26,7 +28,7 @@ module.exports = (robot) ->
     # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
     delete(user.githubDeployToken)
 
-    verifier = new TokenVerifier(token)
+    verifier = new ApiTokenVerifier(token)
     verifier.valid (result) ->
       if result
         robot.vault.forUser(user).set(TokenForBrain, verifier.token)
@@ -46,7 +48,7 @@ module.exports = (robot) ->
     # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
     delete(user.githubDeployToken)
     token = robot.vault.forUser(user).get(TokenForBrain)
-    verifier = new TokenVerifier(token)
+    verifier = new ApiTokenVerifier(token)
     verifier.valid (result) ->
       if result
         msg.send "Your GitHub token is valid on #{verifier.config.hostname}."
