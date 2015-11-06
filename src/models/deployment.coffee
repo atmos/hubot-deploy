@@ -108,8 +108,6 @@ class Deployment
     @rawPost (err, status, body, headers) ->
       data = body
 
-      success = status == 201
-
       if err
         data = err
 
