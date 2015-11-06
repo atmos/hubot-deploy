@@ -106,7 +106,7 @@ module.exports = (robot) ->
     if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS
       robot.emit "github_deployment", msg, deployment
     else
-      deployment.post (responseMessage) ->
+      deployment.post (err, status, body, headers, responseMessage) ->
         msg.reply responseMessage if responseMessage?
 
   ###########################################################################
