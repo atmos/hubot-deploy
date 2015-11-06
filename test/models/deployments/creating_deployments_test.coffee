@@ -25,7 +25,7 @@ describe "Deployments", () ->
         done()
 
     it "does not create a deployment due to missing required commit statuses", (done) ->
-      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-missing-required-status'
+      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-required-status-missing'
       deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
       deployment.rawPost (err, status, body, headers, message) ->
         throw err if err

@@ -8,7 +8,7 @@ module.exports.cassettes =
     body:
       message: 'Bad credentials'
       documentation_url: 'https://developer.github.com/v3'
-  '/repos-atmos-hubot-deploy-deployment-production-create-missing-required-status':
+  '/repos-atmos-hubot-deploy-deployment-production-create-required-status-missing':
     host: 'https://api.github.com:443'
     path: '/repos/atmos/hubot-deploy/deployments'
     method: 'post'
