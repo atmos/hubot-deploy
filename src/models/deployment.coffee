@@ -108,13 +108,10 @@ class Deployment
     @rawPost (err, status, body, headers) ->
       data = body
 
-      callback(err, status, body, headers)
-
       success = status == 201
 
       if err
         data = err
-        console.log err unless process.env.NODE_ENV == 'test'
 
       if data['message']
         bodyMessage = data['message']

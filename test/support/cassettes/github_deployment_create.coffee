@@ -1,4 +1,13 @@
 module.exports.cassettes =
+  '/repos-atmos-hubot-deploy-deployment-production-create-bad-auth':
+    host: 'https://api.github.com:443'
+    path: '/repos/atmos/hubot-deploy/deployments'
+    method: 'post'
+    code: 401
+    path: '/repos/atmos/hubot-deploy/deployments'
+    body:
+      message: 'Bad credentials'
+      documentation_url: 'https://developer.github.com/v3'
   '/repos-atmos-hubot-deploy-deployment-production-create-success':
     host: 'https://api.github.com:443'
     path: '/repos/atmos/hubot-deploy/deployments'
