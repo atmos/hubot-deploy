@@ -44,6 +44,24 @@ describe "Deployments", () ->
         assert.equal "code-climate", body.errors[1].contexts
         done()
 
+    it "sometimes can't auto-merge  when the requested ref is behind the default branch", (done) ->
+      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged-failed'
+      deployment = new Deployment("hubot-deploy", "topic", "deploy", "production", "", "")
+      deployment.rawPost (err, status, body, headers, message) ->
+        throw err if err
+        assert.equal 409, status
+        assert.equal "Conflict merging master into topic.", body.message
+        done()
+
+    it "successfully auto-merges when the requested ref is behind the default branch", (done) ->
+      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged'
+      deployment = new Deployment("hubot-deploy", "topic", "deploy", "production", "", "")
+      deployment.rawPost (err, status, body, headers, message) ->
+        throw err if err
+        assert.equal 202, status
+        assert.equal "Auto-merged master into topic on deployment.", body.message
+        done()
+
     it "successfully created deployment", (done) ->
       VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-success'
       deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")

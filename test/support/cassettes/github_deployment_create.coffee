@@ -35,14 +35,6 @@ module.exports.cassettes =
           status: "failed"
         }
       ]
-  '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged':
-    host: 'https://api.github.com:443'
-    path: '/repos/atmos/hubot-deploy/deployments'
-    method: 'post'
-    code: 202
-    path: '/repos/atmos/hubot-deploy/deployments'
-    body:
-      message: "Auto-merged master into behind-merge-me on deployment."
   '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged-failed':
     host: 'https://api.github.com:443'
     path: '/repos/atmos/hubot-deploy/deployments'
@@ -51,6 +43,14 @@ module.exports.cassettes =
     path: '/repos/atmos/hubot-deploy/deployments'
     body:
       message: "Conflict merging master into topic."
+  '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged':
+    host: 'https://api.github.com:443'
+    path: '/repos/atmos/hubot-deploy/deployments'
+    method: 'post'
+    code: 202
+    path: '/repos/atmos/hubot-deploy/deployments'
+    body:
+      message: "Auto-merged master into topic on deployment."
   '/repos-atmos-hubot-deploy-deployment-production-create-success':
     host: 'https://api.github.com:443'
     path: '/repos/atmos/hubot-deploy/deployments'
