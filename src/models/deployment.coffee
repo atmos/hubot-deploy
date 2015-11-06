@@ -51,8 +51,9 @@ class Deployment
   # A hash to be converted into the body of the post to create a GitHub Deployment
   requestBody: ->
     body = JSON.parse(JSON.stringify(@unfilteredRequestBody()))
-    delete(body.payload.config.github_api)
-    delete(body.payload.config.github_token)
+    if body?.payload?.config?
+      delete(body.payload.config.github_api)
+      delete(body.payload.config.github_token)
     body
 
   unfilteredRequestBody: ->
@@ -96,8 +97,7 @@ class Deployment
     @api().get path, params, (err, status, body, headers) ->
       callback(err, body)
 
-  post: (cb) ->
-    path       = @apiConfig().path("repos/#{@repository}/deployments")
+  post: (callback) ->
     name       = @name
     repository = @repository
     env        = @env
@@ -105,41 +105,34 @@ class Deployment
 
     requiredContexts = @requiredContexts
 
-    @api().post path, @requestBody(), (err, status, body, headers) ->
+    @rawPost (err, status, body, headers) ->
       data = body
-
-      success = status == 201
 
       if err
         data = err
-        console.log err unless process.env.NODE_ENV == 'test'
 
       if data['message']
         bodyMessage = data['message']
 
         if bodyMessage.match(/No successful commit statuses/)
-          message = "I don't see a successful build for #{repository} that covers the latest \"#{@ref}\" branch."
+          message = "I don't see a successful build for #{repository} that covers the latest \"#{ref}\" branch."
 
         if bodyMessage.match(/Conflict merging ([-_\.0-9a-z]+)/)
           default_branch = data.message.match(/Conflict merging ([-_\.0-9a-z]+)/)[1]
-          message = "There was a problem merging the #{default_branch} for #{repository} into #{@ref}. You'll need to merge it manually, or disable auto-merging."
+          message = "There was a problem merging the #{default_branch} for #{repository} into #{ref}. You'll need to merge it manually, or disable auto-merging."
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
-          console.log "Successfully merged the default branch for #{deployment.repository} into #{@ref}. Normal push notifications should provide feedback."
+          console.log "Successfully merged the default branch for #{repository} into #{ref}. Normal push notifications should provide feedback."
 
         if bodyMessage.match(/Conflict: Commit status checks/)
           errors = data['errors'][0]
           commitContexts = errors.contexts
 
-          console.log "GitHub API Errors: #{errors}"
-          namedContexts  = (context.context for context in commitContexts)
-          console.log "Present Commit Status Contexts: #{namedContexts}"
+          namedContexts  = (context.context for context in commitContexts )
           failedContexts = (context.context for context in commitContexts when context.state isnt 'success')
-          console.log "Required Contexts: #{requiredContexts}"
           if requiredContexts?
             failedContexts.push(context) for context in requiredContexts when context not in namedContexts
 
-          console.log "Failed Commit Contexts: #{failedContexts}"
           bodyMessage = "Unmet required commit status contexts for #{name}: #{failedContexts.join(',')} failed."
 
         if bodyMessage == "Not Found"
@@ -147,7 +140,16 @@ class Deployment
         else
           message = bodyMessage
 
-      cb message
+      callback(err, status, body, headers, message)
+
+  rawPost: (callback) ->
+    path       = @apiConfig().path("repos/#{@repository}/deployments")
+    repository = @repository
+    env        = @env
+    ref        = @ref
+
+    @api().post path, @requestBody(), (err, status, body, headers) ->
+      callback(err, status, body, headers)
 
   # Private Methods
   configureEnvironments: ->
