@@ -16,7 +16,20 @@ module.exports.cassettes =
     path: '/repos/atmos/hubot-deploy/deployments'
     body:
       message: 'Conflict: Commit status checks failed for master'
-      documentation_url: 'https://developer.github.com/v3'
+      errors: [
+        {
+          contexts: [
+            {
+              context: "continuous-integration/travis-ci/push"
+              state: "failure"
+            },
+            {
+              context: "code-climate"
+              state: "success"
+            }
+          ]
+        }
+      ]
   '/repos-atmos-hubot-deploy-deployment-production-create-required-status-failing':
     host: 'https://api.github.com:443'
     path: '/repos/atmos/hubot-deploy/deployments'
@@ -27,12 +40,16 @@ module.exports.cassettes =
       message: "Conflict: Commit status checks failed for master"
       errors: [
         {
-          contexts: "continuous-integration/travis-ci/push"
-          status: "failed"
-        },
-        {
-          contexts: "code-climate"
-          status: "failed"
+          contexts: [
+            {
+              context: "continuous-integration/travis-ci/push"
+              state: "failure"
+            },
+            {
+              context: "code-climate"
+              state: "failure"
+            }
+          ]
         }
       ]
   '/repos-atmos-hubot-deploy-deployment-production-create-auto-merged-failed':

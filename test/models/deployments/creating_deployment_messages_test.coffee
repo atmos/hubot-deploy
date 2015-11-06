@@ -32,7 +32,7 @@ describe "Deployments", () ->
         throw err if err
         assert.equal 409, status
         assert.equal "Conflict: Commit status checks failed for master", body.message
-        assert.equal "", message
+        assert.equal "Unmet required commit status contexts for hubot-deploy: continuous-integration/travis-ci/push failed.", message
         done()
 
     it "does not create a deployment due to failing required commit statuses", (done) ->
@@ -42,9 +42,9 @@ describe "Deployments", () ->
         throw err if err
         assert.equal 409, status
         assert.equal "Conflict: Commit status checks failed for master", body.message
-        assert.equal "continuous-integration/travis-ci/push", body.errors[0].contexts
-        assert.equal "code-climate", body.errors[1].contexts
-        assert.equal "", message
+        assert.equal "continuous-integration/travis-ci/push", body.errors[0].contexts[0].context
+        assert.equal "code-climate", body.errors[0].contexts[1].context
+        assert.equal "Unmet required commit status contexts for hubot-deploy: continuous-integration/travis-ci/push,code-climate failed.", message
         done()
 
     it "sometimes can't auto-merge  when the requested ref is behind the default branch", (done) ->

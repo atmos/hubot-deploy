@@ -128,15 +128,11 @@ class Deployment
           errors = data['errors'][0]
           commitContexts = errors.contexts
 
-          console.log "GitHub API Errors: #{errors}"
-          namedContexts  = (context.context for context in commitContexts)
-          console.log "Present Commit Status Contexts: #{namedContexts}"
+          namedContexts  = (context.context for context in commitContexts )
           failedContexts = (context.context for context in commitContexts when context.state isnt 'success')
-          console.log "Required Contexts: #{requiredContexts}"
           if requiredContexts?
             failedContexts.push(context) for context in requiredContexts when context not in namedContexts
 
-          console.log "Failed Commit Contexts: #{failedContexts}"
           bodyMessage = "Unmet required commit status contexts for #{name}: #{failedContexts.join(',')} failed."
 
         if bodyMessage == "Not Found"
