@@ -13,7 +13,7 @@ describe "Deployments", () ->
     VCR.stop()
 
   describe "#rawPost", () ->
-    it "failed deployment due to bad authentication", (done) ->
+    it "does not create a deployment due to bad authentication", (done) ->
       VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-bad-auth'
       deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
       deployment.rawPost (err, status, body, headers, message) ->
@@ -22,6 +22,26 @@ describe "Deployments", () ->
 
         assert.equal "Bad credentials", err.message
         assert.equal 401, err.statusCode
+        done()
+
+    it "does not create a deployment due to missing required commit statuses", (done) ->
+      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-missing-required-status'
+      deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
+      deployment.rawPost (err, status, body, headers, message) ->
+        throw err if err
+        assert.equal 409, status
+        assert.equal "Conflict: Commit status checks failed for master", body.message
+        done()
+
+    it "does not create a deployment due to failing required commit statuses", (done) ->
+      VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-required-status-failing'
+      deployment = new Deployment("hubot-deploy", "master", "deploy", "production", "", "")
+      deployment.rawPost (err, status, body, headers, message) ->
+        throw err if err
+        assert.equal 409, status
+        assert.equal "Conflict: Commit status checks failed for master", body.message
+        assert.equal "continuous-integration/travis-ci/push", body.errors[0].contexts
+        assert.equal "code-climate", body.errors[1].contexts
         done()
 
     it "successfully created deployment", (done) ->
