@@ -39,9 +39,16 @@ Any extra parameters will be passed along to GitHub in the `payload` field. This
 }
 ```
 
-## Supported GitHub Services
+## Providers
 
-GitHub has really simple integrations for Heroku and OpsWorks. The cool thing about these is that you can get deployment support without having to setup and services of your own.
+### Heroku
+
+There's another plugin for hubot called [hubot-deploy-heroku](https://github.com/atmos/hubot-deploy-heroku).
+
+
+## Deprecated GitHub Services
+
+GitHub has service integrations for Heroku and OpsWorks. This allows you to get deployment support without having to setup an service of your own.
 
 ### Heroku
 
@@ -57,5 +64,4 @@ There's also a repo integration for deploying to [Aws OpsWorks](http://aws.amazo
 
 ## Supported Heaven Services
 
-The [heaven](https://github.com/atmos/heaven) exists if you need to write your own custom stuff or don't want to share your keys with GitHub. This requires you to stand up your own service, but deploys to heroku relatively easily. The best docs are probably the readme.
-
+There is also [heaven](https://github.com/atmos/heaven) which exists if you need to write your own custom stuff or don't want to share your keys with GitHub. This requires you to stand up your own service, but deploys to heroku relatively easily.
