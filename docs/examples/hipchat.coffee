@@ -65,5 +65,5 @@ module.exports = (robot) ->
 
     messageBody = status.toSimpleString().replace(/^hubot-deploy: /i, '')
     robot.logger.info messageBody
-    if status?.notify?.room? and status.notify.room isnt spamChannel
+    if status?.notify?.room?
       robot.messageRoom status.notify.room, messageBody
