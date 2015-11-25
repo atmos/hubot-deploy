@@ -5,30 +5,34 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 | Common Attributes       |                                                 |
 |-------------------------|-------------------------------------------------|
 | HUBOT_GITHUB_API        | A String of the full URL to the GitHub API. Default: "https://api.github.com" |
-| HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. |
-| HUBOT_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain.|
-| HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting to the GitHub API. This allows you to do customization of your deployment. |
+| HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. This is normally a bot account. |
+| HUBOT_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain. |
+| HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting directly to the GitHub API. This allows for customization, check out the examples. |
 
-### The Highlander Token
+### Robot Users
 
-If you're only going to use the `HUBOT_GITHUB_TOKEN` then all deployments will be created by a single user. Since you're deploying from chat, it's nice to know who requested the actual deployment.
+If you already have a user on GitHub that is essentially a bot account you can create a [personal OAuth token][1] for that user with the `user` and `repo` scopes. Unfortunately GitHub won't be able to differentiate between different users deploying, they'll all be created in the API as the bot user.
 
 ### User Tokens
 
-The hubot-deploy script provides a way to have user specific tokens for interacting with the API.
+The hubot-deploy script provides a way to have user specific tokens for interacting with the API. You need to be using a chat service that supports private messages like [SlackHQ][2] or [Hipchat][3].
 
-**To prevent chat networks from logging your password it's good practice to lock the room or use private messages if available.**
+To configure your own token, make a [personal OAuth token][1] with both `user`, `repo` scopes. Then provide it to hubot via private message.
 
-To configure your own token, make a [personal OAuth token][1] with both `user`, `repo` scopes. Then provide it to hubot.
+    deploy-token:set:github <mytoken>
 
-    $ hubot deploy-token:set:github <mytoken>
+Hubot will respond and tell you whether the token is sufficient or not. If your token is good future deployments will be properly attributed to your user in the API.
 
-Hubot will respond and tell you whether the token is sufficient or not. Subsequent deployments will be properly attributed to your user in the API.
+If things are being weird you can verify your token.
+
+    deploy-token:verify:github
 
 If you want to go back having the highlander token create your deployments you can reset things like.
 
-    $ hubot deploy-token:reset:github
+    deploy-token:reset:github
 
 Hubot will respond and tell you that your token has been forgotten and removed from the robot's brain.
 
 [1]: https://github.com/settings/tokens
+[2]: https://slack.com/is
+[3]: https://www.hipchat.com
