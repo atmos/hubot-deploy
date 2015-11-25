@@ -48,12 +48,16 @@ module.exports = (robot) ->
     msg.send "#{deployment.name} can be deployed to #{deployment.environments.join(', ')}."
 
   #########################################################################
+  # An incoming webhook from GitHub for a deployment. This is where you dispatch to app specific providers.
+  #
   # deployment - The deployment event webhook from the GitHub API.
   robot.on "github_deployment_event", (deployment) ->
     robot.logger.info JSON.stringify(deployment)
 
   #########################################################################
-  # status - The deployment status event webhook from the GitHub API.
+  # An incoming webhook from GitHub for a deployment status. This is chat feedback.
+  #
+  # status - The deployment status
   robot.on "github_deployment_status_event", (status) ->
     if status.notify
       user  = robot.brain.userForId status.notify.user
