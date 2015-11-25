@@ -3,9 +3,7 @@
 #
 process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS = "true"
 
-###########################################################################
 module.exports = (robot) ->
-  #########################################################################
   # This is what happens with a '/deploy' request is accepted.
   #
   # msg - The hubot message that triggered the deployment. msg.reply and msg.send post back immediately
@@ -28,7 +26,6 @@ module.exports = (robot) ->
     else
       msg.send "Sorry, I can't deploy #{deployment.name}, the provider is unsupported"
 
-  #########################################################################
   # Reply with the most recent deployments that the api is aware of
   #
   # msg - The hubot message that triggered the deployment. msg.reply and msg.send post back immediately
@@ -38,7 +35,6 @@ module.exports = (robot) ->
   robot.on "hubot_deploy_recent_deployments", (msg, deployment, deployments, formatter) ->
     msg.send formatter.message()
 
-  #########################################################################
   # Reply with the environments that hubot-deploy knows about for a specific application.
   #
   # msg - The hubot message that triggered the deployment. msg.reply and msg.send post back immediately
@@ -47,14 +43,12 @@ module.exports = (robot) ->
   robot.on "hubot_deploy_available_environments", (msg, deployment) ->
     msg.send "#{deployment.name} can be deployed to #{deployment.environments.join(', ')}."
 
-  #########################################################################
   # An incoming webhook from GitHub for a deployment.
   #
   # deployment - A Deployment from github_events.coffee
   robot.on "github_deployment_event", (deployment) ->
     robot.logger.info JSON.stringify(deployment)
 
-  #########################################################################
   # An incoming webhook from GitHub for a deployment status.
   #
   # status - A DeploymentStatus from github_events.coffee
