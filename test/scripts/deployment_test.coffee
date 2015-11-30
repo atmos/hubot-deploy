@@ -31,15 +31,26 @@ describe "Deploying from chat", () ->
     robot.run()
 
   afterEach () ->
+    delete(process.env.HUBOT_DEPLOY_DEFAULT_ENVIRONMENT)
     VCR.stop()
     robot.server.close()
     robot.shutdown()
 
-  it "tells you the latest production deploys", (done) ->
+  it "creates deployments when requested from chat", (done) ->
     VCR.play '/repos-atmos-hubot-deploy-deployment-production-create-success'
     robot.on "github_deployment", (msg, deployment) ->
       assert.equal "hubot-deploy", deployment.name
       assert.equal "production", deployment.env
+      done()
+
+    adapter.receive(new TextMessage(user, "Hubot deploy hubot-deploy"))
+
+  it "allows for the default environment to be overridden by an env var", (done) ->
+    process.env.HUBOT_DEPLOY_DEFAULT_ENVIRONMENT = "staging"
+    VCR.play '/repos-atmos-hubot-deploy-deployment-staging-create-success'
+    robot.on "github_deployment", (msg, deployment) ->
+      assert.equal "hubot-deploy", deployment.name
+      assert.equal "staging", deployment.env
       done()
 
     adapter.receive(new TextMessage(user, "Hubot deploy hubot-deploy"))
