@@ -19,6 +19,9 @@ DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern
 
+defaultDeploymentEnvironment = () ->
+  process.env.HUBOT_DEPLOY_DEFAULT_ENVIRONMENT || 'production'
+
 ###########################################################################
 module.exports = (robot) ->
   ###########################################################################
@@ -43,7 +46,7 @@ module.exports = (robot) ->
   # Displays the available environments for an application
   robot.respond DeploysPattern, (msg) ->
     name        = msg.match[2]
-    environment = msg.match[4] || 'production'
+    environment = msg.match[4] || defaultDeploymentEnvironment()
 
     try
       deployment = new Deployment(name, null, null, environment)
@@ -68,7 +71,7 @@ module.exports = (robot) ->
     force = msg.match[2] == '!'
     name  = msg.match[3]
     ref   = (msg.match[4]||'master')
-    env   = (msg.match[5]||'production')
+    env   = (msg.match[5]||defaultDeploymentEnvironment())
     hosts = (msg.match[6]||'')
     yubikey = msg.match[7]
 

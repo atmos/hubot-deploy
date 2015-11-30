@@ -8,6 +8,7 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 | HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. This is normally a bot account. |
 | HUBOT_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain. |
 | HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting directly to the GitHub API. This allows for customization, check out the examples. |
+| HUBOT_DEPLOY_DEFAULT_ENVIRONMENT | Allow for specifying which environment should be the default when it is omitted from the deployment request in chat. |
 
 ### Robot Users
 

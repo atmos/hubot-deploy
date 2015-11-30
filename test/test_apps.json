@@ -11,7 +11,7 @@
 
   "hubot-deploy": {
     "repository": "atmos/hubot-deploy",
-    "environments": ["production"],
+    "environments": ["production", "staging"],
 
     "provider": "npm"
   },
