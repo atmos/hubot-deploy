@@ -79,6 +79,15 @@ describe "Patterns", () ->
       assert.equal "fe",           matches[6], "incorrect host name"
       assert.equal "ccccccdlnncbtuevhdbctrccukdciveuclhbkvehbeve", matches[7], "incorrect yubikey pattern"
 
+    it "handles branch deploys with slashes and environments with hosts plus 2fa keys", () ->
+      matches = "deploy hubot/atmos/branch to production/fe 123456".match(DeployPattern)
+      assert.equal "deploy",       matches[1], "incorrect task"
+      assert.equal "hubot",        matches[3], "incorrect app name"
+      assert.equal "atmos/branch", matches[4], "incorrect branch name"
+      assert.equal "production",   matches[5], "incorrect environment name"
+      assert.equal "fe",           matches[6], "incorrect host name"
+      assert.equal "123456",       matches[7], "incorrect authenticator token"
+
     it "doesn't match on malformed yubikeys", () ->
       matches = "deploy hubot/atmos/branch to production/fe burgers".match(DeployPattern)
       assert.equal null, matches

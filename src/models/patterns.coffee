@@ -13,7 +13,7 @@ DEPLOY_SYNTAX = ///
   (?:\s+(?:to|in|on)\s+                 # http://i.imgur.com/3KqMoRi.gif
   #{validSlug}                          # Environment to release to
   (?:\/([^\s]+))?)?\s*                  # Host filter to try
-  (?:([cbdefghijklnrtuv]{32,64})?\s*)?$ # Optional Yubikey
+  (?:([cbdefghijklnrtuv]{32,64}|\d{6})?\s*)?$ # Optional Yubikey
 ///i
 
 
