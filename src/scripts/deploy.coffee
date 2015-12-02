@@ -19,6 +19,9 @@ DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern
 
+Verifiers     = require(Path.join(__dirname, "..", "models", "verifiers"))
+TokenForBrain = Verifiers.VaultKey
+
 defaultDeploymentEnvironment = () ->
   process.env.HUBOT_DEPLOY_DEFAULT_ENVIRONMENT || 'production'
 
@@ -52,8 +55,9 @@ module.exports = (robot) ->
       deployment = new Deployment(name, null, null, environment)
 
       user = robot.brain.userForId msg.envelope.user.id
-      if user? and user.githubDeployToken?
-        deployment.setUserToken(user.githubDeployToken)
+      token = robot.vault.forUser(user).get(TokenForBrain)
+      if token?
+        deployment.setUserToken(token)
 
       deployment.latest (err, deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
@@ -88,8 +92,9 @@ module.exports = (robot) ->
       return
 
     user = robot.brain.userForId msg.envelope.user.id
-    if user?.githubDeployToken?
-      deployment.setUserToken(user.githubDeployToken)
+    token = robot.vault.forUser(user).get(TokenForBrain)
+    if token?
+      deployment.setUserToken(token)
 
     deployment.user   = user.id
     deployment.room   = msg.message.user.room
