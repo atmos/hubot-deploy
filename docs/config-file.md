@@ -52,7 +52,7 @@ GitHub has service integrations for Heroku and OpsWorks. This allows you to get 
 
 ### Heroku
 
-GitHub provides a repo integration for deploying to [heroku](https:///heroku.com). [Docs](http://www.atmos.org/github-services/heroku/).
+GitHub provides a repo integration for deploying to [heroku](https:///heroku.com). [Docs](https://atmos.org/github-services/heroku/).
 
 | Provider Attributes     |                                                 |
 |-------------------------|-------------------------------------------------|
@@ -60,7 +60,7 @@ GitHub provides a repo integration for deploying to [heroku](https:///heroku.com
 
 ### OpsWorks
 
-There's also a repo integration for deploying to [Aws OpsWorks](http://aws.amazon.com/opsworks/). OpsWorks supports multi-environment deployments by specifying different stack and app ids. [Docs](http://www.atmos.org/github-services/aws-opsworks/).
+There's also a repo integration for deploying to [Aws OpsWorks](http://aws.amazon.com/opsworks/). OpsWorks supports multi-environment deployments by specifying different stack and app ids. [Docs](https://atmos.org/github-services/aws-opsworks/).
 
 ## Supported Heaven Services
 
