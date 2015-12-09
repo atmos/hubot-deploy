@@ -1,9 +1,7 @@
 Fs   = require "fs"
 Path = require "path"
 
-srcDir = Path.join(__dirname, "..","..", "..", "..", "src")
-
-console.log srcDir
+srcDir = Path.join(__dirname, "..", "..", "..", "src")
 
 GitHubEvents     = require(Path.join(srcDir, "github", "webhooks"))
 Deployment       = GitHubEvents.Deployment
@@ -11,7 +9,7 @@ DeploymentStatus = GitHubEvents.DeploymentStatus
 
 describe "GitHubEvents.DeploymentStatus fixtures", () ->
   deploymentStatusFor = (fixtureName) ->
-    fixtureData = Path.join __dirname, "..", "..", "..", "fixtures", "deployment_statuses", "#{fixtureName}.json"
+    fixtureData = Path.join __dirname, "..", "..", "fixtures", "deployment_statuses", "#{fixtureName}.json"
     fixturePayload = JSON.parse(Fs.readFileSync(fixtureData))
     status = new DeploymentStatus "uuid", fixturePayload
 
@@ -38,7 +36,7 @@ describe "GitHubEvents.DeploymentStatus fixtures", () ->
 
 describe "GitHubEvents.Deployment fixtures", () ->
   deploymentFor = (fixtureName) ->
-    fixtureData = Path.join __dirname, "..", "..", "..", "fixtures", "deployments", "#{fixtureName}.json"
+    fixtureData = Path.join __dirname, "..", "..", "fixtures", "deployments", "#{fixtureName}.json"
     fixturePayload = JSON.parse(Fs.readFileSync(fixtureData))
     new Deployment "uuid", fixturePayload
 

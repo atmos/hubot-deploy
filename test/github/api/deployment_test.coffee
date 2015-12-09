@@ -1,7 +1,7 @@
 Path = require "path"
 
-Version    = require(Path.join(__dirname, "..", "..", "..", "..", "src", "version")).Version
-Deployment = require(Path.join(__dirname, "..", "..", "..", "..", "src", "github", "api")).Deployment
+Version    = require(Path.join(__dirname, "..", "..", "..", "src", "version")).Version
+Deployment = require(Path.join(__dirname, "..", "..", "..", "src", "github", "api")).Deployment
 
 describe "Deployment fixtures", () ->
   describe "#autoMerge", () ->
@@ -18,7 +18,7 @@ describe "Deployment fixtures", () ->
 
     context "with ca file", () ->
       it "sets agentOptions.ca", () ->
-        process.env.HUBOT_CA_FILE = Path.join(__dirname, "..", "..", "..", "fixtures", "cafile.txt")
+        process.env.HUBOT_CA_FILE = Path.join(__dirname, "..", "..", "fixtures", "cafile.txt")
         deployment = new Deployment("hubot", "master", "deploy", "production", "", "")
         api = deployment.api()
         assert(api.requestDefaults.agentOptions.ca)
