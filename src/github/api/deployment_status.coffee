@@ -1,8 +1,8 @@
 Path         = require "path"
-Version      = require(Path.join(__dirname, "..", "version")).Version
+Version      = require(Path.join(__dirname, "..", "..", "version")).Version
 ScopedClient = require "scoped-http-client"
 
-class GitHubDeploymentStatus
+class DeploymentStatus
   constructor: (@apiToken, @repoName, @number) ->
     @state       = undefined
     @targetUrl   = undefined
@@ -24,4 +24,4 @@ class GitHubDeploymentStatus
       post(@postParams()) (err, res, body) ->
         callback(err, res, body)
 
-exports.GitHubDeploymentStatus = GitHubDeploymentStatus
+exports.DeploymentStatus = DeploymentStatus

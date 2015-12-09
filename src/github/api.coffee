@@ -1,7 +1,7 @@
 Url  = require "url"
 Path = require "path"
 ###########################################################################
-class ApiConfig
+class GitHubApi
   constructor: (@userToken, @application) ->
     @token = @apiToken()
 
@@ -32,4 +32,6 @@ class ApiConfig
     else
       @parsedApiUrl.path
 
-exports.ApiConfig = ApiConfig
+exports.Api              = GitHubApi
+exports.Deployment       = require(Path.join(__dirname, "api", "deployment")).Deployment
+exports.DeploymentStatus = require(Path.join(__dirname, "api", "deployment_status")).DeploymentStatus

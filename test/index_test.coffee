@@ -32,19 +32,7 @@ describe "The Hubot Script", () ->
     assert.match result, /production/im
     assert.notMatch result, /staging/im
 
-  it "displays recent deployments", () ->
-    room.user.say 'atmos', 'hubot deploys hubot'
-    assert.equal 1, room.messages.length
-    # TODO stub out the response or something?
-
-  it "displays recent staging deployments", () ->
-    room.user.say 'atmos', 'hubot deploys hubot to staging'
-    assert.equal 1, room.messages.length
-    # TODO stub out the response or something?
-
   it "does not allow deploying in random room if allowed_rooms is configured", () ->
     room.user.say 'atmos', 'hubot deploy restricted-app to production'
     result = room.messages[1][1]
     assert.match result, /not allowed to be deployed from this room/im
-
-  it "deploys hubot"

@@ -1,10 +1,10 @@
 Path = require('path')
 
-ApiConfig = require(Path.join(__dirname, "..", "..", "src", "models", "api_config"))
+GitHubApi = require(Path.join(__dirname, "..", "..", "..", "src", "github", "api"))
 
-describe "ApiConfig", () ->
+describe "GitHubApi", () ->
   describe "defaults", () ->
-    apiConfig = new ApiConfig.ApiConfig("xxx", null)
+    apiConfig = new GitHubApi.Api("xxx", null)
 
     it "fetches the GitHub API token provided", () ->
       assert.equal "xxx", apiConfig.token
@@ -20,7 +20,7 @@ describe "ApiConfig", () ->
       application =
         github_api:   "https://enterprise.mycompany.com/api/v3/"
         github_token: "yyy"
-    apiConfig = new ApiConfig.ApiConfig("xxx", application)
+    apiConfig = new GitHubApi.Api("xxx", application)
 
     it "fetches the custom GitHub API token", () ->
       assert.equal "yyy", apiConfig.token
