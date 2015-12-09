@@ -1,7 +1,7 @@
 Fs   = require "fs"
 Path = require "path"
 
-GitHubRequests   = require(Path.join(__dirname, "..", "..", "..", "src", "models", "github", "requests"))
+GitHubRequests   = require(Path.join(__dirname, "..", "..", "..", "..", "src", "models", "github", "outgoing", "deployment_status"))
 DeploymentStatus = GitHubRequests.GitHubDeploymentStatus
 
 describe "GitHubRequests.GitHubDeploymentStatus", () ->

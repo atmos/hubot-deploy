@@ -1,9 +1,9 @@
 Fs        = require "fs"
 Url       = require "url"
 Path      = require "path"
-Version   = require(Path.join(__dirname, "..", "version")).Version
+Version      = require(Path.join(__dirname, "..", "..", "..", "version")).Version
 Octonode  = require "octonode"
-GitHubApi = require(Path.join(__dirname, "github", "api")).Api
+GitHubApi = require(Path.join(__dirname, "..", "api")).Api
 ###########################################################################
 
 class Deployment

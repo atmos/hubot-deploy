@@ -10,7 +10,7 @@ supported_tasks = [ "#{DeployPrefix}-token" ]
 
 Path           = require("path")
 Patterns       = require(Path.join(__dirname, "..", "models", "patterns"))
-Deployment     = require(Path.join(__dirname, "..", "models", "deployment")).Deployment
+Deployment     = require(Path.join(__dirname, "..", "models", "github", "outgoing", "deployment")).Deployment
 DeployPrefix   = Patterns.DeployPrefix
 DeployPattern  = Patterns.DeployPattern
 DeploysPattern = Patterns.DeploysPattern

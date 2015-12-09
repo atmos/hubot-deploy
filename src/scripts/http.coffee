@@ -7,7 +7,7 @@
 Path             = require "path"
 Crypto           = require "crypto"
 
-GitHubEvents     = require(Path.join(__dirname, "..", "models", "github", "events"))
+GitHubEvents     = require(Path.join(__dirname, "..", "models", "github", "incoming"))
 Deployment       = GitHubEvents.Deployment
 DeploymentStatus = GitHubEvents.DeploymentStatus
 
@@ -16,7 +16,6 @@ DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).Dep
 GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
 supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
-
 
 Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
 
