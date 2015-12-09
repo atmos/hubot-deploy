@@ -2,7 +2,10 @@ Fs   = require "fs"
 Path = require "path"
 
 srcDir = Path.join(__dirname, "..","..", "..", "..", "src")
-GitHubEvents     = require(Path.join(srcDir, "models", "github", "incoming"))
+
+console.log srcDir
+
+GitHubEvents     = require(Path.join(srcDir, "github", "webhooks"))
 Deployment       = GitHubEvents.Deployment
 DeploymentStatus = GitHubEvents.DeploymentStatus
 

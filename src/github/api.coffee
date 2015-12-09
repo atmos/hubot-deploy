@@ -32,4 +32,6 @@ class GitHubApi
     else
       @parsedApiUrl.path
 
-exports.Api = GitHubApi
+exports.Api              = GitHubApi
+exports.Deployment       = require(Path.join(__dirname, "api", "deployment")).Deployment
+exports.DeploymentStatus = require(Path.join(__dirname, "api", "deployment_status")).DeploymentStatus

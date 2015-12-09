@@ -1,5 +1,5 @@
 Path         = require "path"
-Version      = require(Path.join(__dirname, "..", "..", "..", "version")).Version
+Version      = require(Path.join(__dirname, "..", "..", "version")).Version
 ScopedClient = require "scoped-http-client"
 
 class DeploymentStatus

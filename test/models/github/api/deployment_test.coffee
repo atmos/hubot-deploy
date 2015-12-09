@@ -1,7 +1,7 @@
 Path = require "path"
 
 Version    = require(Path.join(__dirname, "..", "..", "..", "..", "src", "version")).Version
-Deployment = require(Path.join(__dirname, "..", "..", "..", "..", "src", "models", "github", "outgoing")).Deployment
+Deployment = require(Path.join(__dirname, "..", "..", "..", "..", "src", "github", "api")).Deployment
 
 describe "Deployment fixtures", () ->
   describe "#autoMerge", () ->

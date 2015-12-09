@@ -4,7 +4,7 @@ Path = require "path"
 srcDir = Path.join(__dirname, "..", "..", "..", "src")
 
 Version    = require(Path.join(srcDir, "version")).Version
-Deployment = require(Path.join(srcDir, "models", "github", "outgoing")).Deployment
+Deployment = require(Path.join(srcDir, "github", "api")).Deployment
 
 describe "Deployment#latest", () ->
   beforeEach () ->

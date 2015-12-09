@@ -1,6 +1,6 @@
 Path = require('path')
 
-GitHubApi = require(Path.join(__dirname, "..", "..", "..", "src", "models", "github", "api"))
+GitHubApi = require(Path.join(__dirname, "..", "..", "..", "src", "github", "api"))
 
 describe "GitHubApi", () ->
   describe "defaults", () ->
