@@ -1,11 +1,9 @@
 Path = require "path"
 
 Version    = require(Path.join(__dirname, "..", "..", "..", "..", "src", "version")).Version
-Deployment = require(Path.join(__dirname, "..", "..", "..", "..", "src", "models", "github", "outgoing", "deployment")).Deployment
+Deployment = require(Path.join(__dirname, "..", "..", "..", "..", "src", "models", "github", "outgoing")).Deployment
 
 describe "Deployment fixtures", () ->
-
-
   describe "#autoMerge", () ->
     it "works with auto-merging", () ->
       deployment = new Deployment("hubot", "master", "deploy", "production", "", "")

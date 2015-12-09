@@ -1,6 +1,6 @@
 Path = require('path')
 
-Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "github", "outgoing", "deployment")).Deployment
+Deployment = require(Path.join(__dirname, "..", "..", "src", "models", "github", "outgoing")).Deployment
 Formatter  = require(Path.join(__dirname, "..", "..", "src", "models", "formatters"))
 
 describe "Formatter", () ->
