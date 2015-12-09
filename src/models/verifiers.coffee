@@ -1,7 +1,7 @@
 Path      = require "path"
 Octonode  = require "octonode"
 Address4  = require("ip-address").Address4
-ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
+GitHubApi = require(Path.join(__dirname, "github", "api")).Api
 ###########################################################################
 
 VaultKey = "hubot-deploy-github-secret"
@@ -10,7 +10,7 @@ class ApiTokenVerifier
   constructor: (token) ->
     @token = token?.trim()
 
-    @config = new ApiConfig(@token, null)
+    @config = new GitHubApi(@token, null)
     @api   = Octonode.client(@config.token, {hostname: @config.hostname})
 
   valid: (cb) ->

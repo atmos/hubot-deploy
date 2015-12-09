@@ -3,7 +3,7 @@ Url       = require "url"
 Path      = require "path"
 Version   = require(Path.join(__dirname, "..", "version")).Version
 Octonode  = require "octonode"
-ApiConfig = require(Path.join(__dirname, "api_config")).ApiConfig
+GitHubApi = require(Path.join(__dirname, "github", "api")).Api
 ###########################################################################
 
 class Deployment
@@ -81,11 +81,10 @@ class Deployment
     @userToken = token.trim()
 
   apiConfig: ->
-    new ApiConfig(@userToken, @application)
+    new GitHubApi(@userToken, @application)
 
   api: ->
     api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
-    api.requestDefaults.headers['Accept'] = 'application/vnd.github.cannonball-preview+json'
     api.requestDefaults.agentOptions = { ca: @caFile } if @caFile
     api
 

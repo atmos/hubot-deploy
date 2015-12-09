@@ -7,7 +7,7 @@
 Path             = require "path"
 Crypto           = require "crypto"
 
-GitHubEvents     = require(Path.join(__dirname, "..", "models", "github_events"))
+GitHubEvents     = require(Path.join(__dirname, "..", "models", "github", "events"))
 Deployment       = GitHubEvents.Deployment
 DeploymentStatus = GitHubEvents.DeploymentStatus
 
