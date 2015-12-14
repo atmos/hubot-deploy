@@ -69,7 +69,7 @@
       },
       "repo": {
         "id": 45451154,
-        "name": "changeling",
+        "name": "hubot-deploy",
         "full_name": "atmos/hubot-deploy",
         "owner": {
           "login": "atmos",
@@ -180,7 +180,7 @@
       },
       "repo": {
         "id": 45451154,
-        "name": "changeling",
+        "name": "hubot-deploy",
         "full_name": "atmos/hubot-deploy",
         "owner": {
           "login": "atmos",
@@ -305,7 +305,7 @@
   },
   "repository": {
     "id": 45451154,
-    "name": "changeling",
+    "name": "hubot-deploy",
     "full_name": "atmos/hubot-deploy",
     "owner": {
       "login": "atmos",
