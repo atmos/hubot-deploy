@@ -6,12 +6,6 @@ node_js:
   - "0.12"
   - "4"
 
-env:
-  - HUBOT_VERSION=2.7.2
-  - HUBOT_VERSION=2.13.2
-  - HUBOT_VERSION=2.14
-  - HUBOT_VERSION=^2.16
-
 before_install:
   - npm install "hubot@$HUBOT_VERSION" --save
 
