@@ -13,29 +13,41 @@ describe "GitHubEvents.PullRequest fixtures", () ->
     status = new PullRequest "uuid", fixturePayload
 
   describe "opened", () ->
-    it "knows the number and repo", () ->
+    it "knows the state, number, and repo", () ->
       pullRequest = pullRequestFor("opened")
       assert.equal 32, pullRequest.number
+      assert.equal "open", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
 
   describe "merged", () ->
-    it "knows the number and repo", () ->
+    it "knows the state, number, and repo", () ->
       pullRequest = pullRequestFor("merged")
       assert.equal 32, pullRequest.number
+      assert.equal "closed", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
 
   describe "closed", () ->
-    it "knows the number and repo", () ->
+    it "knows the state, number, and repo", () ->
       pullRequest = pullRequestFor("closed")
       assert.equal 32, pullRequest.number
+      assert.equal "closed", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
 
   describe "reopened", () ->
-    it "knows the number and repo", () ->
+    it "knows the state, number, and repo", () ->
       pullRequest = pullRequestFor("reopened")
       assert.equal 32, pullRequest.number
+      assert.equal "open", pullRequest.state
+      assert.equal "hubot-deploy", pullRequest.name
+      assert.equal "atmos/hubot-deploy", pullRequest.repoName
+
+  describe "synchronize", () ->
+    it "knows the state, number, and repo", () ->
+      pullRequest = pullRequestFor("reopened")
+      assert.equal 32, pullRequest.number
+      assert.equal "open", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
