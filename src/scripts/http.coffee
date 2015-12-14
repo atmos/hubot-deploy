@@ -9,6 +9,7 @@ Crypto           = require "crypto"
 
 GitHubEvents     = require(Path.join(__dirname, "..", "github", "webhooks"))
 Deployment       = GitHubEvents.Deployment
+PullRequest      = GitHubEvents.PullRequest
 DeploymentStatus = GitHubEvents.DeploymentStatus
 
 DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).DeployPrefix
@@ -63,6 +64,14 @@ module.exports = (robot) ->
 
             res.writeHead 200, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
+
+          when "pull_requests"
+            pullRequest = new PullRequest deliveryId, req.body
+
+            robot.emit "github_pull_request", pullRequest
+
+            res.writeHead 200, {'content-type': 'application/json' }
+            return res.end(JSON.stringify({message: pullRequest.toSimpleString()}))
 
           else
             res.writeHead 400, {'content-type': 'application/json' }
