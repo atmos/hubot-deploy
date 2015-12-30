@@ -4,6 +4,7 @@ class Vault
   constructor: (@user) ->
     @user?.vault or= {}
     @vault = @user.vault
+    @secrets = @getSecrets()
 
   set: (key, value) ->
     token = new fernet.Token(secret: @currentSecret())
@@ -11,7 +12,7 @@ class Vault
 
   get: (key) ->
     return undefined unless @vault[key]
-    for secret in @secrets()
+    for secret in @secrets
       token = new fernet.Token
         secret: secret
         token: @vault[key]
@@ -26,9 +27,12 @@ class Vault
     delete @vault[key]
 
   currentSecret: ->
-    @secrets()[0]
+    @secrets[0]
 
-  secrets: ->
-    (new fernet.Secret(secret) for secret in process.env.HUBOT_FERNET_SECRETS.split(","))
+  getSecrets: ->
+    unless process.env.HUBOT_DEPLOY_FERNET_SECRETS?
+      throw new Error("Please set a HUBOT_DEPLOY_FERNET_SECRETS string in the environment")
+    fernetSecrets = process.env.HUBOT_DEPLOY_FERNET_SECRETS.split(",")
+    (new fernet.Secret(secret) for secret in fernetSecrets)
 
 exports.Vault = Vault

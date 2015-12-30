@@ -11,7 +11,7 @@ describe "Deploying from chat", () ->
 
   beforeEach (done) ->
     VCR.playback()
-    process.env.HUBOT_FERNET_SECRETS or= "HSfTG4uWzw9whtlLEmNAzscHh96eHUFt3McvoWBXmHk="
+    process.env.HUBOT_DEPLOY_FERNET_SECRETS or= "HSfTG4uWzw9whtlLEmNAzscHh96eHUFt3McvoWBXmHk="
     process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS = true
     robot = new Robot(null, "mock-adapter", true, "Hubot")
 
