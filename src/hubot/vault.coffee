@@ -10,7 +10,7 @@ class Vault
     @vault[key] = token.encode(JSON.stringify(value))
 
   get: (key) ->
-    return unless @vault[key]
+    return undefined unless @vault[key]
     for secret in @secrets()
       token = new fernet.Token
         secret: secret
