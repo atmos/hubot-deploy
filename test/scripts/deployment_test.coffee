@@ -16,7 +16,6 @@ describe "Deploying from chat", () ->
     robot = new Robot(null, "mock-adapter", true, "Hubot")
 
     robot.adapter.on "connected", () ->
-      require("hubot-vault")(robot)
       require("../../index")(robot)
 
       userInfo =

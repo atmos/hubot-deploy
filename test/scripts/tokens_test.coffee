@@ -15,7 +15,6 @@ describe "Setting tokens and such", () ->
     robot = new Robot(null, "mock-adapter", true, "Hubot")
 
     robot.adapter.on "connected", () ->
-      require("hubot-vault")(robot)
       require("../../index")(robot)
 
       userInfo =
