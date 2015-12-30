@@ -8,7 +8,7 @@
 
 * Add hubot-deploy to your `package.json` file.
 * Add hubot-deploy to your `external-scripts.json` file.
-* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your runtime environment to interaction with the GitHub API.
+* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your runtime environment to interact with the GitHub API.
 * Understand how [apps.json](https://github.com/atmos/hubot-deploy/blob/master/docs/config-file.md) works.
 * Learn about [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/docs/chatops.md) deploys.
 
