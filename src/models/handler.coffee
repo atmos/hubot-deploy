@@ -6,12 +6,14 @@ GitHubDeploymentStatus = require("../github/api").GitHubDeploymentStatus
 class Handler
   constructor: (@robot, @deployment) ->
     @ref              = @deployment.ref
+    @sha              = @deployment.sha
     @repoName         = @deployment.repoName
     @environment      = @deployment.environment
     @notify           = @deployment.notify
     @actualDeployment = @deployment.payload.deployment
     @provider         = @actualDeployment.payload?.config?.provider
     @number           = @actualDeployment.id
+    @task             = @actualDeployment.task
 
   run: (callback) ->
     try

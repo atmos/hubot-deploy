@@ -64,12 +64,17 @@ describe "Deployment Handlers", () ->
       assert.equal err.message, "Not deploying atmos/my-robot/heroku to production. Not chat initiated."
       done()
 
-  it "dispatches to heroku", (done) ->
+  it "dispatches to specific providers", (done) ->
     fixturePayload = deploymentFixtureFor "production"
     deployment = new Deployment "uuid", fixturePayload
 
     handler = new Handler.Handler robot, deployment
     handler.run (err, handler) ->
       throw err if err
-      assert.equal "heroku", handler.provider
+      assert.equal "heroku",  handler.provider
+      assert.equal "heroku",  handler.ref
+      assert.equal "3c9f42c", handler.sha
+      assert.equal "1875476", handler.number
+      assert.equal "production", handler.environment
+      assert.equal "atmos/my-robot", handler.repoName
       done()
