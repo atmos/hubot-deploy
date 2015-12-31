@@ -7,6 +7,7 @@
     "task": "deploy",
     "payload": {
       "name": "heaven",
+      "robotName": "hubot",
       "hosts": "",
       "notify": {
         "room": "ops",
@@ -27,7 +28,7 @@
       }
     },
     "environment": "staging",
-    "description": "Deploying from hubot-deploy-v0.6.53",
+    "description": "Deploying from hubot-deploy-v0.12.5",
     "creator": {
       "login": "atmos",
       "id": 6626297,
