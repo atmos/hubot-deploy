@@ -50,7 +50,7 @@ describe "Deployment Handlers", () ->
     deployment = new Deployment "uuid", fixturePayload
 
     handler = new Handler.Handler robot, deployment
-    handler.run (err, provider) ->
+    handler.run (err, handler) ->
       assert.equal err.message, "Received request for unintended robot evilbot."
       done()
 
@@ -60,20 +60,16 @@ describe "Deployment Handlers", () ->
     deployment = new Deployment "uuid", fixturePayload
 
     handler = new Handler.Handler robot, deployment
-    handler.run (err, provider) ->
+    handler.run (err, handler) ->
       assert.equal err.message, "Not deploying atmos/my-robot/heroku to production. Not chat initiated."
       done()
-#
-#  it "blows up", (done) ->
-#    fixturePayload = deploymentFixtureFor "production"
-#    deployment = new Deployment "uuid", fixturePayload
-#
-#    handler = new Handler.Handler robot, deployment
-#    handler.run (err, provider) ->
-#      throw err if err
-#      console.log err
-#      switch provider
-#        when "heroku" then @heroku()
-#        else
-#          throw new Error "Unknown provider: #{provider}"
-#      done()
+
+  it "dispatches to heroku", (done) ->
+    fixturePayload = deploymentFixtureFor "production"
+    deployment = new Deployment "uuid", fixturePayload
+
+    handler = new Handler.Handler robot, deployment
+    handler.run (err, handler) ->
+      throw err if err
+      assert.equal "heroku", handler.provider
+      done()
