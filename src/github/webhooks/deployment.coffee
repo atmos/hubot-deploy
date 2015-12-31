@@ -7,6 +7,7 @@ class Deployment
     @number      = deployment.id
     @sha         = deployment.sha.substring(0,7)
     @ref         = deployment.ref
+    @task        = deployment.task
     @environment = deployment.environment
     @notify      = deployment.payload.notify
 
