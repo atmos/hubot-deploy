@@ -118,10 +118,17 @@ class Deployment
 
         if bodyMessage.match(/Conflict merging ([-_\.0-9a-z]+)/)
           default_branch = data.message.match(/Conflict merging ([-_\.0-9a-z]+)/)[1]
-          message = "There was a problem merging the #{default_branch} for #{repository} into #{ref}. You'll need to merge it manually, or disable auto-merging."
+          message = '''
+          There was a problem merging the #{default_branch} for #{repository} into #{ref}.
+          You'll need to merge it manually, or disable auto-merging.
+          '''
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
-          console.log "Successfully merged the default branch for #{repository} into #{ref}. Normal push notifications should provide feedback."
+          tmpMessage = '''
+          Successfully merged the default branch for #{repository} into #{ref}.
+          Normal push notifications should provide feedback.
+          '''
+          console.log tmpMessage
 
         if bodyMessage.match(/Conflict: Commit status checks/)
           errors = data['errors'][0]
