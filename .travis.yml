@@ -6,6 +6,10 @@ node_js:
   - "0.12"
   - "4"
 
+script:
+  - cake test
+  - cake lint
+
 before_install:
   - npm install "hubot@$HUBOT_VERSION" --save
 
