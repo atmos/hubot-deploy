@@ -10,6 +10,6 @@ task "test", "run tests", ->
     throw err if err
 
 task "lint", "run linter", ->
-  exec "NODE_ENV=test find ./src -name '*.coffee' | xargs ./node_modules/.bin/coffeelint", (err, output) ->
+  exec "NODE_ENV=test coffeelint -f .coffeelint.json src/", (err, output) ->
     console.log output
     throw err if err

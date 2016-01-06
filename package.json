@@ -18,7 +18,8 @@
   ],
   "homepage": "https://github.com/atmos/hubot-deploy",
   "scripts": {
-    "test": "cake test"
+    "test": "NODE_ENV=test mocha test/**/*_test.coffee test/**/**/*_test.coffee test/**/**/**/*_test.coffee",
+    "posttest": "NODE_ENV=test coffeelint -f .coffeelint.json src/"
   },
   "contributors": [
     {

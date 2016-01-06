@@ -114,14 +114,23 @@ class Deployment
         bodyMessage = data['message']
 
         if bodyMessage.match(/No successful commit statuses/)
-          message = "I don't see a successful build for #{repository} that covers the latest \"#{ref}\" branch."
+          message = """
+          I don't see a successful build for #{repository} that covers the latest \"#{ref}\" branch.
+          """
 
         if bodyMessage.match(/Conflict merging ([-_\.0-9a-z]+)/)
           default_branch = data.message.match(/Conflict merging ([-_\.0-9a-z]+)/)[1]
-          message = "There was a problem merging the #{default_branch} for #{repository} into #{ref}. You'll need to merge it manually, or disable auto-merging."
+          message = """
+          There was a problem merging the #{default_branch} for #{repository} into #{ref}.
+          You'll need to merge it manually, or disable auto-merging.
+          """
 
         if bodyMessage.match(/Merged ([-_\.0-9a-z]+) into/)
-          console.log "Successfully merged the default branch for #{repository} into #{ref}. Normal push notifications should provide feedback."
+          tmpMessage = """
+          Successfully merged the default branch for #{repository} into #{ref}.
+          Normal push notifications should provide feedback.
+          """
+          console.log tmpMessage
 
         if bodyMessage.match(/Conflict: Commit status checks/)
           errors = data['errors'][0]
@@ -132,7 +141,9 @@ class Deployment
           if requiredContexts?
             failedContexts.push(context) for context in requiredContexts when context not in namedContexts
 
-          bodyMessage = "Unmet required commit status contexts for #{name}: #{failedContexts.join(',')} failed."
+          bodyMessage = """
+          Unmet required commit status contexts for #{name}: #{failedContexts.join(',')} failed.
+          """
 
         if bodyMessage == "Not Found"
           message = "Unable to create deployments for #{repository}. Check your scopes for this token."
