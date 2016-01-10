@@ -23,7 +23,10 @@ class ApiTokenVerifier
 
 class GitHubWebHookIpVerifier
   constructor: () ->
-    @subnets = [ new Address4("192.30.252.0/22") ]
+    gitHubSubnets = process.env.HUBOT_GITHUB_VERIFICATION_SUBNETS || "192.30.252.0/22"
+    @subnets = gitHubSubnets.split(',').map (subnet) ->
+      return subnet && new Address4(subnet.trim())
+    .filter Boolean
 
   ipIsValid: (ipAddress) ->
     address = new Address4("#{ipAddress}/24")
