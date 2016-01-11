@@ -5,7 +5,7 @@ Verifiers = require(Path.join(__dirname, "..", "..", "src", "models", "verifiers
 
 describe "GitHubWebHookIpVerifier", () ->
   afterEach () ->
-    delete process.env.HUBOT_GITHUB_VERIFICATION_SUBNETS
+    delete process.env.HUBOT_DEPLOY_GITHUB_SUBNETS
 
   it "verifies correct ip addresses", () ->
     verifier = new Verifiers.GitHubWebHookIpVerifier
@@ -24,7 +24,7 @@ describe "GitHubWebHookIpVerifier", () ->
     assert.isFalse verifier.ipIsValid("127.0.0.1")
 
   it "verifies correct ip addresses with custom subnets", () ->
-    process.env.HUBOT_GITHUB_VERIFICATION_SUBNETS = '207.97.227.0/22,,   198.41.190.0/22'
+    process.env.HUBOT_DEPLOY_GITHUB_SUBNETS = '207.97.227.0/22,,   198.41.190.0/22'
     verifier = new Verifiers.GitHubWebHookIpVerifier
 
     assert.isTrue verifier.ipIsValid("207.97.224.1")
