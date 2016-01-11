@@ -9,6 +9,7 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 | HUBOT_DEPLOY_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain. A comma delimited set of different key tokens. To create one run `dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64` on a UNIX system.  |
 | HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting directly to the GitHub API. This allows for customization, check out the examples. |
 | HUBOT_DEPLOY_DEFAULT_ENVIRONMENT | Allow for specifying which environment should be the default when it is omitted from the deployment request in chat. |
+| HUBOT_DEPLOY_GITHUB_SUBNETS | Allow for specifying the subnets for your GitHub install, useful for GitHub Enterprise. Defaults to github.com's IP range. |
 
 ### Robot Users
 
