@@ -59,4 +59,6 @@ describe "GitHubEvents.PullRequest fixtures", () ->
       assert.equal "open", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
-      assert.equal "hubot-deploy: https://github.com/atmos/hubot-deploy/pull/32", pullRequest.toSimpleString()
+      expectedOutput = "hubot-deploy: atmos opened pull request #32: webhooks-events-generator " +
+                       "https://github.com/atmos/hubot-deploy/pull/32/files"
+      assert.equal pullRequest.toSimpleString(), expectedOutput
