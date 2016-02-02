@@ -9,7 +9,7 @@ class CommitStatus
     @repoName    = @payload.repository.full_name
 
   toSimpleString: ->
-    msg = "hubot-deploy: commit status for #{@context} on #{@name}/#{@sha} "
+    msg = "hubot-deploy: commit status for #{@name}/#{@sha} (#{@context}) "
     switch @state
       when "success"
         msg += "was successful."
