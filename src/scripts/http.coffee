@@ -66,7 +66,7 @@ module.exports = (robot) ->
             res.writeHead 200, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
 
-          when "commit_status"
+          when "status"
             status = new CommitStatus deliveryId, req.body
 
             robot.emit "github_commit_status_event", status
