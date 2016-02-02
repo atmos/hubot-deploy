@@ -7,6 +7,6 @@ class PullRequest
     @repoName    = @payload.repository.full_name
 
   toSimpleString: ->
-    "hubot-deploy: https://#{github.com}/#{@repoName}/pull/#{@number}"
+    "hubot-deploy: https://github.com/#{@repoName}/pull/#{@number}"
 
 exports.PullRequest = PullRequest
