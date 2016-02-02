@@ -51,3 +51,12 @@ describe "GitHubEvents.PullRequest fixtures", () ->
       assert.equal "open", pullRequest.state
       assert.equal "hubot-deploy", pullRequest.name
       assert.equal "atmos/hubot-deploy", pullRequest.repoName
+
+  describe "toSimpleString", () ->
+    it "works", () ->
+      pullRequest = pullRequestFor("reopened")
+      assert.equal 32, pullRequest.number
+      assert.equal "open", pullRequest.state
+      assert.equal "hubot-deploy", pullRequest.name
+      assert.equal "atmos/hubot-deploy", pullRequest.repoName
+      assert.equal "hubot-deploy: https://github.com/atmos/hubot-deploy/pull/32", pullRequest.toSimpleString()
