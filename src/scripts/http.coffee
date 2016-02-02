@@ -11,6 +11,7 @@ GitHubEvents     = require(Path.join(__dirname, "..", "github", "webhooks"))
 Deployment       = GitHubEvents.Deployment
 PullRequest      = GitHubEvents.PullRequest
 DeploymentStatus = GitHubEvents.DeploymentStatus
+CommitStatus     = GitHubEvents.CommitStatus
 
 DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).DeployPrefix
 
@@ -61,6 +62,14 @@ module.exports = (robot) ->
             status = new DeploymentStatus deliveryId, req.body
 
             robot.emit "github_deployment_status_event", status
+
+            res.writeHead 200, {'content-type': 'application/json' }
+            return res.end(JSON.stringify({message: status.toSimpleString()}))
+
+          when "status"
+            status = new CommitStatus deliveryId, req.body
+
+            robot.emit "github_commit_status_event", status
 
             res.writeHead 200, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
