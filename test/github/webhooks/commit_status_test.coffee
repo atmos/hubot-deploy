@@ -17,18 +17,18 @@ describe "GitHubEvents.CommitStatus fixtures", () ->
       status = deploymentStatusFor "pending"
       assert.equal status.state, "pending"
       assert.equal status.repoName, "atmos/my-robot"
-      assert.equal status.toSimpleString(), "hubot-deploy: commit status for Janky (github) on atmos/1333c01 is running. https://ci.atmos.org/1123112/output"
+      assert.equal status.toSimpleString(), "hubot-deploy: commit status for atmos/1333c01 (Janky (github)) is running. https://ci.atmos.org/1123112/output"
 
   describe "failure", () ->
     it "knows the status and repo", () ->
       status = deploymentStatusFor "failure"
       assert.equal status.state, "failure"
       assert.equal status.repoName, "atmos/my-robot"
-      assert.equal status.toSimpleString(), "hubot-deploy: commit status for Janky (github) on my-robot/f911111 failed. https://baller.com/target_stuff"
+      assert.equal status.toSimpleString(), "hubot-deploy: commit status for my-robot/f911111 (Janky (github)) failed. https://baller.com/target_stuff"
 
   describe "success", () ->
     it "knows the status and repo", () ->
       status = deploymentStatusFor "success"
       assert.equal status.state, "success"
       assert.equal status.repoName, "atmos/my-robot"
-      assert.equal status.toSimpleString(), "hubot-deploy: commit status for Janky (github) on github/1333c01 was successful. https://ci.atmos.org/1123112/output"
+      assert.equal status.toSimpleString(), "hubot-deploy: commit status for github/1333c01 (Janky (github)) was successful. https://ci.atmos.org/1123112/output"
