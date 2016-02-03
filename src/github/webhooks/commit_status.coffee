@@ -4,12 +4,13 @@ class CommitStatus
     @targetUrl   = @payload.target_url
     @description = @payload.description
     @context     = @payload.context
+    @ref         = @payload.branches[0].name
     @sha         = @payload.sha.substring(0,7)
     @name        = @payload.repository.name
     @repoName    = @payload.repository.full_name
 
   toSimpleString: ->
-    msg = "hubot-deploy: commit status for #{@name}/#{@sha} (#{@context}) "
+    msg = "hubot-deploy: Build for #{@name}/#{@ref} (#{@context}) "
     switch @state
       when "success"
         msg += "was successful."
