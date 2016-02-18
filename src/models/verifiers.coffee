@@ -1,7 +1,8 @@
-Path      = require "path"
-Octonode  = require "octonode"
-Address4  = require("ip-address").Address4
-GitHubApi = require(Path.join(__dirname, "..", "github", "api")).Api
+Path         = require "path"
+Octonode     = require "octonode"
+Address4     = require("ip-address").Address4
+GitHubApi    = require(Path.join(__dirname, "..", "github", "api")).Api
+ScopedClient = require "scoped-http-client"
 ###########################################################################
 
 VaultKey = "hubot-deploy-github-secret"
