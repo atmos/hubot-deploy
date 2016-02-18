@@ -21,36 +21,37 @@ TokenForBrain    = Verifiers.VaultKey
 ApiTokenVerifier = Verifiers.ApiTokenVerifier
 ###########################################################################
 module.exports = (robot) ->
-  robot.respond ///#{DeployPrefix}-token:set:github\s+(.*)///i, (msg) ->
-    user  = robot.brain.userForId msg.envelope.user.id
-    token = msg.match[1]
+  if process.env.HUBOT_DEPLOY_PRIVATE_MESSAGE_TOKEN_MANAGEMENT is "true"
+    robot.respond ///#{DeployPrefix}-token:set:github\s+(.*)///i, id: "hubot-deploy.token.set", (msg) ->
+      user  = robot.brain.userForId msg.envelope.user.id
+      token = msg.match[1]
 
-    # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
-    delete(user.githubDeployToken)
+      # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
+      delete(user.githubDeployToken)
 
-    verifier = new ApiTokenVerifier(token)
-    verifier.valid (result) ->
-      if result
-        robot.vault.forUser(user).set(TokenForBrain, verifier.token)
-        msg.send "Your GitHub token is valid. I stored it for future use."
-      else
-        msg.send "Your GitHub token is invalid, verify that it has 'repo' scope."
+      verifier = new ApiTokenVerifier(token)
+      verifier.valid (result) ->
+        if result
+          robot.vault.forUser(user).set(TokenForBrain, verifier.token)
+          msg.send "Your GitHub token is valid. I stored it for future use."
+        else
+          msg.send "Your GitHub token is invalid, verify that it has 'repo' scope."
 
-  robot.respond ///#{DeployPrefix}-token:reset:github$///i, (msg) ->
-    user = robot.brain.userForId msg.envelope.user.id
-    robot.vault.forUser(user).unset(TokenForBrain)
-    # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
-    delete(user.githubDeployToken)
-    msg.reply "I nuked your GitHub token. I'll try to use my default token until you configure another."
+    robot.respond ///#{DeployPrefix}-token:reset:github$///i, id: "hubot-deploy.token.reset", (msg) ->
+      user = robot.brain.userForId msg.envelope.user.id
+      robot.vault.forUser(user).unset(TokenForBrain)
+      # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
+      delete(user.githubDeployToken)
+      msg.reply "I nuked your GitHub token. I'll try to use my default token until you configure another."
 
-  robot.respond ///#{DeployPrefix}-token:verify:github$///i, (msg) ->
-    user = robot.brain.userForId msg.envelope.user.id
-    # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
-    delete(user.githubDeployToken)
-    token = robot.vault.forUser(user).get(TokenForBrain)
-    verifier = new ApiTokenVerifier(token)
-    verifier.valid (result) ->
-      if result
-        msg.send "Your GitHub token is valid on #{verifier.config.hostname}."
-      else
-        msg.send "Your GitHub token is invalid, verify that it has 'repo' scope."
+    robot.respond ///#{DeployPrefix}-token:verify:github$///i, id: "hubot-deploy.token.verify",  (msg) ->
+      user = robot.brain.userForId msg.envelope.user.id
+      # Versions of hubot-deploy < 0.9.0 stored things unencrypted, encrypt them.
+      delete(user.githubDeployToken)
+      token = robot.vault.forUser(user).get(TokenForBrain)
+      verifier = new ApiTokenVerifier(token)
+      verifier.valid (result) ->
+        if result
+          msg.send "Your GitHub token is valid on #{verifier.config.hostname}."
+        else
+          msg.send "Your GitHub token is invalid, verify that it has 'repo' scope."
