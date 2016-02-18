@@ -6,10 +6,13 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 |-------------------------|-------------------------------------------------|
 | HUBOT_GITHUB_API        | A String of the full URL to the GitHub API. Default: "https://api.github.com" |
 | HUBOT_GITHUB_TOKEN      | A [personal oauth token][1] with repo_deployment scope. This is normally a bot account. |
+| HUBOT_DEPLOY_PREFIX     | The thing to prefix your deployment commands with. Defaults to 'deploy' |
 | HUBOT_DEPLOY_FERNET_SECRETS    | The key used for encrypting your tokens in the hubot's brain. A comma delimited set of different key tokens. To create one run `dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64` on a UNIX system.  |
 | HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS | If set to true a `github_deployment` event emit emitted instead of posting directly to the GitHub API. This allows for customization, check out the examples. |
 | HUBOT_DEPLOY_DEFAULT_ENVIRONMENT | Allow for specifying which environment should be the default when it is omitted from the deployment request in chat. |
 | HUBOT_DEPLOY_GITHUB_SUBNETS | Allow for specifying the subnets for your GitHub install, useful for GitHub Enterprise. Defaults to github.com's IP range. |
+| HUBOT_DEPLOY_PRIVATE_MESSAGE_TOKEN_MANAGEMENT | Allow for messaging tokens to hubot in chat. This is going away. |
+| HUBOT_DEPLOY_WEBHOOK_SECRET | The shared webhook secret to check payload signatures from GitHub. |
 
 ### Robot Users
 
