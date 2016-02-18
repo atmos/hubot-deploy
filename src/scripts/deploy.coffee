@@ -53,11 +53,31 @@ module.exports = (robot) ->
 
     try
       deployment = new Deployment(name, null, null, environment)
+      unless deployment.isValidApp()
+        msg.reply "#{name}? Never heard of it."
+        return
+      unless deployment.isValidEnv()
+        msg.reply "#{name} doesn't seem to have an #{env} environment."
+        return
 
       user = robot.brain.userForId msg.envelope.user.id
       token = robot.vault.forUser(user).get(TokenForBrain)
       if token?
         deployment.setUserToken(token)
+
+      deployment.user   = user.id
+      deployment.room   = msg.message.user.room
+
+      if robot.adapterName is "flowdock"
+        deployment.threadId = msg.message.metadata.thread_id
+        deployment.messageId = msg.message.id
+
+      if robot.adapterName is "hipchat"
+        if msg.envelope.user.reply_to?
+          deployment.room = msg.envelope.user.reply_to
+
+      deployment.adapter   = robot.adapterName
+      deployment.robotName = robot.name
 
       deployment.latest (err, deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
