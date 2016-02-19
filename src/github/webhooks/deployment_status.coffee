@@ -1,7 +1,7 @@
 class DeploymentStatus
   constructor: (@id, @payload) ->
     deployment   = @payload.deployment
-    @name        = @payload.repository.name
+    @name        = deployment?.payload?.name or @payload.repository.name
     @repoName    = @payload.repository.full_name
 
     @number      = deployment.id
