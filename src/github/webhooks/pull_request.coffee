@@ -5,6 +5,7 @@ class PullRequest
     @title       = @payload.pull_request.title
     @branch      = @payload.pull_request.head.ref
     @state       = @payload.pull_request.state
+    @merged      = @payload.pull_request.merged
     @action      = @payload.action
     @number      = @payload.number
     @repoName    = @payload.repository.full_name
