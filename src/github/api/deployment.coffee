@@ -42,7 +42,7 @@ class Deployment
     @application?
 
   isValidEnv: ->
-    (@env in @environments) or @env?.length is 0
+    @env in @environments
 
   isAllowedRoom: (room) ->
     !@allowedRooms? || room in @allowedRooms

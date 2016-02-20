@@ -57,8 +57,9 @@ module.exports = (robot) ->
         msg.reply "#{name}? Never heard of it."
         return
       unless deployment.isValidEnv()
-        msg.reply "#{name} doesn't seem to have an #{environment} environment."
-        return
+        if environment.length > 0
+          msg.reply "#{name} doesn't seem to have an #{environment} environment."
+          return
 
       user = robot.brain.userForId msg.envelope.user.id
       token = robot.vault.forUser(user).get(TokenForBrain)
