@@ -49,7 +49,7 @@ module.exports = (robot) ->
   # Displays the recent deployments for an application in an environment
   robot.respond DeploysPattern, id: "hubot-deploy.recent", hubotDeployAuthenticate: true, (msg) ->
     name        = msg.match[2]
-    environment = msg.match[4] || defaultDeploymentEnvironment()
+    environment = msg.match[4] || ""
 
     try
       deployment = new Deployment(name, null, null, environment)
