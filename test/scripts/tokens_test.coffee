@@ -11,6 +11,7 @@ describe "Setting tokens and such", () ->
 
   beforeEach (done) ->
     VCR.playback()
+    process.env.HUBOT_DEPLOY_PRIVATE_MESSAGE_TOKEN_MANAGEMENT = "true"
     process.env.HUBOT_DEPLOY_FERNET_SECRETS or= "HSfTG4uWzw9whtlLEmNAzscHh96eHUFt3McvoWBXmHk="
     robot = new Robot(null, "mock-adapter", true, "Hubot")
 
