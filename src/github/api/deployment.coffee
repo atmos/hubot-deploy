@@ -13,6 +13,7 @@ class Deployment
     @room             = 'unknown'
     @user             = 'unknown'
     @adapter          = 'unknown'
+    @userName         = 'unknown'
     @robotName        = 'hubot'
     @autoMerge        = true
     @environments     = [ "production" ]
@@ -73,6 +74,7 @@ class Deployment
         adapter: @adapter
         room: @room
         user: @user
+        user_name: @userName
         message_id: @messageId
         thread_id: @threadId
       config: @application

@@ -128,11 +128,9 @@ module.exports = (robot) ->
       if msg.envelope.user.reply_to?
         deployment.room = msg.envelope.user.reply_to
 
-    if robot.adapterName is "slack"
-      deployment.user = user.name
-
     deployment.yubikey   = yubikey
     deployment.adapter   = robot.adapterName
+    deployment.userName  = user.name
     deployment.robotName = robot.name
 
     if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS
