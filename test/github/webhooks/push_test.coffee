@@ -12,8 +12,15 @@ describe "GitHubEvents.Push fixtures", () ->
     push = new GitHubEvents.Push "uuid", fixturePayload
 
   describe "single commit", () ->
-    it "knows the statue and repo", (done) ->
+    it "knows the state and repo", (done) ->
       commits = pushFor("single")
-      message = "hubot-deploy: atmos pushed 1 commits"
+      message = "hubot-deploy: atmos pushed a commit"
+      assert.equal message, commits.toSimpleString()
+      done()
+
+  describe "multiple commits", () ->
+    it "knows the state and repo", (done) ->
+      commits = pushFor("multiple")
+      message = "hubot-deploy: atmos pushed 3 commits"
       assert.equal message, commits.toSimpleString()
       done()
