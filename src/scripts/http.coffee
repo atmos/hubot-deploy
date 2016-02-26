@@ -8,6 +8,7 @@ Path             = require "path"
 Crypto           = require "crypto"
 
 GitHubEvents     = require(Path.join(__dirname, "..", "github", "webhooks"))
+Push             = GitHubEvents.Push
 Deployment       = GitHubEvents.Deployment
 PullRequest      = GitHubEvents.PullRequest
 DeploymentStatus = GitHubEvents.DeploymentStatus
