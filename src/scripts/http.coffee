@@ -50,6 +50,14 @@ module.exports = (robot) ->
             res.writeHead 200, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
 
+          when "push"
+            push = new Push deliveryId, req.body
+
+            robot.emit "github_push_event", push
+
+            res.writeHead 200, {'content-type': 'application/json' }
+            return res.end(JSON.stringify({message: push.toSimpleString()}))
+
           when "deployment"
             deployment = new Deployment deliveryId, req.body
 
