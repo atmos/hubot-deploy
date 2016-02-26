@@ -37,7 +37,7 @@ class Push
 
   formatCommitMessage: (commit) ->
     short = commit.message.split("\n", 2)[0]
-    "[#{@repoName}/#{@branchName}] #{short} - #{commit.author.name}"
+    "[#{@repoName}/#{@refName}] #{short} - #{commit.author.name}"
 
   summaryUrl: ->
     if @created
@@ -75,14 +75,14 @@ class Push
           message << "(+#{@commitMessage})"
 
     else if @deleted
-      message.push("deleted #{@branchName} at #{@beforeSha}")
+      message.push("deleted #{@refName} at #{@beforeSha}")
 
     else if @forced
       message.push("force-pushed #{@refName} from #{@beforeSha} to #{@afterSha}")
 
     else if @commits.length > 0 and @distinctCommits.length is 0
       if @baseRef
-        message.push("merged #{baseRefName} into #{@branchName}")
+        message.push("merged #{baseRefName} into #{@refName}")
       else
         message.push("fast-forwarded #{@refName} from #{@beforeSha} to #{@afterSha}")
 
