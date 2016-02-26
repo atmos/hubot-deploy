@@ -28,7 +28,7 @@ class Push
     @beforeShaUrl  = "#{@repoUrl}/commit/#{@beforeSha}"
     @nameWithOwner = "#{@ownerName}/#{@repoName}"
 
-    @distinctCommits = @commits
+    @distinctCommits = (commit for commit in @commits when commit.distinct and commit.message.length > 0)
 
     if @count > 1
       @commitMessage = "#{@count} commits"
