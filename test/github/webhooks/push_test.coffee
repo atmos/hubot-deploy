@@ -13,14 +13,22 @@ describe "GitHubEvents.Push fixtures", () ->
 
   describe "single commit", () ->
     it "knows the state and repo", (done) ->
-      commits = pushFor("single")
+      push = pushFor("single")
       message = "hubot-deploy: atmos pushed a commit"
-      assert.equal message, commits.toSimpleString()
+      assert.equal message, push.toSimpleString()
+      summaryMessage = "[hubot-deploy] atmos pushed 1 new commit to changes"
+      assert.equal summaryMessage, push.summaryMessage()
+      summaryUrl = "https://github.com/atmos/hubot-deploy/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"
+      assert.equal summaryUrl, push.summaryUrl()
       done()
 
   describe "multiple commits", () ->
     it "knows the state and repo", (done) ->
-      commits = pushFor("multiple")
+      push = pushFor("multiple")
       message = "hubot-deploy: atmos pushed 3 commits"
-      assert.equal message, commits.toSimpleString()
+      assert.equal message, push.toSimpleString()
+      summaryMessage = "[hubot-deploy] atmos pushed 3 new commits to master"
+      assert.equal summaryMessage, push.summaryMessage()
+      summaryUrl = "http://github.com/atmos/hubot-deploy/compare/4c8124f...a47fd41"
+      assert.equal summaryUrl, push.summaryUrl()
       done()
