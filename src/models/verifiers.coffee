@@ -12,7 +12,14 @@ class ApiTokenVerifier
     @token = token?.trim()
 
     @config = new GitHubApi(@token, null)
-    @api   = Octonode.client(@config.token, {hostname: @config.hostname})
+
+    hostname = @config.hostname
+    path = @config.path()
+
+    if path isnt "/"
+      hostname += path
+
+    @api   = Octonode.client(@config.token, {hostname: hostname})
 
   valid: (cb) ->
     @api.get "/user", (err, status, data, headers) ->
