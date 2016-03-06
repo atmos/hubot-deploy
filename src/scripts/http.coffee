@@ -92,7 +92,7 @@ module.exports = (robot) ->
             return res.end(JSON.stringify({message: pullRequest.toSimpleString()}))
 
           else
-            res.writeHead 400, {'content-type': 'application/json' }
+            res.writeHead 204, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: "Received but not processed."}))
 
       catch err
