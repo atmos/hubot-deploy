@@ -67,7 +67,7 @@ class Push
 
         if @baseRef
           message.push("from #{@baseRefName}")
-        else if distinct_commits.empty?
+        else if @distinctCommits.empty?
           message.push("at #{@afterSha}")
 
         if @distinctCommits.length > 0
