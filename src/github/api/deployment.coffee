@@ -56,7 +56,7 @@ class Deployment
     if body?.payload?.config?
       delete(body.payload.config.github_api)
       delete(body.payload.config.github_token)
-    if process.env.HUBOT_DEPLOY_ENCRYPT_PAYLOAD and proccess.env.HUBOT_DEPLOY_FERNET_SECRETS
+    if process.env.HUBOT_DEPLOY_ENCRYPT_PAYLOAD and process.env.HUBOT_DEPLOY_FERNET_SECRETS
       payload      = body.payload
       fernetSecret = new Fernet.Secret(process.env.HUBOT_DEPLOY_FERNET_SECRETS)
       fernetToken  = new Fernet.Token(secret: fernetSecret)
