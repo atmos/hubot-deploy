@@ -1,6 +1,7 @@
 Fs        = require "fs"
 Url       = require "url"
 Path      = require "path"
+Fernet    = require "fernet"
 Version   = require(Path.join(__dirname, "..", "..", "version")).Version
 Octonode  = require "octonode"
 GitHubApi = require(Path.join(__dirname, "..", "api")).Api
@@ -20,8 +21,8 @@ class Deployment
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
-    @messageId = undefined
-    @threadId = undefined
+    @messageId        = undefined
+    @threadId         = undefined
 
     try
       applications = JSON.parse(Fs.readFileSync(@constructor.APPS_FILE).toString())
@@ -55,6 +56,13 @@ class Deployment
     if body?.payload?.config?
       delete(body.payload.config.github_api)
       delete(body.payload.config.github_token)
+    if process.env.HUBOT_DEPLOY_ENCRYPT_PAYLOAD and proccess.env.HUBOT_DEPLOY_FERNET_SECRETS
+      payload      = body.payload
+      fernetSecret = new Fernet.Secret(process.env.HUBOT_DEPLOY_FERNET_SECRETS)
+      fernetToken  = new Fernet.Token(secret: fernetSecret)
+
+      body.payload = fernetToken.encode(payload)
+
     body
 
   unfilteredRequestBody: ->

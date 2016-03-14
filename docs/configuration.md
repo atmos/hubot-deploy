@@ -13,6 +13,7 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 | HUBOT_DEPLOY_GITHUB_SUBNETS | Allow for specifying the subnets for your GitHub install, useful for GitHub Enterprise. Defaults to github.com's IP range. |
 | HUBOT_DEPLOY_PRIVATE_MESSAGE_TOKEN_MANAGEMENT | Allow for messaging tokens to hubot in chat. This is going away. |
 | HUBOT_DEPLOY_WEBHOOK_SECRET | The shared webhook secret to check payload signatures from GitHub. |
+| HUBOT_DEPLOY_ENCRYPT_PAYLOAD | Encrypt the entire deployment payload in the GitHub API. |
 
 ### Robot Users
 

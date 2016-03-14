@@ -1,3 +1,5 @@
+Fernet = require "fernet"
+
 class Deployment
   constructor: (@id, @payload) ->
     deployment   = @payload.deployment
@@ -9,6 +11,14 @@ class Deployment
     @ref         = deployment.ref
     @task        = deployment.task
     @environment = deployment.environment
+
+    if process.env.HUBOT_DEPLOY_ENCRYPT_PAYLOAD and proccess.env.HUBOT_DEPLOY_FERNET_SECRETS
+      fernetSecret = new Fernet.Secret(process.env.HUBOT_DEPLOY_FERNET_SECRETS)
+      fernetToken  = new Fernet.Token(secret: fernetSecret, token: deployment.payload, ttl: 0)
+
+      payload = deployment.payload
+      deployment.payload = fernetToken.decode(payload)
+
     @notify      = deployment.payload.notify
 
     if @notify? and @notify.user?
