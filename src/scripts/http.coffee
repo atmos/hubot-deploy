@@ -4,6 +4,7 @@
 # Commands:
 #
 
+Fs               = require "fs"
 Path             = require "path"
 Crypto           = require "crypto"
 
@@ -22,12 +23,39 @@ supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
 
 Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
 
+AppsJsonFile = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
+AppsJsonData = JSON.parse(Fs.readFileSync(AppsJsonFile))
 ###########################################################################
 module.exports = (robot) ->
   ipVerifier = new Verifiers.GitHubWebHookIpVerifier
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
+    robot.router.get  "/hubot-deploy/apps", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        res.writeHead 200, {'content-type': 'application/json' }
+        return res.end(JSON.stringify(AppsJsonData))
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.get  "/hubot-deploy/apps/:name", (req, res) ->
+      try
+        token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+        if token isnt process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+          throw new Error("Bad auth headers")
+        else
+          app = AppsJsonData[params["name"]]
+          if app?
+            res.writeHead 200, {'content-type': 'application/json' }
+            return res.end(JSON.stringify(app))
+          else
+            throw new Error("App not found")
+      catch
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
     robot.router.post "/hubot-deploy", (req, res) ->
       try
         remoteIp = req.headers['x-forwarded-for'] or req.connection.remoteAddress
