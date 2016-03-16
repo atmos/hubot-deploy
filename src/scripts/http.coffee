@@ -46,7 +46,7 @@ module.exports = (robot) ->
         if token isnt process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
           throw new Error("Bad auth headers")
         else
-          app = AppsJsonData[params["name"]]
+          app = AppsJsonData[req.params["name"]]
           if app?
             res.writeHead 200, {'content-type': 'application/json' }
             return res.end(JSON.stringify(app))
