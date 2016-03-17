@@ -18,6 +18,12 @@ describe "GitHubEvents.Push fixtures", () ->
       assert.equal message, push.toSimpleString()
       summaryMessage = "[hubot-deploy] atmos pushed 1 new commit to changes"
       assert.equal summaryMessage, push.summaryMessage()
+      actorLink = "<a href=\"https://github.com/atmos\">atmos</a>"
+      assert.equal actorLink, push.actorLink
+      branchUrl = "https://github.com/atmos/hubot-deploy/commits/changes"
+      assert.equal branchUrl, push.branchUrl
+      firstMessage = "- Update README.md - atmos - (<a href=\"https://github.com/atmos/hubot-deploy/commit/0d1a26e6\">0d1a26e6</a>)"
+      assert.equal firstMessage, push.firstMessage
       summaryUrl = "https://github.com/atmos/hubot-deploy/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"
       assert.equal summaryUrl, push.summaryUrl()
       done()

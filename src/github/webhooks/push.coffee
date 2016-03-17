@@ -28,7 +28,11 @@ class Push
     @beforeShaUrl  = "#{@repoUrl}/commit/#{@beforeSha}"
     @nameWithOwner = "#{@ownerName}/#{@repoName}"
 
+    @actorLink     = "<a href=\"https://github.com/#{@actor}\">#{@actor}</a>"
+
     @distinctCommits = (commit for commit in @commits when commit.distinct and commit.message.length > 0)
+
+    @firstMessage    = @formatCommitMessage(@commits[0])
 
     if @count > 1
       @commitMessage = "#{@count} commits"
@@ -37,7 +41,7 @@ class Push
 
   formatCommitMessage: (commit) ->
     short = commit.message.split("\n", 2)[0]
-    "[#{@repoName}/#{@refName}] #{short} - #{commit.author.name}"
+    "- #{short} - #{commit.author.name} - (<a href=\"#{@afterShaUrl}\">#{@afterSha}</a>)"
 
   summaryUrl: ->
     if @created
