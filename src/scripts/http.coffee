@@ -31,7 +31,7 @@ module.exports = (robot) ->
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
-    robot.router.get  "/hubot-deploy/apps", (req, res) ->
+    robot.router.get "/hubot-deploy/apps", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         res.writeHead 200, {'content-type': 'application/json' }
@@ -40,7 +40,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.get  "/hubot-deploy/repos/:owner/:repo/messages", (req, res) ->
+    robot.router.post "/hubot-deploy/repos/:owner/:repo/messages", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         emission =
@@ -55,7 +55,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.get  "/teams/:team/messages", (req, res) ->
+    robot.router.post "/hubot-deploy/teams/:team/messages", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         emission =
@@ -69,7 +69,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.get  "/hubot-deploy/apps/:name", (req, res) ->
+    robot.router.get "/hubot-deploy/apps/:name", (req, res) ->
       try
         token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
         if token isnt process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
