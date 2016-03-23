@@ -40,6 +40,35 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
+    robot.router.get  "/hubot-deploy/repos/:owner/:repo/messages", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        emission =
+          body: req.body
+          repo: req.params.repo
+          owner: req.params.owner
+
+        robot.emit "hubot_deploy_repo_message", emission
+        res.writeHead 202, {'content-type': 'application/json' }
+        return res.end("{}")
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.get  "/teams/:team/messages", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        emission =
+          team: req.params.team
+          body: req.body
+
+        robot.emit "hubot_deploy_team_message", emission
+        res.writeHead 202, {'content-type': 'application/json' }
+        return res.end("{}")
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
     robot.router.get  "/hubot-deploy/apps/:name", (req, res) ->
       try
         token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
@@ -76,7 +105,7 @@ module.exports = (robot) ->
         deliveryId = req.headers['x-github-delivery']
         switch req.headers['x-github-event']
           when "ping"
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 204, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
 
           when "push"
@@ -84,7 +113,7 @@ module.exports = (robot) ->
 
             robot.emit "github_push_event", push
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: push.toSimpleString()}))
 
           when "deployment"
@@ -92,7 +121,7 @@ module.exports = (robot) ->
 
             robot.emit "github_deployment_event", deployment
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: deployment.toSimpleString()}))
 
           when "deployment_status"
@@ -100,7 +129,7 @@ module.exports = (robot) ->
 
             robot.emit "github_deployment_status_event", status
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
 
           when "status"
@@ -108,7 +137,7 @@ module.exports = (robot) ->
 
             robot.emit "github_commit_status_event", status
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
 
           when "pull_request"
@@ -116,7 +145,7 @@ module.exports = (robot) ->
 
             robot.emit "github_pull_request", pullRequest
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: pullRequest.toSimpleString()}))
 
           else
