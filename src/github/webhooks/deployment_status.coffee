@@ -14,10 +14,12 @@ class DeploymentStatus
     else
       @actorName = deployment.creator.login
 
-    @state       = @payload.deployment_status.state
-    @targetUrl   = @payload.deployment_status.target_url
+    deployment_status = @payload.deployment_status
+    @state       = deployment_status.state
+    @targetUrl   = deployment_status.target_url
+    @description = deployment_status.description
 
-    if @payload.deployment.sha is @ref
+    if deployment.sha is @ref
       @ref = @sha
 
   toSimpleString: ->
