@@ -19,6 +19,8 @@ DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).Dep
 
 GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
+WebhookPrefix    = process.env.HUBOT_DEPLOY_WEBHOOK_PREFIX or "/hubot-deploy"
+
 supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
 
 Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
@@ -31,7 +33,7 @@ module.exports = (robot) ->
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
-    robot.router.get "/hubot-deploy/apps", (req, res) ->
+    robot.router.get WebhookPrefix + "/apps", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         res.writeHead 200, {'content-type': 'application/json' }
@@ -40,7 +42,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.post "/hubot-deploy/repos/:owner/:repo/messages", (req, res) ->
+    robot.router.post WebhookPrefix + "/repos/:owner/:repo/messages", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         emission =
@@ -55,7 +57,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.post "/hubot-deploy/teams/:team/messages", (req, res) ->
+    robot.router.post WebhookPrefix + "/teams/:team/messages", (req, res) ->
       token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
       if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
         emission =
@@ -69,7 +71,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.get "/hubot-deploy/apps/:name", (req, res) ->
+    robot.router.get WebhookPrefix + "/apps/:name", (req, res) ->
       try
         token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
         if token isnt process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
@@ -85,7 +87,7 @@ module.exports = (robot) ->
         res.writeHead 404, {'content-type': 'application/json' }
         return res.end(JSON.stringify({message: "Not Found"}))
 
-    robot.router.post "/hubot-deploy", (req, res) ->
+    robot.router.post WebhookPrefix, (req, res) ->
       try
         remoteIp = req.headers['x-forwarded-for'] or req.connection.remoteAddress
         unless ipVerifier.ipIsValid(remoteIp)
