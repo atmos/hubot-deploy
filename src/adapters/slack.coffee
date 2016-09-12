@@ -7,7 +7,8 @@ module.exports = (robot) ->
   # This is what happens with a '/deploy' request is accepted.
   #
   # msg - The hubot message that triggered the deployment. msg.reply and msg.send post back immediately
-  # deployment - The deployment captured from a chat interaction. You can modify it before it's passed on to the GitHub API.
+  # deployment - The deployment captured from a chat interaction.
+  #              You can modify it before it's passed on to the GitHub API.
   robot.on "github_deployment", (msg, deployment) ->
     user = robot.brain.userForId deployment.user
 
