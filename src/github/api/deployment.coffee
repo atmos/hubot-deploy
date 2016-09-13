@@ -81,8 +81,8 @@ class Deployment
     force: @force
     auto_merge: @autoMerge
     environment: @env
-    transient_environment  = @transientEnvironment
-    production_environment = @productionEnvironment
+    transient_environment: @transientEnvironment
+    production_environment: @productionEnvironment
     required_contexts: @requiredContexts
     description: "#{@task} on #{@env} from hubot-deploy-v#{Version}"
     payload:
@@ -108,6 +108,7 @@ class Deployment
   api: ->
     api = Octonode.client(@apiConfig().token, { hostname: @apiConfig().hostname })
     api.requestDefaults.agentOptions = { ca: @caFile } if @caFile
+    api.requestDefaults.headers.Accept = 'application/vnd.github.ant-man-preview+json'
     api
 
   latest: (callback) ->
@@ -180,6 +181,7 @@ class Deployment
     env        = @env
     ref        = @ref
 
+
     @api().post path, @requestBody(), (err, status, body, headers) ->
       callback(err, status, body, headers)
 
@@ -198,11 +200,11 @@ class Deployment
       @autoMerge = false
 
   configureTransientEnvironment: ->
-    if @environments[@originalEnvValue]['transient']?
+    if @isValidEnv() and @environments[@originalEnvValue]['transient']?
       @transientEnvironment = @environments[@originalEnvValue]['transient']
 
   configureProductionEnvironment: ->
-    if @environments[@originalEnvValue]['production']?
+    if @isValidEnv() and @environments[@originalEnvValue]['production']?
       @productionEnvironment = @environments[@originalEnvValue]['production']
 
   configureRequiredContexts: ->

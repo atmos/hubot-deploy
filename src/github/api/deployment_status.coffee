@@ -16,8 +16,11 @@ class DeploymentStatus
     JSON.stringify(data)
 
   create: (callback) ->
+    #accept = "application/vnd.github+json"
+    accept = "application/vnd.github.ant-man-preview+json"
+
     ScopedClient.create("https://api.github.com").
-      header("Accept", "application/vnd.github+json").
+      header("Accept", accept).
       header("User-Agent", "hubot-deploy-v#{Version}").
       header("Authorization", "token #{@apiToken}").
       path("/repos/#{@repoName}/deployments/#{@number}/statuses").
