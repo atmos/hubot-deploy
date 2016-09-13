@@ -24,34 +24,34 @@ Any extra parameters will be passed along to GitHub in the `payload` field. This
     "repository": "MyOrg/my-org-hubot",
     "environments": [{
       "name": "live",
-      "production": true,
+      "production": true
     }, {
-      "name": "production"
+      "name": "production",
+      "provider_env_name": "my-org-www-production"
     }, {
       "name": "staging",
-      "auto_inactive": true
+      "provider_env_name": "my-org-www-staging",
+      "auto_inactive": false
     }, {
       "name": "test",
+      "provider_env_name": "my-org-www-test",
       "transient": true
-    }],
-    "heroku_production_name": "my-orgs-hubot"
+    }]
   },
 
   "dotcom": {
     "provider": "heroku",
     "repository": "MyOrg/www",
     "environments": [{
-      "name" : "production"
+      "name" : "production",
+      "provider_env_name": "my-org-www-live"
     },
     {
       "name" : "staging",
-      "production" : false,
+      "provider_env_name": "my-org-www-live",
       "transient" : true
     }],
-    "required_contexts": ["ci/janky", "security/brakeman"],
-
-    "heroku_staging_name": "my-org-www-staging",
-    "heroku_production_name": "my-org-www"
+    "required_contexts": ["ci/janky", "security/brakeman"]
   }
 }
 ```
