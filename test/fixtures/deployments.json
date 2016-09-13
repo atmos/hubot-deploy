@@ -101,7 +101,7 @@
                 "provider_env_name": "my-org-www-test",
                 "transient": true
               }
-            },
+            }
         },
         "actor" : null,
         "sha": "8efb8c88"
