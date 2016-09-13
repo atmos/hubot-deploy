@@ -15,9 +15,12 @@ class Deployment
     @user             = 'unknown'
     @adapter          = 'unknown'
     @userName         = 'unknown'
-    @robotName        = 'hubot'
-    @autoMerge        = true
-    @environments     = [ "production" ]
+    @robotName             = 'hubot'
+    @autoMerge             = true
+    @transientEnvironment  = undefined
+    @productionEnvironment = undefined
+    @environments     = [ {"name" : "production"} ]
+    @originalEnvValue = @env
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
 
@@ -37,6 +40,8 @@ class Deployment
       @configureAutoMerge()
       @configureRequiredContexts()
       @configureEnvironments()
+      @configureTransientEnvironment()
+      @configureProductionEnvironment()
 
       @allowedRooms = @application['allowed_rooms']
 
@@ -44,7 +49,7 @@ class Deployment
     @application?
 
   isValidEnv: ->
-    @env in @environments
+    @environments[@originalEnvValue]?
 
   isAllowedRoom: (room) ->
     !@allowedRooms? || room in @allowedRooms
@@ -56,6 +61,11 @@ class Deployment
     if body?.payload?.config?
       delete(body.payload.config.github_api)
       delete(body.payload.config.github_token)
+    unless body?.transient_environment?
+      delete(body.transient_environment)
+    unless body?.production_environment?
+      delete(body.production_environment)
+
     if process.env.HUBOT_DEPLOY_ENCRYPT_PAYLOAD and process.env.HUBOT_DEPLOY_FERNET_SECRETS
       payload      = body.payload
       fernetSecret = new Fernet.Secret(process.env.HUBOT_DEPLOY_FERNET_SECRETS)
@@ -71,6 +81,8 @@ class Deployment
     force: @force
     auto_merge: @autoMerge
     environment: @env
+    transient_environment  = @transientEnvironment
+    production_environment = @productionEnvironment
     required_contexts: @requiredContexts
     description: "#{@task} on #{@env} from hubot-deploy-v#{Version}"
     payload:
@@ -184,6 +196,14 @@ class Deployment
       @autoMerge = @application['auto_merge']
     if @force
       @autoMerge = false
+
+  configureTransientEnvironment: ->
+    if @environments[@originalEnvValue]['transient']?
+      @transientEnvironment = @environments[@originalEnvValue]['transient']
+
+  configureProductionEnvironment: ->
+    if @environments[@originalEnvValue]['production']?
+      @productionEnvironment = @environments[@originalEnvValue]['production']
 
   configureRequiredContexts: ->
     if @application['required_contexts']?

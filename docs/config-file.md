@@ -22,15 +22,32 @@ Any extra parameters will be passed along to GitHub in the `payload` field. This
     "provider": "heroku",
     "auto_merge": false,
     "repository": "MyOrg/my-org-hubot",
-    "environments": ["production"],
-
+    "environments": [{
+      "name": "live",
+      "production": true,
+    }, {
+      "name": "production"
+    }, {
+      "name": "staging",
+      "auto_inactive": true
+    }, {
+      "name": "test",
+      "transient": true
+    }],
     "heroku_production_name": "my-orgs-hubot"
   },
 
   "dotcom": {
     "provider": "heroku",
     "repository": "MyOrg/www",
-    "environments": ["production","staging"],
+    "environments": [{
+      "name" : "production"
+    },
+    {
+      "name" : "staging",
+      "production" : false,
+      "transient" : true
+    }],
     "required_contexts": ["ci/janky", "security/brakeman"],
 
     "heroku_staging_name": "my-org-www-staging",
