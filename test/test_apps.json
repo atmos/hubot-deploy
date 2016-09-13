@@ -5,10 +5,6 @@
     "environments": {
       "production": {
         "provider_env_name": "my-org-www-prod"
-      },
-      "staging": {
-        "provider_env_name": "my-org-www-staging",
-        "auto_inactive": false
       }
     },
     "required_contexts": ["ci/janky", "ci/travis-ci"],
