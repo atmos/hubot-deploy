@@ -19,7 +19,7 @@ class Deployment
     @autoMerge             = true
     @transientEnvironment  = undefined
     @productionEnvironment = undefined
-    @environments     = [ {"name" : "production"} ]
+    @environments     = { "production" : {}}
     @originalEnvValue = @env
     @requiredContexts = null
     @caFile           = Fs.readFileSync(process.env['HUBOT_CA_FILE']) if process.env['HUBOT_CA_FILE']
