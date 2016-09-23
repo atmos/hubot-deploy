@@ -1,6 +1,6 @@
 {
   "name": "hubot-deploy",
-  "version": "0.13.24-fork",
+  "version": "0.13.24",
   "author": "Corey Donohoe <atmos@atmos.org>",
   "description": "hubot script for GitHub Flow",
   "main": "index.coffee",
@@ -25,10 +25,6 @@
     {
       "name": "Corey Donohoe",
       "email": "atmos@atmos.org"
-    },
-    {
-      "name": "Alain Hélaïli",
-      "email": "helaili@github.com"
     }
   ],
   "dependencies": {
