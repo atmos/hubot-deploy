@@ -1,5 +1,5 @@
 # Description
-#  Custom hubot-deploy scripts for hipchat
+#  Custom hubot-deploy scripts for slack
 #
 process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS = "true"
 
@@ -7,24 +7,19 @@ module.exports = (robot) ->
   # This is what happens with a '/deploy' request is accepted.
   #
   # msg - The hubot message that triggered the deployment. msg.reply and msg.send post back immediately
-  # deployment - The deployment captured from a chat interaction. You can modify it before it's passed on to the GitHub API.
+  # deployment - The deployment captured from a chat interaction.
+  #              You can modify it before it's passed on to the GitHub API.
   robot.on "github_deployment", (msg, deployment) ->
-    # Handle the difference between userIds and roomIds in hipchat
     user = robot.brain.userForId deployment.user
-    unless user.id?.match(/\d+/)
-      user = robot.brain.userByNameOrMention(user.id)
-      deployment.user = user.id if user.id?
 
     vault = robot.vault.forUser(user)
     githubDeployToken = vault.get "hubot-deploy-github-secret"
     if githubDeployToken?
       deployment.setUserToken(githubDeployToken)
 
-    if deployment.application.provider in [ "heroku", "capistrano" ]
-      deployment.post (err, status, body, headers, responseMessage) ->
-        msg.send responseMessage if responseMessage?
-    else
-      msg.send "Sorry, I can't deploy #{deployment.name}, the provider is unsupported"
+
+    deployment.post (err, status, body, headers, responseMessage) ->
+      msg.send responseMessage if responseMessage?
 
   # Reply with the most recent deployments that the api is aware of
   #
@@ -41,7 +36,8 @@ module.exports = (robot) ->
   # deployment - The deployed app that matched up with the request.
   # formatter - A basic formatter for the deployments that should work everywhere even though it looks gross.
   robot.on "hubot_deploy_available_environments", (msg, deployment) ->
-    msg.send "#{deployment.name} can be deployed to #{deployment.environments.join(', ')}."
+    environments = (envName for envName, envValue of deployment.environments)
+    msg.send "#{deployment.name} can be deployed to #{environments.join(', ')}."
 
   # An incoming webhook from GitHub for a deployment.
   #

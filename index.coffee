@@ -9,3 +9,7 @@ module.exports = (robot, scripts) ->
   robot.loadFile(Path.resolve(__dirname, "src", "scripts"), "http.coffee")
   robot.loadFile(Path.resolve(__dirname, "src", "scripts"), "token.coffee")
   robot.loadFile(Path.resolve(__dirname, "src", "scripts"), "deploy.coffee")
+
+  adapter = process.env.HUBOT_DEPLOY_ADAPTER
+  if adapter?
+    robot.loadFile(Path.resolve(__dirname, "src", "adapters"), "#{adapter}.coffee")

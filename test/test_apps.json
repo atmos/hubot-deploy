@@ -2,7 +2,11 @@
   "hubot": {
     "auto_merge": false,
     "repository": "MyOrg/my-org-hubot",
-    "environments": ["production"],
+    "environments": {
+      "production": {
+        "provider_env_name": "my-org-www-prod"
+      }
+    },
     "required_contexts": ["ci/janky", "ci/travis-ci"],
 
     "provider": "heroku",
@@ -11,21 +15,41 @@
 
   "hubot-deploy": {
     "repository": "atmos/hubot-deploy",
-    "environments": ["production", "staging"],
+    "environments": {
+      "production": {
+        "provider_env_name": "my-org-www-prod"
+      },
+      "staging": {
+        "provider_env_name": "my-org-www-staging",
+        "auto_inactive": false
+      }
+    },
 
     "provider": "npm"
   },
 
   "github": {
     "repository": "github/github",
-    "environments": ["production","staging"],
+    "environments": {
+      "production": {
+        "provider_env_name": "my-org-www-prod"
+      },
+      "staging": {
+        "provider_env_name": "my-org-www-staging",
+        "auto_inactive": false
+      }
+    },
 
     "provider": "capistrano"
   },
 
   "restricted-app": {
     "repository": "acme/example",
-    "enironments": ["production"],
+    "enironments": {
+      "production": {
+        "provider_env_name": "my-org-www-prod"
+      }
+    },
     "provider": "capistrano",
     "allowed_rooms": ["ops"]
   }

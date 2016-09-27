@@ -11,8 +11,9 @@ class WhereFormatter extends Formatter
     output += Sprintf "%-15s\n", "Environment"
     output += "-----------------------------------------------------------------\n"
 
-    for environment in @deployment.environments
-      output += "#{environment}\n"
+    for envName, envValue of @deployment.environments
+      console.log envName
+      output += "#{envName}\n"
     output += "-----------------------------------------------------------------\n"
 
     output
