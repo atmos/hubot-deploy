@@ -45,6 +45,7 @@ class GitHubTokenVerifier
     @token = token?.trim()
 
   valid: (cb) ->
+    cb(false) unless token?
     ScopedClient.create("https://api.github.com").
       header("User-Agent", "hubot-deploy/0.13.1").
       header("Authorization", "token #{@token}").
@@ -66,6 +67,7 @@ class HerokuTokenVerifier
     @token = token?.trim()
 
   valid: (cb) ->
+    cb(false) unless token?
     ScopedClient.create("https://api.heroku.com").
       header("Accept", "application/vnd.heroku+json; version=3").
       header("Authorization", "Bearer #{@token}").
