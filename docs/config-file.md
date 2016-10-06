@@ -22,36 +22,45 @@ Any extra parameters will be passed along to GitHub in the `payload` field. This
     "provider": "heroku",
     "auto_merge": false,
     "repository": "MyOrg/my-org-hubot",
-    "environments": [{
-      "name": "live",
-      "production": true
-    }, {
-      "name": "production",
-      "provider_env_name": "my-org-www-production"
-    }, {
-      "name": "staging",
-      "provider_env_name": "my-org-www-staging",
-      "auto_inactive": false
-    }, {
-      "name": "test",
-      "provider_env_name": "my-org-www-test",
-      "transient": true
-    }]
+    "environments": [
+      {
+        "name": "live",
+        "production": true
+      },
+      {
+        "name": "production",
+        "provider_env_name": "my-org-www-production"
+      },
+      {
+        "name": "staging",
+        "provider_env_name": "my-org-www-staging",
+        "auto_inactive": false
+      },
+      {
+        "name": "test",
+        "provider_env_name": "my-org-www-test",
+        "transient": true
+      }
+    ]
   },
-
   "dotcom": {
     "provider": "heroku",
     "repository": "MyOrg/www",
-    "environments": [{
-      "name" : "production",
-      "provider_env_name": "my-org-www-live"
-    },
-    {
-      "name" : "staging",
-      "provider_env_name": "my-org-www-live",
-      "transient" : true
-    }],
-    "required_contexts": ["ci/janky", "security/brakeman"]
+    "environments": [
+      {
+        "name": "production",
+        "provider_env_name": "my-org-www-live"
+      },
+      {
+        "name": "staging",
+        "provider_env_name": "my-org-www-live",
+        "transient": true
+      }
+    ],
+    "required_contexts": [
+      "ci/janky",
+      "security/brakeman"
+    ]
   }
 }
 ```
