@@ -12,7 +12,6 @@ class WhereFormatter extends Formatter
     output += "-----------------------------------------------------------------\n"
 
     for envName, envValue of @deployment.environments
-      console.log envName
       output += "#{envName}\n"
     output += "-----------------------------------------------------------------\n"
 
