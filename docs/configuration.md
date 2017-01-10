@@ -15,6 +15,7 @@ In order to create deployments on GitHub you need to configure a few things. Fal
 | HUBOT_DEPLOY_WEBHOOK_SECRET | The shared webhook secret to check payload signatures from GitHub. |
 | HUBOT_DEPLOY_ENCRYPT_PAYLOAD | Encrypt the entire deployment payload in the GitHub API. |
 | HUBOT_DEPLOY_WEBHOOK_PREFIX  | The URL prefix to be used for receiving webhooks. Default: "/hubot-deploy"
+| HUBOT_DEPLOY_ADAPTER | The name of the adapter (slack, hipchat) to use. Adapter needs to be located in src/adapters. 
 
 ### Robot Users
 
