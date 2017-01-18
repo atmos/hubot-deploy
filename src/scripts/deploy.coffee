@@ -27,21 +27,8 @@ defaultDeploymentEnvironment = () ->
 
 ###########################################################################
 module.exports = (robot) ->
-  ###########################################################################
-  # where can i deploy <app>
-  #
-  # Displays the available environments for an application
-  robot.respond ///where\s+can\s+i\s+#{DeployPrefix}\s+([-_\.0-9a-z]+)///i, id: "hubot-deploy.wcid", (msg) ->
-    name = msg.match[1]
-
-    try
-      deployment = new Deployment(name)
-      formatter  = new Formatters.WhereFormatter(deployment)
-
-      robot.emit "hubot_deploy_available_environments", msg, deployment, formatter
-
-    catch err
-      robot.logger.info "Exploded looking for deployment locations: #{err}"
+  robot.respond /deploy/i, id: "h-deploy", (msg) ->
+    msg.reply "Try running /h deploy"
 
   ###########################################################################
   # deploys <app> in <env>
@@ -76,7 +63,7 @@ module.exports = (robot) ->
       if robot.adapterName is "hipchat"
         if msg.envelope.user.reply_to?
           deployment.room = msg.envelope.user.reply_to
-          
+
       if robot.adapterName is "slack"
         deployment.user = user.name
         deployment.room = robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(msg.message.user.room).name
