@@ -103,8 +103,9 @@ module.exports = (robot) ->
     env   = (msg.match[5]||defaultDeploymentEnvironment())
     hosts = (msg.match[6]||'')
     yubikey = msg.match[7]
+    aws_instance_type = (msg.match[8]||'')
 
-    deployment = new Deployment(name, ref, task, env, force, hosts)
+    deployment = new Deployment(name, ref, task, env, force, hosts, aws_instance_type)
 
     unless deployment.isValidApp()
       msg.reply "#{name}? Never heard of it."
