@@ -10,7 +10,7 @@ GitHubApi = require(Path.join(__dirname, "..", "api")).Api
 class Deployment
   @APPS_FILE = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
 
-  constructor: (@name, @ref, @task, @env, @force, @hosts) ->
+  constructor: (@name, @ref, @task, @env, @force, @hosts, @aws_instance_type) ->
     @room             = 'unknown'
     @user             = 'unknown'
     @adapter          = 'unknown'
@@ -86,6 +86,8 @@ class Deployment
         message_id: @messageId
         thread_id: @threadId
       config: @application
+      aws_deploy_config:
+        aws_instance_type: @aws_instance_type
 
   setUserToken: (token) ->
     @userToken = token.trim()

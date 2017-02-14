@@ -52,6 +52,26 @@ describe "Patterns", () ->
       assert.equal "production",  matches[5], "incorrect environment name"
       assert.equal undefined,     matches[6], "incorrect branch name"
 
+    it "handles deploying to environments with aws config", () ->
+      matches = "deploy hubot to production on t2.small".match(DeployPattern)
+      assert.equal "deploy",      matches[1], "incorrect task"
+      assert.equal "hubot",       matches[3], "incorrect app name"
+      assert.equal undefined,     matches[4], "incorrect branch name"
+      assert.equal "production",  matches[5], "incorrect environment name"
+      assert.equal undefined,     matches[6], "incorrect branch name"
+      assert.equal undefined,     matches[7], "incorrect authenticator token"
+      assert.equal "t2.small",    matches[8], "incorrect aws config"
+
+    it "handles deploying to environments with aws config large", () ->
+      matches = "deploy hubot to production on m3.large".match(DeployPattern)
+      assert.equal "deploy",      matches[1], "incorrect task"
+      assert.equal "hubot",       matches[3], "incorrect app name"
+      assert.equal undefined,     matches[4], "incorrect branch name"
+      assert.equal "production",  matches[5], "incorrect environment name"
+      assert.equal undefined,     matches[6], "incorrect branch name"
+      assert.equal undefined,     matches[7], "incorrect authenticator token"
+      assert.equal "m3.large",    matches[8], "incorrect aws config"
+
     it "handles environments with hosts", () ->
       matches = "deploy hubot to production/fe".match(DeployPattern)
       assert.equal "deploy",      matches[1], "incorrect task"
