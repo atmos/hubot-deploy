@@ -1,5 +1,5 @@
 
-This is a clone of the deprecated https://github.com/atmos/hubot-deploy published under the name hubot-deploy-lentus
+This is a clone of the deprecated https://github.com/atmos/hubot-deploy published under the name `hubot-deploy-lentus`
 
 # hubot-deploy [![Build Status](https://travis-ci.org/lentusignavus/hubot-deploy.svg?branch=master)](https://travis-ci.org/lentusignavus/hubot-deploy)
 
@@ -11,9 +11,9 @@ This is a clone of the deprecated https://github.com/atmos/hubot-deploy publishe
 
 * Add hubot-deploy to your `package.json` file.
 * Add hubot-deploy to your `external-scripts.json` file.
-* [Configure](https://github.com/atmos/hubot-deploy/blob/master/docs/configuration.md) your runtime environment to interact with the GitHub API.
-* Understand how [apps.json](https://github.com/atmos/hubot-deploy/blob/master/docs/config-file.md) works.
-* Learn about [ChatOps](https://github.com/atmos/hubot-deploy/blob/master/docs/chatops.md) deploys.
+* [Configure](https://github.com/lentusignavus/hubot-deploy/blob/master/docs/configuration.md) your runtime environment to interact with the GitHub API.
+* Understand how [apps.json](https://github.com/lentusignavus/hubot-deploy/blob/master/docs/config-file.md) works.
+* Learn about [ChatOps](https://github.com/lentusignavus/hubot-deploy/blob/master/docs/chatops.md) deploys.
 
 ## See Also
 
