@@ -112,12 +112,13 @@ module.exports = (robot) ->
     unless deployment.isValidEnv()
       msg.reply "#{name} doesn't seem to have an #{env} environment."
       return
-    unless deployment.isAllowedRoom(msg.message.user.room)
-      msg.reply "#{name} is not allowed to be deployed from this room."
-      return
     if robot.adapterName is "slack"
       roomName = robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(msg.message.user.room).name
       unless deployment.isAllowedRoom(roomName)
+        msg.reply "#{name} is not allowed to be deployed from this room."
+        return
+    else
+      unless deployment.isAllowedRoom(msg.message.user.room)
         msg.reply "#{name} is not allowed to be deployed from this room."
         return
 
