@@ -1,12 +1,12 @@
 {
-  "name": "hubot-deploy",
-  "version": "0.13.27",
-  "author": "Corey Donohoe <atmos@atmos.org>",
-  "description": "hubot script for GitHub Flow",
+  "name": "hubot-deploy-lentus",
+  "version": "1.0.0",
+  "author": "Kareem March <lentusignavus@gmail.com>",
+  "description": "hubot script for GitHub Deployments - a fork of the deprecated https://github.com/atmos/hubot-deploy library",
   "main": "index.coffee",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atmos/hubot-deploy"
+    "url": "https://github.com/lentusignavus/hubot-deploy"
   },
   "keywords": [
     "flow",
@@ -16,15 +16,15 @@
     "chatops",
     "deployment"
   ],
-  "homepage": "https://github.com/atmos/hubot-deploy",
+  "homepage": "https://github.com/lentusignavus/hubot-deploy",
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*_test.coffee test/**/**/*_test.coffee test/**/**/**/*_test.coffee",
     "posttest": "NODE_ENV=test coffeelint -f .coffeelint.json src/"
   },
   "contributors": [
     {
-      "name": "Corey Donohoe",
-      "email": "atmos@atmos.org"
+      "name": "Kareem March",
+      "email": "lentusignavus@gmail.com"
     }
   ],
   "dependencies": {
@@ -49,7 +49,7 @@
     "node": ">=0.8.0"
   },
   "bugs": {
-    "url": "https://github.com/atmos/hubot-deploy/issues"
+    "url": "https://github.com/lentusignavus/hubot-deploy/issues"
   },
   "license": "MIT"
 }
