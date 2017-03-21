@@ -105,6 +105,13 @@ module.exports = (robot) ->
           return res.end(JSON.stringify({error: "X-Hub-Signature does not match blob signature"}))
 
         deliveryId = req.headers['x-github-delivery']
+
+        # NOTE: On github.com the payload gets wrapped in a string somehow.
+        #       This code is to remove the string before sending it further.
+        if req.body.payload
+          if typeof(req.body.payload) is 'string'
+            req.body = JSON.parse(req.body.payload)
+
         switch req.headers['x-github-event']
           when "ping"
             res.writeHead 204, {'content-type': 'application/json' }
