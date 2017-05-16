@@ -25,7 +25,7 @@ class LatestFormatter extends Formatter
     result = null
     if deployment.payload?
       if deployment.payload.notify
-        result or= deployment.payload.notify.user
+        result or= deployment.payload.notify.user_name
       result or= deployment.payload.actor
 
     result or= deployment.creator.login

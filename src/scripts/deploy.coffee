@@ -49,15 +49,40 @@ module.exports = (robot) ->
   # Displays the recent deployments for an application in an environment
   robot.respond DeploysPattern, id: "hubot-deploy.recent", hubotDeployAuthenticate: true, (msg) ->
     name        = msg.match[2]
-    environment = msg.match[4] || defaultDeploymentEnvironment()
+    environment = msg.match[4] || ""
 
     try
       deployment = new Deployment(name, null, null, environment)
+      unless deployment.isValidApp()
+        msg.reply "#{name}? Never heard of it."
+        return
+      unless deployment.isValidEnv()
+        if environment.length > 0
+          msg.reply "#{name} doesn't seem to have an #{environment} environment."
+          return
 
       user = robot.brain.userForId msg.envelope.user.id
       token = robot.vault.forUser(user).get(TokenForBrain)
       if token?
         deployment.setUserToken(token)
+
+      deployment.user   = user.id
+      deployment.room   = msg.message.user.room
+
+      if robot.adapterName is "flowdock"
+        deployment.threadId = msg.message.metadata.thread_id
+        deployment.messageId = msg.message.id
+
+      if robot.adapterName is "hipchat"
+        if msg.envelope.user.reply_to?
+          deployment.room = msg.envelope.user.reply_to
+          
+      if robot.adapterName is "slack"
+        deployment.user = user.name
+        deployment.room = robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(msg.message.user.room).name
+
+      deployment.adapter   = robot.adapterName
+      deployment.robotName = robot.name
 
       deployment.latest (err, deployments) ->
         formatter = new Formatters.LatestFormatter(deployment, deployments)
@@ -107,8 +132,13 @@ module.exports = (robot) ->
       if msg.envelope.user.reply_to?
         deployment.room = msg.envelope.user.reply_to
 
+    if robot.adapterName is "slack"
+      deployment.user = user.name
+      deployment.room = robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(msg.message.user.room).name
+
     deployment.yubikey   = yubikey
     deployment.adapter   = robot.adapterName
+    deployment.userName  = user.name
     deployment.robotName = robot.name
 
     if process.env.HUBOT_DEPLOY_EMIT_GITHUB_DEPLOYMENTS

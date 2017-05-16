@@ -1,7 +1,8 @@
-Path      = require "path"
-Octonode  = require "octonode"
-Address4  = require("ip-address").Address4
-GitHubApi = require(Path.join(__dirname, "..", "github", "api")).Api
+Path         = require "path"
+Octonode     = require "octonode"
+Address4     = require("ip-address").Address4
+GitHubApi    = require(Path.join(__dirname, "..", "github", "api")).Api
+ScopedClient = require "scoped-http-client"
 ###########################################################################
 
 VaultKey = "hubot-deploy-github-secret"
@@ -11,7 +12,14 @@ class ApiTokenVerifier
     @token = token?.trim()
 
     @config = new GitHubApi(@token, null)
-    @api   = Octonode.client(@config.token, {hostname: @config.hostname})
+
+    hostname = @config.hostname
+    path = @config.path()
+
+    if path isnt "/"
+      hostname += path
+
+    @api   = Octonode.client(@config.token, {hostname: hostname})
 
   valid: (cb) ->
     @api.get "/user", (err, status, data, headers) ->
@@ -37,6 +45,7 @@ class GitHubTokenVerifier
     @token = token?.trim()
 
   valid: (cb) ->
+    return cb(false) unless token?
     ScopedClient.create("https://api.github.com").
       header("User-Agent", "hubot-deploy/0.13.1").
       header("Authorization", "token #{@token}").
@@ -58,6 +67,7 @@ class HerokuTokenVerifier
     @token = token?.trim()
 
   valid: (cb) ->
+    return cb(false) unless token?
     ScopedClient.create("https://api.heroku.com").
       header("Accept", "application/vnd.heroku+json; version=3").
       header("Authorization", "Bearer #{@token}").
