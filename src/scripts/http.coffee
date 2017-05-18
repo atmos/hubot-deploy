@@ -4,10 +4,12 @@
 # Commands:
 #
 
+Fs               = require "fs"
 Path             = require "path"
 Crypto           = require "crypto"
 
 GitHubEvents     = require(Path.join(__dirname, "..", "github", "webhooks"))
+Push             = GitHubEvents.Push
 Deployment       = GitHubEvents.Deployment
 PullRequest      = GitHubEvents.PullRequest
 DeploymentStatus = GitHubEvents.DeploymentStatus
@@ -17,17 +19,75 @@ DeployPrefix     = require(Path.join(__dirname, "..", "models", "patterns")).Dep
 
 GitHubSecret     = process.env.HUBOT_DEPLOY_WEBHOOK_SECRET
 
+WebhookPrefix    = process.env.HUBOT_DEPLOY_WEBHOOK_PREFIX or "/hubot-deploy"
+
 supported_tasks       = [ "#{DeployPrefix}-hooks:sync" ]
 
 Verifiers = require(Path.join(__dirname, "..", "models", "verifiers"))
 
+AppsJsonFile = process.env['HUBOT_DEPLOY_APPS_JSON'] or "apps.json"
+AppsJsonData = JSON.parse(Fs.readFileSync(AppsJsonFile))
 ###########################################################################
 module.exports = (robot) ->
   ipVerifier = new Verifiers.GitHubWebHookIpVerifier
 
   process.env.HUBOT_DEPLOY_WEBHOOK_SECRET or= "459C1E17-AAA9-4ABF-9120-92E8385F9949"
   if GitHubSecret
-    robot.router.post "/hubot-deploy", (req, res) ->
+    robot.router.get WebhookPrefix + "/apps", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        res.writeHead 200, {'content-type': 'application/json' }
+        return res.end(JSON.stringify(AppsJsonData))
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.post WebhookPrefix + "/repos/:owner/:repo/messages", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        emission =
+          body: req.body
+          repo: req.params.repo
+          owner: req.params.owner
+
+        robot.emit "hubot_deploy_repo_message", emission
+        res.writeHead 202, {'content-type': 'application/json' }
+        return res.end("{}")
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.post WebhookPrefix + "/teams/:team/messages", (req, res) ->
+      token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+      if token is process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+        emission =
+          team: req.params.team
+          body: req.body
+
+        robot.emit "hubot_deploy_team_message", emission
+        res.writeHead 202, {'content-type': 'application/json' }
+        return res.end("{}")
+      else
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.get WebhookPrefix + "/apps/:name", (req, res) ->
+      try
+        token = req.headers['authorization']?.match(/Bearer (.+){1,256}/)?[1]
+        if token isnt process.env["HUBOT_DEPLOY_WEBHOOK_SECRET"]
+          throw new Error("Bad auth headers")
+        else
+          app = AppsJsonData[req.params["name"]]
+          if app?
+            res.writeHead 200, {'content-type': 'application/json' }
+            return res.end(JSON.stringify(app))
+          else
+            throw new Error("App not found")
+      catch
+        res.writeHead 404, {'content-type': 'application/json' }
+        return res.end(JSON.stringify({message: "Not Found"}))
+
+    robot.router.post WebhookPrefix, (req, res) ->
       try
         remoteIp = req.headers['x-forwarded-for'] or req.connection.remoteAddress
         unless ipVerifier.ipIsValid(remoteIp)
@@ -47,15 +107,23 @@ module.exports = (robot) ->
         deliveryId = req.headers['x-github-delivery']
         switch req.headers['x-github-event']
           when "ping"
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 204, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: "Hello from #{robot.name}. :D"}))
+
+          when "push"
+            push = new Push deliveryId, req.body
+
+            robot.emit "github_push_event", push
+
+            res.writeHead 202, {'content-type': 'application/json' }
+            return res.end(JSON.stringify({message: push.toSimpleString()}))
 
           when "deployment"
             deployment = new Deployment deliveryId, req.body
 
             robot.emit "github_deployment_event", deployment
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: deployment.toSimpleString()}))
 
           when "deployment_status"
@@ -63,7 +131,7 @@ module.exports = (robot) ->
 
             robot.emit "github_deployment_status_event", status
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
 
           when "status"
@@ -71,7 +139,7 @@ module.exports = (robot) ->
 
             robot.emit "github_commit_status_event", status
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: status.toSimpleString()}))
 
           when "pull_request"
@@ -79,11 +147,11 @@ module.exports = (robot) ->
 
             robot.emit "github_pull_request", pullRequest
 
-            res.writeHead 200, {'content-type': 'application/json' }
+            res.writeHead 202, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: pullRequest.toSimpleString()}))
 
           else
-            res.writeHead 400, {'content-type': 'application/json' }
+            res.writeHead 204, {'content-type': 'application/json' }
             return res.end(JSON.stringify({message: "Received but not processed."}))
 
       catch err
