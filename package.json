@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "coffeelint": "^1.14.2",
-    "fernet": "0.3.0",
+    "fernet": "git://github.com/CGamesPlay/fernet.js.git#bee54973eab1ffe599d9477b3d377aab111b0613",
     "hubot": ">=2.7.2 <=2.13.2",
     "inflection": "1.3.6",
     "ip-address": "5.0.2",
